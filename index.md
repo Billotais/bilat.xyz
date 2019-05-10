@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: Loïs Bilat
 subtitle: Computer Science Student
 published: true
