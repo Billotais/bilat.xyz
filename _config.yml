@@ -1,7 +1,8 @@
 theme: jekyll-theme-midnight
 title:        Loïs Bilat
 tagline:      Computer Science Student
-baseurl:      "https://bilat.xyz"
+url:          "https://bilat.xyz"
+baseurl:      ""
 paginate:     1
 locale:       "en"
 
