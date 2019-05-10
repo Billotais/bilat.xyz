@@ -10,3 +10,6 @@ locale:       "en"
 author:
   name:       Loïs Bilat
   url:        https://bilat.xyz 
+
+github:
+  is_project_page: false
