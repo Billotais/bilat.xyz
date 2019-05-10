@@ -7,7 +7,7 @@ published: true
 
 Currently studying for a Master in Computer Science at [EPFL](https://epfl.ch). I have taken courses about many subjects, but I'm mostly interested in Machine Learning, Data Analysis and Natural Language Processing. I principaly program in Python, Java and C.
 
-You can download my [CV](http://cv.bilat.xyz), or take a look at my [Github page](https://github.com/billotais).
+You can download my [CV](http://cv.bilat.xyz), or take a look at my [Github page](https://git.bilat.xyz).
 
 # Contact me
 
