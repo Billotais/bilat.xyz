@@ -1,6 +1,6 @@
 theme: jekyll-theme-cayman
 title:        Loïs Bilat
-tagline:      Computer Science Student
+description:      Computer Science Student
 url:          "https://bilat.xyz"
 baseurl:      ""
 paginate:     1
