@@ -25,12 +25,16 @@
     <header class="page-header" role="banner">
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
-      {% if site.github.is_project_page %}
-        <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
-      {% endif %}
       
-      <a href="{{ site.buttons.url_btn_1 }}" class="btn">{{ site.buttons.text_btn_1 }}</a>
-      <a href="{{ site.buttons.url_btn_2 }}" class="btn">{{ site.buttons.text_btn_2 }}</a>
+      {% if site.buttons.url_btn_1 % }
+        <a href="{{ site.buttons.url_btn_1 }}" class="btn">{{ site.buttons.text_btn_1 }}</a>
+      {% endif %}
+      {% if site.buttons.url_btn_2 % }
+        <a href="{{ site.buttons.url_btn_2 }}" class="btn">{{ site.buttons.text_btn_2 }}</a>
+      {% endif %}
+      {% if site.buttons.url_btn_3 % }
+        <a href="{{ site.buttons.url_btn_3 }}" class="btn">{{ site.buttons.text_btn_3 }}</a>
+      {% endif %}
       
     </header>
 
@@ -38,9 +42,6 @@
       {{ content }}
 
       <footer class="site-footer">
-        {% if site.github.is_project_page %}
-          <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
-        {% endif %}
         <span class="site-footer-credits">{{ site.footer }}</span>
       </footer>
     </main>
