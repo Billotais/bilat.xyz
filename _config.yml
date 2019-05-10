@@ -17,3 +17,8 @@ github:
 
 show_downloads: true
 footer: © Copyright 2019 - Loïs Bilat - <a href="https://bilat.xyz">bilat.xyz</a>
+buttons:
+  url_btn_1: https://cv.bilat.xyz
+  url_btn_2: https://git.bilat.xyz
+  text_btn_1: CV
+  text_btn_2: GitHub
