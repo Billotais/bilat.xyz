@@ -26,13 +26,13 @@
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
       
-      {% if site.buttons.url_btn_1 % }
+      {% if site.buttons.btn_1 % }
         <a href="{{ site.buttons.url_btn_1 }}" class="btn">{{ site.buttons.text_btn_1 }}</a>
       {% endif %}
-      {% if site.buttons.url_btn_2 % }
+      {% if site.buttons.btn_2 % }
         <a href="{{ site.buttons.url_btn_2 }}" class="btn">{{ site.buttons.text_btn_2 }}</a>
       {% endif %}
-      {% if site.buttons.url_btn_3 % }
+      {% if site.buttons.btn_3 % }
         <a href="{{ site.buttons.url_btn_3 }}" class="btn">{{ site.buttons.text_btn_3 }}</a>
       {% endif %}
       
