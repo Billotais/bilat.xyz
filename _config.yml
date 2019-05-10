@@ -1,1 +1,11 @@
 theme: jekyll-theme-cayman
+title:        Loïs Bilat
+tagline:      Computer Science Student
+baseurl:      ""
+paginate:     1
+locale:       "en"
+
+# About/contact
+author:
+  name:       Loïs Bilat
+  url:        https://bilat.xyz 
