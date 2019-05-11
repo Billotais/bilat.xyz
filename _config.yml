@@ -21,6 +21,8 @@ buttons:
   btn_1: true
   btn_2: true
   btn_3: true
+  btn_4: false
+  btn_5: false
   url_btn_1: http://bilat.xyz/cv
   url_btn_2: http://git.bilat.xyz
   url_btn_3: 
