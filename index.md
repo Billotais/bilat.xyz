@@ -49,4 +49,4 @@ Creation of a multiplayer video game for iOS based on the game Dots and Boxes as
 
 ### yvesbilat.ch
 
-Website created for an entrepreneur, showcasing his work. Done using Wordpress. [Link](https://yvesbilat.ch)
+Website created for an entrepreneur, showcasing his work. Done using Wordpress. [Link](http://yvesbilat.ch)
