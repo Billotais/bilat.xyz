@@ -15,13 +15,12 @@ You can download my [CV](http://cv.bilat.xyz), or take a look at my [Github page
 - phone : +41 78 645 94 84
 - social networks : [Linkedin](https://linkedin.com/in/lois-bilat) and [Twitter](https://twitter.com/@Billotais)
 
-<iframe src="http://docs.google.com/gview?url=http://bilat.xyz/pdf/cd.pdf" style="width:718px; height:700px;" frameborder="0"></iframe>
+
 
 <embed src="https://drive.google.com/viewerng/
 viewer?embedded=true&url=http://bilat.xyz/pdf/cv.pdf" width="100%" height="375">
 
-<embed src="http://bilat.xyz/pdf/cv.pdf" width="500" height="375" 
- type="application/pdf">
+
 # My Projects
 
 During my studies and my free time, I had the occasion to work on many programming projects. Here are a few of them :
