@@ -15,7 +15,7 @@ You can download my [CV](http://cv.bilat.xyz), or take a look at my [Github page
 - phone : +41 78 645 94 84
 - social networks : [Linkedin](https://linkedin.com/in/lois-bilat) and [Twitter](https://twitter.com/@Billotais)
 
-<iframe src="http://docs.google.com/gview?url=http://bilat.xyz/pdf/cd.pdf&embedded=true" style="width:718px; height:700px;" frameborder="0"></iframe>
+<iframe src="http://docs.google.com/gview?url=http://bilat.xyz/pdf/cd.pdf" style="width:718px; height:700px;" frameborder="0"></iframe>
 
 <embed src="https://drive.google.com/viewerng/
 viewer?embedded=true&url=http://bilat.xyz/pdf/cv.pdf" width="500" height="375">
