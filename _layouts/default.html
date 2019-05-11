@@ -30,8 +30,9 @@
       {% if site.buttons.btn_1 %}
       	<a href="{{ site.buttons.url_btn_1 }}" class="btn">{{ site.buttons.text_btn_1 }}</a>
       {% endif %}
-      <a href="{{ site.buttons.url_btn_2 }}" class="btn">{{ site.buttons.text_btn_2 }}</a>
-      
+      {% if site.buttons.btn_2 %}
+      	<a href="{{ site.buttons.url_btn_2 }}" class="btn">{{ site.buttons.text_btn_2 }}</a>
+      {% endif %}
     </header>
 
     <main id="content" class="main-content" role="main">
