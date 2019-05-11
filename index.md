@@ -21,7 +21,7 @@ During my studies and my free time, I had the occasion to work on many programmi
 
 ### Detecting Bias in Amazon reviews
 
-A Data Story about the potential bias that can be found in Amazon user reviews, and how to correct it. Done in Python, with various tools including Pandas, pyspark, and matplotlib. [Link](https://ada-lyn.github.io/)
+A Data Story about the potential bias that can be found in Amazon user reviews, and how to correct it. We worked on 20GB of comments extracted from various Amazon articles, and used multiple tools including Pandas, pyspark, and matplotlib. [Link](https://ada-lyn.github.io/)
 
 ### The Quest for The Holy Grail
 
@@ -45,7 +45,7 @@ Creation of an Android app that people can use to do some small calculations (ad
 
 ### La Pipopipette
 
-Creation of a multiplayer video game for iOS based on the game Dots and Boxes as my Maturity Project. An artificial Intelligence was implemented. Written in Objective-C. [Link](http://tm.bilat.xyz)
+Creation of a multiplayer video game for iOS based on the game Dots and Boxes as my Maturity Project. COuld be player by up to 4 players on the same device. An artificial Intelligence was implemented. Written in Objective-C. [Link](http://tm.bilat.xyz)
 
 ### yvesbilat.ch
 
