@@ -20,7 +20,7 @@ footer: © Copyright 2019 - Loïs Bilat - <a href="https://bilat.xyz">bilat.xyz<
 buttons:
   btn_1: true
   btn_2: true
-  btn_3: true
+  btn_3: false
   btn_4: false
   btn_5: false
   url_btn_1: http://bilat.xyz/cv
