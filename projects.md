@@ -1,3 +1,9 @@
+---
+layout: page
+title: Projects
+published: true
+description: Loïs Bilat
+---
 
 During my studies and my free time, I had the occasion to work on many programming projects. Here are a few of them :
 
