@@ -18,7 +18,7 @@ You can download my [CV](http://cv.bilat.xyz), or take a look at my [Github page
 <iframe src="http://docs.google.com/gview?url=http://bilat.xyz/pdf/cd.pdf" style="width:718px; height:700px;" frameborder="0"></iframe>
 
 <embed src="https://drive.google.com/viewerng/
-viewer?embedded=true&url=http://bilat.xyz/pdf/cv.pdf" width="500" height="375">
+viewer?embedded=true&url=http://bilat.xyz/pdf/cv.pdf" width="100%" height="375">
 
 <embed src="http://bilat.xyz/pdf/cv.pdf" width="500" height="375" 
  type="application/pdf">
