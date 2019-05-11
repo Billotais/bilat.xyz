@@ -27,8 +27,9 @@
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
       
-      
-      <a href="{{ site.buttons.url_btn_1 }}" class="btn">{{ site.buttons.text_btn_1 }}</a>
+      {% if site.buttons.btn_1 %}
+      	<a href="{{ site.buttons.url_btn_1 }}" class="btn">{{ site.buttons.text_btn_1 }}</a>
+      {% endif %}
       <a href="{{ site.buttons.url_btn_2 }}" class="btn">{{ site.buttons.text_btn_2 }}</a>
       
     </header>
