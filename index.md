@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Loïs Bilat
-subtitle: Computer Science Student
+description: Computer Science Student
 published: true
 ---
 
