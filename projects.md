@@ -1,3 +1,4 @@
+
 During my studies and my free time, I had the occasion to work on many programming projects. Here are a few of them :
 
 ### Detecting Bias in Amazon reviews
