@@ -7,7 +7,7 @@ published: true
 
 Currently studying for a Master in Computer Science at [EPFL](https://epfl.ch). I have taken courses about many subjects, but I'm mostly interested in Machine Learning, Data Analysis and Natural Language Processing. I principaly program in Python, Java and C.
 
-You can download my [CV](http://cv.bilat.xyz), or take a look at my [Github page](https://git.bilat.xyz).
+You can download my [CV](http://cv.bilat.xyz), or take a look at my [Github page](http://git.bilat.xyz).
 
 # Contact me
 
@@ -45,7 +45,7 @@ Creation of an Android app that people can use to do some small calculations (ad
 
 ### La Pipopipette
 
-Creation of a multiplayer video game for iOS based on the game Dots and Boxes as my Maturity Project. An artificial Intelligence was implemented. Written in Objective-C. [Link](https://github.com/Billotais/billotais.github.io/raw/master/_data/TM.pdf)
+Creation of a multiplayer video game for iOS based on the game Dots and Boxes as my Maturity Project. An artificial Intelligence was implemented. Written in Objective-C. [Link](http://tm.bilat.xyz)
 
 ### yvesbilat.ch
 
