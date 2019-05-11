@@ -1,5 +1,5 @@
 ---
-layout: pdf
+layout: page
 title: CV
 subtitle: Loïs Bilat
 published: true
