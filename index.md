@@ -19,6 +19,9 @@ You can download my [CV](http://cv.bilat.xyz), or take a look at my [Github page
 
 <embed src="https://drive.google.com/viewerng/
 viewer?embedded=true&url=http://bilat.xyz/pdf/cv.pdf" width="500" height="375">
+
+<embed src="http://bilat.xyz/pdf/cv.pdf" width="500" height="375" 
+ type="application/pdf">
 # My Projects
 
 During my studies and my free time, I had the occasion to work on many programming projects. Here are a few of them :
