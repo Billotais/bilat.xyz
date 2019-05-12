@@ -13,5 +13,10 @@ $body-text-color: #000000 !default;
 $body-link-color: #0b8793 !default;
 
 
-
+.particles {
+	display: block;
+    position: absolute;
+    width: 100%
+    height: 300px;
+}
 @import "{{ site.theme }}";
