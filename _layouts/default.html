@@ -29,7 +29,7 @@ particlesJS("particles-js", {"particles":{"number":{"value":60,"density":{"enabl
   <body>
  
 
-    <header class="page-header" role="banner">
+    <header class="page-header" id="particles-js" role="banner">
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
       
@@ -51,9 +51,7 @@ particlesJS("particles-js", {"particles":{"number":{"value":60,"density":{"enabl
     </header>
     
     <main id="content" id="particles-js" class="main-content" role="main">
-      <div id="particles-js">
-        {{ content }}
-      </div>
+      {{ content }}
       
 
       <footer class="site-footer">
