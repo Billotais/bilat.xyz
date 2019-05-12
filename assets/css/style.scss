@@ -24,6 +24,7 @@ $body-link-color: #0b8793 !default;
 	z-index: -10;
 }
 .btn {
-	z-index: 10
+	position: relative;
+
 }
 @import "{{ site.theme }}";
