@@ -25,3 +25,5 @@ viewer?embedded=true&amp;url=http://bilat.xyz/pdf/cv.pdf" width="100%" height="7
 <embed src= "pdf/cv.pdf" width= "500" height= "375">
 
 ------------------
+
+<object data="pdf/cv.pdf"></object>
