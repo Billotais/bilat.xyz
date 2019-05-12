@@ -27,8 +27,5 @@ $body-link-color: #0b8793 !default;
 	position: relative;
 
 }
-@media screen and (min-width: 64em)
-.page-header {
-    padding: 10rem 6rem;
-}
+
 @import "{{ site.theme }}";
