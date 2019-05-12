@@ -12,15 +12,6 @@ $section-headings-color: #0b8793 !default;
 $body-text-color: #000000 !default;
 $body-link-color: #0b8793 !default;
 
-#particles-js {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #b61924;
-  background-image: url("");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 50%;
-}
+
 
 @import "{{ site.theme }}";
