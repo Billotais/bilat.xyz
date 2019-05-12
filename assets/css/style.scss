@@ -23,4 +23,7 @@ $body-link-color: #0b8793 !default;
 .page-header {
 	z-index: -10;
 }
+.btn {
+	z-index: 10
+}
 @import "{{ site.theme }}";
