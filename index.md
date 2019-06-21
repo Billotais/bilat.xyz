@@ -11,7 +11,7 @@ I am a Swiss Computer Science Student currently studying for my Master at [EPFL]
 
 I have taken courses about many subjects, but I'm mostly interested in Machine Learning, Data Analysis, Natural Language Processing and Computer Vision. I can code in Python, Java/Scala and C/C++, and I have some experience with a lot of libraries (Spark, Keras, Scikit-learn, nltk, pandas, ...)
 
-You take a look at my [CV](http://bilat.xyz/cv), see a list of [Projects](http://bilat.xyz/projects) I worked on or take a look at my [Github page](https://github.com/Billotais).
+You can take a look at my [CV](http://bilat.xyz/cv), see a list of [Projects](http://bilat.xyz/projects) I worked on or take a look at my [Github page](https://github.com/Billotais).
 
 # Contact me
 
