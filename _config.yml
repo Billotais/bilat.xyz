@@ -1,6 +1,6 @@
 theme: jekyll-theme-cayman
 title:        Loïs Bilat
-description:      Computer Science Student
+# description:      Computer Science Student
 url:          "https://bilat.xyz"
 baseurl:      ""
 paginate:     1
@@ -16,14 +16,16 @@ github:
   is_project_page: false
 
 show_downloads: true
-footer: © Copyright 2019 - Loïs Bilat - <a href="https://bilat.xyz">bilat.xyz</a>
+footer: © Copyright 2019 - <a href="mailto:lois@bilat.xyz">Loïs Bilat</a> - bilat.xyz
 buttons:
   btn_1: true
   btn_2: true
   btn_3: true
-  url_btn_1: https://cv.bilat.xyz
-  url_btn_2: https://git.bilat.xyz
-  url_btn_3: 
+  btn_4: false
+  btn_5: false
+  url_btn_1: http://bilat.xyz/cv
+  url_btn_2: http://bilat.xyz/projects
+  url_btn_3: http://git.bilat.xyz
   text_btn_1: CV
-  text_btn_2: GitHub
-  text_btn_3: 
+  text_btn_2: Projects
+  text_btn_3: GitHub
