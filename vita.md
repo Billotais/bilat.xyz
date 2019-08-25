@@ -1,8 +1,8 @@
 ---
 layout: page
-title: Semester Project at VITA Lab
+title: Denoising with Generative Models
 published: true
-description: Preliminary notes 
+description: Project at VITA lab - Preliminary notes 
 ---
 
 # Audio denoising papers
