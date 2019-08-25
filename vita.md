@@ -2,7 +2,7 @@
 layout: page
 title: Semester Project at VITA Lab
 published: true
-description: Loïs Bilat
+description: Preliminary notes 
 ---
 
 # Audio denoising papers
