@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: hidden
 title: Denoising with Generative Models
 published: true
 description: Project at VITA lab - Preliminary notes 
