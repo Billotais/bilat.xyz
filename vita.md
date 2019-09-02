@@ -8,7 +8,7 @@ description: Project at VITA lab - Preliminary notes
 
 # Audio denoising papers
 
-## Noise Reduction Techniques and Algorithms For Speech Signal Processing (Algo_Speech.pdf)
+## 1. Noise Reduction Techniques and Algorithms For Speech Signal Processing (Algo_Speech.pdf)
 
 Different types of noise : 
 
@@ -31,31 +31,31 @@ Smoothing : noise is often random and fast change, so smoothing can help again w
 
 [Link](http://bilat.xyz/vita/Algo_Speech.pdf)
  
-## A Review of Adaptive Line Enhancers for Noise Cancellation (ALE.pdf)
+## 2. A Review of Adaptive Line Enhancers for Noise Cancellation (ALE.pdf)
 
 Doesn't need recording of noise. Adaptive self-tuning filter that can spearate periodic and stochastic component. Detect low-level sin-waves in noise
 
 [Link](http://bilat.xyz/vita/ALE.pdf)
 
-## A review: Audio noise reduction and various techniques (Techniques.pdf)
+## 3. A review: Audio noise reduction and various techniques (Techniques.pdf)
 
 Some filters : Butterworth filter, Chebyshev filter, Elliptical filter
 
 [Link](http://bilat.xyz/vita/Techniques.pdf)
 
-## Employing phase information for audio denoising (Phase.pdf)
+## 4. Employing phase information for audio denoising (Phase.pdf)
 
 TODO
 
 [Link](http://bilat.xyz/vita/Phase.pdf)
 
-## Audio Denoising by Time-Frequency Block Thresholding (Block_Threshold.pdf)
+## 5. Audio Denoising by Time-Frequency Block Thresholding (Block_Threshold.pdf)
 
 TODO
 
 [Link](http://bilat.xyz/vita/Block_Threshold.pdf)
 
-## Speech Denoising with Deep Feature Losses (Speech_DL.pdf)
+## 6. Speech Denoising with Deep Feature Losses (Speech_DL.pdf)
 
 Fully convolutional network, work on the raw waveform. For the loss, use the internal activation of another network trainned for domestic audio tagging, and environnement detection (classification network). It's a little bit like a GAN.
 
@@ -71,7 +71,7 @@ Now this is for speech, and it might not work as well for general sound/music
 
 [Link](http://bilat.xyz/vita/Speech_DL.pdf)
 
-## Recurrent Neural Networks for Noise Reduction in Robust ASR (RNN.pdf)
+## 7. Recurrent Neural Networks for Noise Reduction in Robust ASR (RNN.pdf)
 
 SPLICE algorithm  is a model that can reduce noise by finding a joint distribution between clean and noisy data, ref to article in the paper's reference, but could not find it online for free.
 
@@ -83,14 +83,14 @@ More advanced : Deep recurrent denoising audtoencoder, we add conection "between
 
 [Link](http://bilat.xyz/vita/RNN.pdf)
 
-## Investigating RNN-based speech enhancement methods for noise-robust Text-to-Speech (RNN_Speech_Enhancement.pdf)
+## 8. Investigating RNN-based speech enhancement methods for noise-robust Text-to-Speech (RNN_Speech_Enhancement.pdf)
 
 Shows the two alternative approaches (time vs frequency) on a graph
 
 [Link](http://bilat.xyz/vita/RNN_Speech_Enhancement.pdf)
 
 
-## Audio Denoising with Deep Network Priors (DN_Priors.pdf)
+## 9. Audio Denoising with Deep Network Priors (DN_Priors.pdf)
 
 Combines time and frequency domain, unsuppervised, you try to fit the noisy audio and since we only partialy fit the output of the network helps to find the clean audio. Link to github repo with some data and the code [github](https://github.com/mosheman5/DNP).
 
@@ -104,7 +104,7 @@ Technique already used in CV. Diff : in CV, the output is already the cleaned im
 
 [Link](http://bilat.xyz/vita/DN_Priors.pdf)
 
-## Spectral and Cepstral Audio Noise Reduction Techniques in Speech Emotion Recognition (Spectral_Cepstral.pdf)
+## 10. Spectral and Cepstral Audio Noise Reduction Techniques in Speech Emotion Recognition (Spectral_Cepstral.pdf)
 
 They will compare their method to methods of "Spectral substraction", where you remove the noise spectrum from the audio spectrum.
 
@@ -118,7 +118,7 @@ Probably more informations about signal processing techniques in the references.
 
 [Link](http://bilat.xyz/vita/Spectral_Cepstral.pdf)
 
-## Raw Waveform-based Speech Enhancement by Fully Convolutional Networks (RawWave_CNN.pdf)
+## 11. Raw Waveform-based Speech Enhancement by Fully Convolutional Networks (RawWave_CNN.pdf)
 
 Convolutional, waveform to waveform. Mentions like most "Wiener filtering", "spectral substraction", "non-negative matrix factorisation". Also mentions "Deep denoising autoencoder" from (RNN.pdf), also see (DDAE.pdf) that they are citing.
 
@@ -134,7 +134,7 @@ They also mention at the end the difference between the "shift step" for the inp
 
 [Link](http://bilat.xyz/vita/RawWave_CNN.pdf)
 
-## Speech Enhancement Based on Deep Denoising Autoencoder (DDAE.pdf)
+## 12. Speech Enhancement Based on Deep Denoising Autoencoder (DDAE.pdf)
 
 They meantion a DAE where they only trained using clean speech : Clean as in and out, then when we give a noisy signal it tries to express it on the "clean subspace/basis function", they try to model "what makes a clean speech", need to look into that. This time, they use dirty-clean pairs, so they want to know "what is the statistical difference between noisy and clean.
 
@@ -150,7 +150,7 @@ Their results are mostly better than traditional methods.
 
 [Link](http://bilat.xyz/vita/DDAE.pdf)
 
-## SEGAN: Speech Enhancement Generative Adversarial Network (Speech_GAN.pdf)
+## 13. SEGAN: Speech Enhancement Generative Adversarial Network (Speech_GAN.pdf)
 
 As some other papers, mention that most use spectral form, but here they use the raw waveform.
 
@@ -166,7 +166,7 @@ All the code is on [github](https://github.com/santi-pdp/segan). Results are pos
 
 [Link](http://bilat.xyz/vita/Speech_GAN.pdf)
 
-## A Wavenet for Speech Denoising (WaveNet.pdf)
+## 14. A Wavenet for Speech Denoising (WaveNet.pdf)
 
 They first present the WaveNet network, which was used to synthesize natural sounding speech.
 
@@ -176,7 +176,7 @@ Their model is similair to WaveNet, but the convolution is "symetrically centerd
 
 # Audio super-resolution papers
 
-## Audio Super-Resolution using Neural Nets (SuperRes_NN.pdf)
+## 15. Audio Super-Resolution using Neural Nets (SuperRes_NN.pdf)
 
 Paper + webpage + github on super resolution with deep networks
 [https://kuleshov.github.io/audio-super-res/#](https://kuleshov.github.io/audio-super-res/#)
@@ -199,7 +199,7 @@ When they tried with a more diverse musical dataset, it wasn't sucessfull and th
 
 [Link](http://bilat.xyz/vita/SuperRes_NN.pdf)
 
-## Adversarial Audio Super-resolution with Unsuppervised Feature Losses (Adversarial.pdf)
+## 16. Adversarial Audio Super-resolution with Unsuppervised Feature Losses (Adversarial.pdf)
 
 Called MU-GAN
 GAN are hard to train, people sometimes replace the sample-space loss with a feature loss (instead of distance between two samples in the ssample space, we use the feature maps of an auxiliary nn).
@@ -214,7 +214,7 @@ They used the [6] dataset for voices, and [5] for the piano dataset. As metrics,
 
 [Link](http://bilat.xyz/vita/Adversarial.pdf)
 
-## Time Series Super Resolution with Temporal Adaptive Batch Normalization (TimeSerie_Batch.pdf)
+## 17. Time Series Super Resolution with Temporal Adaptive Batch Normalization (TimeSerie_Batch.pdf)
 
 [Link](http://bilat.xyz/vita/TimeSerie_Batch.pdf)
 
