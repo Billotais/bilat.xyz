@@ -5,10 +5,68 @@ published: true
 description: Project at VITA lab - Preliminary notes 
 ---
 
+# Week 2 : Learning pytorch, finding data
 
-# Audio denoising papers
+## Beethoven dataset
 
-## 1. Noise Reduction Techniques and Algorithms For Speech Signal Processing (Algo_Speech.pdf)
+Downloaded, ~350MB, OGG format, bitrate between 96 and 112 kbps
+
+## MAESTRO Dataset
+
+Piano recording from virtuosic piano performances, ~200 hours in total, available in midi (precisly recorded from the piano, 85MB) or in WAV (122 GB).
+
+Might be a very good complement to the Beethoven dataset, and maybe better quality ? 
+
+[here](https://magenta.tensorflow.org/datasets/maestro)
+## Lakh MIDI dataset
+
+176k+ midi files, [here](https://colinraffel.com/projects/lmd/)
+## Pytorch 
+
+Big tutorial [here](https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html). 
+
+U-net in paytorch [here](https://github.com/milesial/Pytorch-UNet). Seems really easy to creates sub-modules in a seperate file, and then call them from the main entwork. So it will be quite easy to create a class for the downsampling block and the class for the upsampling block, and then put them one after the other. Similarly, for the discriminator, they repeat a block 7 times, so we can create it and reuse it.
+
+
+
+Note : to add skip connections, we just need to keep the variable representing the ouput of the downsampling block, and give it to the upsampling block as, for instace, a class argument. We can then just "add" it.
+
+ex : 
+
+```
+out16 = self.in_tr(x)
+out32 = self.down(16, 32, out16)
+out64 = self.down(32, 64, out32)
+out128 = self.down(64, 128, out64)
+out = self.up(128, 64, out128)
+out = self.up(64, 32, out64)
+out = self.up(32, 16, out32)
+out = self.out_tr(out)
+```
+
+
+
+## Audio specific 
+
+torchaudio seems to be able to do resampling, and can handle waveform audio. Can do many other transformations. Probably good to use this if we do super resolution, so we can generate our intput data. Tuto [here](https://pytorch.org/tutorials/beginner/audio_preprocessing_tutorial.html) Wasn't able to install it, always an error.
+
+Could also try to use [Librosa](https://stackoverflow.com/questions/30619740/python-downsampling-wav-audio-file) that can open files downsampled directly.
+
+## Paper
+
+Will probably follow [this paper](https://bilat.xyz/vita/Adversarial.pdf) (MUGAN), but it is "under review" so there isn't any names. How will this work ?
+
+Need to check how to train the external network
+
+Input : fixed size audio sample from the data, going through low pass filter. They don't seem to give the input size, but they use 8 layers => 2^8 as the input size maybe ?
+
+Downsampling : 4 filters, 1 of each size. Then is goes through PRelU (Parametric relu) : $f(x) = alpha * x for x < 0, f(x) = x for x >= 0$ And then it goes throught the Superpixel block (similar to a pooling block) which reduces the dimension by 2 and double the number of filters (alternate values, even goes in one output, odd goes in the other output). This seem straight forward.
+
+Upsampling block : Once again we have the same 4 filters. I'm not sure how we are supposed to upsample if we have convolutional filters again. Then a dropout, the same PRelU, a subpixel block which this times interleaves two "samples" to make one larger. And then we stack with the input of the corresponding downsampling block.
+
+# Week 1 : Audio denoising papers
+
+## Noise Reduction Techniques and Algorithms For Speech Signal Processing (Algo_Speech.pdf)
 
 Different types of noise : 
 
@@ -31,31 +89,31 @@ Smoothing : noise is often random and fast change, so smoothing can help again w
 
 [Link](http://bilat.xyz/vita/Algo_Speech.pdf)
  
-## 2. A Review of Adaptive Line Enhancers for Noise Cancellation (ALE.pdf)
+## A Review of Adaptive Line Enhancers for Noise Cancellation (ALE.pdf)
 
 Doesn't need recording of noise. Adaptive self-tuning filter that can spearate periodic and stochastic component. Detect low-level sin-waves in noise
 
 [Link](http://bilat.xyz/vita/ALE.pdf)
 
-## 3. A review: Audio noise reduction and various techniques (Techniques.pdf)
+## A review: Audio noise reduction and various techniques (Techniques.pdf)
 
 Some filters : Butterworth filter, Chebyshev filter, Elliptical filter
 
 [Link](http://bilat.xyz/vita/Techniques.pdf)
 
-## 4. Employing phase information for audio denoising (Phase.pdf)
+## Employing phase information for audio denoising (Phase.pdf)
 
 TODO
 
 [Link](http://bilat.xyz/vita/Phase.pdf)
 
-## 5. Audio Denoising by Time-Frequency Block Thresholding (Block_Threshold.pdf)
+## Audio Denoising by Time-Frequency Block Thresholding (Block_Threshold.pdf)
 
 TODO
 
 [Link](http://bilat.xyz/vita/Block_Threshold.pdf)
 
-## 6. Speech Denoising with Deep Feature Losses (Speech_DL.pdf)
+## Speech Denoising with Deep Feature Losses (Speech_DL.pdf)
 
 Fully convolutional network, work on the raw waveform. For the loss, use the internal activation of another network trainned for domestic audio tagging, and environnement detection (classification network). It's a little bit like a GAN.
 
@@ -71,7 +129,7 @@ Now this is for speech, and it might not work as well for general sound/music
 
 [Link](http://bilat.xyz/vita/Speech_DL.pdf)
 
-## 7. Recurrent Neural Networks for Noise Reduction in Robust ASR (RNN.pdf)
+## Recurrent Neural Networks for Noise Reduction in Robust ASR (RNN.pdf)
 
 SPLICE algorithm  is a model that can reduce noise by finding a joint distribution between clean and noisy data, ref to article in the paper's reference, but could not find it online for free.
 
@@ -83,14 +141,14 @@ More advanced : Deep recurrent denoising audtoencoder, we add conection "between
 
 [Link](http://bilat.xyz/vita/RNN.pdf)
 
-## 8. Investigating RNN-based speech enhancement methods for noise-robust Text-to-Speech (RNN_Speech_Enhancement.pdf)
+## Investigating RNN-based speech enhancement methods for noise-robust Text-to-Speech (RNN_Speech_Enhancement.pdf)
 
 Shows the two alternative approaches (time vs frequency) on a graph
 
 [Link](http://bilat.xyz/vita/RNN_Speech_Enhancement.pdf)
 
 
-## 9. Audio Denoising with Deep Network Priors (DN_Priors.pdf)
+## Audio Denoising with Deep Network Priors (DN_Priors.pdf)
 
 Combines time and frequency domain, unsuppervised, you try to fit the noisy audio and since we only partialy fit the output of the network helps to find the clean audio. Link to github repo with some data and the code [github](https://github.com/mosheman5/DNP).
 
@@ -104,7 +162,7 @@ Technique already used in CV. Diff : in CV, the output is already the cleaned im
 
 [Link](http://bilat.xyz/vita/DN_Priors.pdf)
 
-## 10. Spectral and Cepstral Audio Noise Reduction Techniques in Speech Emotion Recognition (Spectral_Cepstral.pdf)
+## Spectral and Cepstral Audio Noise Reduction Techniques in Speech Emotion Recognition (Spectral_Cepstral.pdf)
 
 They will compare their method to methods of "Spectral substraction", where you remove the noise spectrum from the audio spectrum.
 
@@ -118,7 +176,7 @@ Probably more informations about signal processing techniques in the references.
 
 [Link](http://bilat.xyz/vita/Spectral_Cepstral.pdf)
 
-## 11. Raw Waveform-based Speech Enhancement by Fully Convolutional Networks (RawWave_CNN.pdf)
+## Raw Waveform-based Speech Enhancement by Fully Convolutional Networks (RawWave_CNN.pdf)
 
 Convolutional, waveform to waveform. Mentions like most "Wiener filtering", "spectral substraction", "non-negative matrix factorisation". Also mentions "Deep denoising autoencoder" from (RNN.pdf), also see (DDAE.pdf) that they are citing.
 
@@ -134,7 +192,7 @@ They also mention at the end the difference between the "shift step" for the inp
 
 [Link](http://bilat.xyz/vita/RawWave_CNN.pdf)
 
-## 12. Speech Enhancement Based on Deep Denoising Autoencoder (DDAE.pdf)
+## Speech Enhancement Based on Deep Denoising Autoencoder (DDAE.pdf)
 
 They meantion a DAE where they only trained using clean speech : Clean as in and out, then when we give a noisy signal it tries to express it on the "clean subspace/basis function", they try to model "what makes a clean speech", need to look into that. This time, they use dirty-clean pairs, so they want to know "what is the statistical difference between noisy and clean.
 
@@ -150,7 +208,7 @@ Their results are mostly better than traditional methods.
 
 [Link](http://bilat.xyz/vita/DDAE.pdf)
 
-## 13. SEGAN: Speech Enhancement Generative Adversarial Network (Speech_GAN.pdf)
+## SEGAN: Speech Enhancement Generative Adversarial Network (Speech_GAN.pdf)
 
 As some other papers, mention that most use spectral form, but here they use the raw waveform.
 
@@ -166,7 +224,7 @@ All the code is on [github](https://github.com/santi-pdp/segan). Results are pos
 
 [Link](http://bilat.xyz/vita/Speech_GAN.pdf)
 
-## 14. A Wavenet for Speech Denoising (WaveNet.pdf)
+## A Wavenet for Speech Denoising (WaveNet.pdf)
 
 They first present the WaveNet network, which was used to synthesize natural sounding speech.
 
@@ -176,7 +234,7 @@ Their model is similair to WaveNet, but the convolution is "symetrically centerd
 
 # Audio super-resolution papers
 
-## 15. Audio Super-Resolution using Neural Nets (SuperRes_NN.pdf)
+## Audio Super-Resolution using Neural Nets (SuperRes_NN.pdf)
 
 Paper + webpage + github on super resolution with deep networks
 [https://kuleshov.github.io/audio-super-res/#](https://kuleshov.github.io/audio-super-res/#)
@@ -199,7 +257,7 @@ When they tried with a more diverse musical dataset, it wasn't sucessfull and th
 
 [Link](http://bilat.xyz/vita/SuperRes_NN.pdf)
 
-## 16. Adversarial Audio Super-resolution with Unsuppervised Feature Losses (Adversarial.pdf)
+## Adversarial Audio Super-resolution with Unsuppervised Feature Losses (Adversarial.pdf)
 
 Called MU-GAN
 GAN are hard to train, people sometimes replace the sample-space loss with a feature loss (instead of distance between two samples in the ssample space, we use the feature maps of an auxiliary nn).
@@ -214,7 +272,7 @@ They used the [6] dataset for voices, and [5] for the piano dataset. As metrics,
 
 [Link](http://bilat.xyz/vita/Adversarial.pdf)
 
-## 17. Time Series Super Resolution with Temporal Adaptive Batch Normalization (TimeSerie_Batch.pdf)
+## Time Series Super Resolution with Temporal Adaptive Batch Normalization (TimeSerie_Batch.pdf)
 
 [Link](http://bilat.xyz/vita/TimeSerie_Batch.pdf)
 
