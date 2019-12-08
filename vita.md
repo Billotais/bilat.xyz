@@ -11,15 +11,10 @@ github: https://github.com/Billotais/Denoising-with-Generative-Models
 
 **Description of the problem**
 
-The quality of audio recordings from a mobile device has gotten better over the years, but there are still a lot of factors that can decrease the quality :
+The quality of audio recordings from a mobile device has gotten better over the years, but there are still a lot of factors that can decrease the quality. Among others, the size and the quality of the microphone sensor, as well as its location relative to the audio source can have a non-negligable impact. We also cannot forget potential ambient noise (e.g. voices, rain, traffic) and reverberation that can be cause by the size and shape of the room.
 
-- Size and quality of the microphone sensor
-- Location of the microphone compared to the audio source
-- Shape of the room (causing some reverberation)
-- Obstruction of the microphone (phone case, hand, ...)
-- Ambient noise (voices, traffic, rain, …)
-
-It would be useful to overcome those limitations by using software tools that would be able to automatically improve the audio quality of a given audio sample.
+It would be usefull if we could somehow correct all those issues by using software tools that could take a low quality audio file, and improve it as if the audio was recorded using high quality equipement in a perfectly silent environement. More precisly, given a music sample of any length and recorded using low quality equipment in a noisy environment (therefore it might have a low resolution, some noise and some reverberation), we want to output a higher resolution version of the same audio sample, with some of the noise and reverberation removed.
+quality version of this audio sample. If the resulting music file sounds better to the human ear than the original, the transformation is considered successful. 
 
 **Why is it important ?**
 
@@ -29,16 +24,10 @@ Moreover, If we are able to improve the quality of an audio signal, we might als
 
 For instance, it could be used to improve the precision of the LIDAR technology that can be very useful for autonomous cars.
 
-**Precise problem statement**
-
-Given a music sample of any length and recorded using low quality equipment in a noisy environment (therefore it might have a low resolution, some noise and some reverberation) : 
-
-- Output a higher resolution version of the same audio sample, with some of the noise and reverberation removed.
-I- f the resulting music file sounds better to the human ear than the original, the transformation is considered successful. 
-
-
 
 ## Architecture
+
+The architecture proposed here is a concolutional autoencoder with skip connections, associated to a discriminator network.
 
 ### Original Architecture
 
