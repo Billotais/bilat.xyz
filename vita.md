@@ -127,6 +127,10 @@ optional arguments:
 
 ### Datasets
 
+#### MAESTRO Dataset
+
+200 hours of recorded piano in high quality (44.1kHz
+
 ### Results
 
 ## Potential improvements
