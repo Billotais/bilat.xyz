@@ -29,6 +29,8 @@ For instance, it could be used to improve the precision of the LIDAR technology 
 
 The architecture proposed here is a concolutional autoencoder with skip connections. Starting from this base model, I added a few improvments, such as a discriminator network to transform my model into a GAN, another autoencoder to further improve the learning process, and finally I implemented a Collaborative GAN hoping to make the generated files better.
 
+\[ corrected\_rating = actual\_rating + \alpha \cdot (avg - x) \ \ (1)\]
+
 ```
 for i in mylist:
 	if i == 2:
