@@ -41,7 +41,14 @@ else:
 
 ### Original Architecture
 
-The original architecture is, as mentionned before, a convolutional autoencoder, inspired by [this paper](http://bilat.xyz/vita/SuperRes_NN.pdf). I consists of $N$ downsampling blocks, 
+The original architecture is, as mentionned before, a convolutional autoencoder, inspired by [this paper](http://bilat.xyz/vita/SuperRes_NN.pdf). I consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsamplign and an upsampling block at the same level, and an additive residual connection between the input and the final block.
+
+IMAGE HERE
+<p float="left">
+  <img src="/img/products/helpful_vs_number_Books.png" width="90%" />
+</p>
+
+
 
 ### GAN
 
