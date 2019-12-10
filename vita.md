@@ -2,8 +2,8 @@
 layout: git
 title: Denoising with Generative Models
 published: true
-description: Project at VITA lab - Preliminary notes 
-github: https://github.com/Billotais/Denoising-with-Generative-Models
+description: Project at VITA lab - Preliminary notes
+github: 'https://github.com/Billotais/Denoising-with-Generative-Models'
 ---
 # Final README
 
@@ -27,11 +27,25 @@ For instance, it could be used to improve the precision of the LIDAR technology 
 
 ## Architecture
 
-The architecture proposed here is a concolutional autoencoder with skip connections, associated to a discriminator network.
+The architecture proposed here is a concolutional autoencoder with skip connections. Starting from this base model, I added a few improvments, such as a discriminator network to transform my model into a GAN, another autoencoder to further improve the learning process, and finally I implemented a Collaborative GAN hoping to make the generated files better.
+
+```
+for i in mylist:
+	if i == 2:
+    print(found)
+    	break
+    
+else:
+	print("notfound")
+```
 
 ### Original Architecture
 
+The original architecture is, as mentionned before, a convolutional autoencoder, inspired by [this paper](http://bilat.xyz/vita/SuperRes_NN.pdf). I consists of $N$ downsampling blocks, 
+
 ### GAN
+
+### Autoencoder
 
 ### Collaborative GAN
 
