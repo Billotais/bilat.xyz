@@ -65,8 +65,9 @@ usage: main.py [-h] [-c COUNT] [-o OUT] [-e EPOCHS] [-b BATCH] [-w WINDOW]
                [--train_n TRAIN_N] [--test_n TEST_N] [--load LOAD]
                [--continue CONTINUE] [--dataset DATASET]
                [--dataset_args DATASET_ARGS] [--data_root DATA_ROOT] --rate
-               RATE --preprocessing PREPROCESSING [--gan GAN] [--lr_g LR_G]
-               [--lr_d LR_D] [--scheduler SCHEDULER]
+               RATE --preprocessing PREPROCESSING [--gan GAN] [--ae AE]
+               [--collab COLLAB] [--lr_g LR_G] [--lr_d LR_D] [--lr_ae LR_AE]
+               [--scheduler SCHEDULER]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -113,10 +114,15 @@ optional arguments:
                         file
   --gan GAN             lambda for the gan loss [float], default=0 (meaning
                         gan disabled)
+  --ae AE               lambda for the audoencoder loss [float], default=0
+                        (meaning autoencoder disabled)
+  --collab COLLAB       Enable the collaborative gan [bool], default=False
   --lr_g LR_G           learning rate for the generator [float],
                         default=0.0001
   --lr_d LR_D           learning rate for the discriminator [float],
-                        default=0.0001]
+                        default=0.0001
+  --lr_ae LR_AE         learning rate for the autoencoder [float],
+                        default=0.0001
   --scheduler SCHEDULER
                         enable the scheduler [bool], default=False
 
