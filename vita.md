@@ -64,7 +64,7 @@ To transform our system into a Generative Adversarial Network (GAN), we need to 
 
 The architecture of the discirminator, is basically the first half ot the generator network, with a Batch normalization added between the convolutional and ReLu layers. At the end, everthing is sent into a linear layer and a sigmoid activation function that will input one value between 0 and 1, the probability that a given sample is *real*. This Discriminator is trained with the following loss function. 
 
-$$\L_D = - [\log D(x_h) + \log(1-D(G(x_l)))]$$
+$$\mathcal{L}_D = - [\log D(x_h) + \log(1-D(G(x_l)))]$$
 
 When training our model, we first train our generator and discriminator separatly for a while, and once the loss of the discriminar is low enough, we edit the generator loss $L_G$ to
 
