@@ -88,7 +88,9 @@ $$\mathcal{L}_G = \mathcal{L}_{L2} + \lambda_{adv}\mathcal{L}_{adv} + \lambda_f 
 
 with 
 
-$$\mathcal{Ĺ}_f = \frac{1}{C_f W_f} \sum_{c=1}^{C_f} \sum_{i=1}^{W_f} \left\| \psi (x_h)_{i.c} - \psi(G(x_l))_{i,c}\right\|$$
+$$\mathcal{L}_f = \frac{1}{C_f W_f} \sum_{c=1}^{C_f} \sum_{i=1}^{W_f} \left\| \psi (x_h)_{i.c} - \psi(G(x_l))_{i,c}\right\|$$
+
+Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ and $W_f$ are the number of channels and the width of the data at the bottleneck
 
 ### Collaborative GAN
 
