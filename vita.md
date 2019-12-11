@@ -42,7 +42,7 @@ IMAGE HERE
 
 We train this network using the $L2$ loss
 
-$$mathcal{L}_{L2} = \frac{1}{W}\sum_{i=1}^W \left\|x_{h,i} - G(x_l)_i\right\|$$
+$$\mathcal{L}_{L2} = \frac{1}{W}\sum_{i=1}^W \left\|x_{h,i} - G(x_l)_i\right\|$$
 
 where $x_h$ is the high quality audio signal, and $x_l$ the low quality signal.
 
@@ -85,6 +85,10 @@ This autoencoder is trained using the $mathcal{L}_{L2} loss, on the *identity ta
 The new loss for the generator is now 
 
 $$\mathcal{L}_G = \mathcal{L}_{L2} + \lambda_{adv}\mathcal{L}_{adv} + \lambda_f \mathcal{L}_f$$
+
+with 
+
+$$\mathcal{Ĺ}_f = \frac{1}{C_f W_f} \sum_{c=1}^{C_f} \sum_{i=1}^{W_f} \left\| \psi (x_h)_{i.c} - \psi(G(x_l))_{i,c}\right\|$$
 
 ### Collaborative GAN
 
