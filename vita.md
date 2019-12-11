@@ -66,6 +66,14 @@ The architecture of the discirminator, is basically the first half ot the genera
 
 $$L_D = - [log D(x_h) + log(1-D(G(x_l)))]$$
 
+When training our model, we first train our generator and discriminator separatly for a while, and once the loss of the discriminar is low enough, we edit the generator loss $L_G$ to
+
+$$L_G = L_{L2} + \lambda_{adv}L_{adv}$$
+
+with
+
+$$L_{adv} = - log D(G(x_l))$$
+
 ### Autoencoder
 
 ### Collaborative GAN
