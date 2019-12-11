@@ -64,19 +64,27 @@ To transform our system into a Generative Adversarial Network (GAN), we need to 
 
 The architecture of the discirminator, is basically the first half ot the generator network, with a Batch normalization added between the convolutional and ReLu layers. At the end, everthing is sent into a linear layer and a sigmoid activation function that will input one value between 0 and 1, the probability that a given sample is *real*. This Discriminator is trained with the following loss function. 
 
-$$L_D = - [\log D(x_h) + \log(1-D(G(x_l)))]$$
+$$\L_D = - [\log D(x_h) + \log(1-D(G(x_l)))]$$
 
 When training our model, we first train our generator and discriminator separatly for a while, and once the loss of the discriminar is low enough, we edit the generator loss $L_G$ to
 
-$$mathcal{L}_G = mathcal{L}_{L2} + \lambda_{adv}mathcal{L}_{adv}$$
+$$\mathcal{L}_G = mathcal{L}_{L2} + \lambda_{adv}\mathcal{L}_{adv}$$
 
 with
 
-$$mathcal{L}_{adv} = - \log D(G(x_l))$$
+$$\mathcal{L}_{adv} = - \log D(G(x_l))$$
 
 Meaning that our generator will not only look at its own loss (i.e. how far are we from the target sample), but it will also try to generate more realistic samples to fool the discriminator.
 
 ### Autoencoder
+
+To improve our model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently).
+
+This autoencoder is trained using the $mathcal{L}_{L2} loss, on the *identity task* (meaning that the target is the same as the input). The goal of this is to find a lower dimnesion representation of our data (at the bottlneck), that can give some useful information to our optimisation problem.
+
+The new loss for the generator is now 
+
+$$\mathcal{L}_G = \mathcal{L}_{L2} + \lambda_{adv}\mathcal{L}_{adv} + \lambda_f \mathcal{L}_f$$
 
 ### Collaborative GAN
 
