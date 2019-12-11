@@ -74,6 +74,8 @@ with
 
 $$L_{adv} = - log D(G(x_l))$$
 
+Meaning that our generator will not only look at its own loss (i.e. how far are we from the target sample), but it will also try to generate more realistic samples to fool the discriminator.
+
 ### Autoencoder
 
 ### Collaborative GAN
