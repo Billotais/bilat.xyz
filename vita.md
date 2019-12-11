@@ -68,7 +68,7 @@ $$\mathcal{L}_D = - [\log D(x_h) + \log(1-D(G(x_l)))]$$
 
 When training our model, we first train our generator and discriminator separatly for a while, and once the loss of the discriminar is low enough, we edit the generator loss $L_G$ to
 
-$$\mathcal{L}_G = mathcal{L}_{L2} + \lambda_{adv}\mathcal{L}_{adv}$$
+$$\mathcal{L}_G = \mathcal{L}_{L2} + \lambda_{adv}\mathcal{L}_{adv}$$
 
 with
 
