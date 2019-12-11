@@ -54,6 +54,12 @@ IMAGE HERE
 
 ### GAN
 
+To transform our system into a Generative Adversarial Network (GAN), we need to add a discriminator network, whose goal is to classify given samples as *real* or *fake*. In our case, we want that the original high quality audio should be classify as *real*, and the genereated improved files should be classified as *fake*. The goal of our first network, called generator here, is to create improved samples that will be classified as *true* by the discriminator.
+
+The architecture of the discirminator, is basically the first half ot the generator network, with a Batch normalization added between the convolutional and ReLu layers. At the end, everthing is sent into a linear layer and a sigmoid activation function that will input one value between 0 and 1, the probability that a given sample is *real*. This Discriminator is trained with the following loss function. 
+
+$$L_D = - \[log D(x_h) + log(1-D(G(x_l)))\]$$
+
 ### Autoencoder
 
 ### Collaborative GAN
