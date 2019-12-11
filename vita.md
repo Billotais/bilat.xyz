@@ -42,7 +42,7 @@ IMAGE HERE
 
 We train this network using the $L2$ loss
 
-$$L_{L2} = \frac{1}{W}\sum_{i=1}^W \left\|x_{h,i} - G(x_l)_i\right\|$$
+$$mathcal{L}_{L2} = \frac{1}{W}\sum_{i=1}^W \left\|x_{h,i} - G(x_l)_i\right\|$$
 
 where $x_h$ is the high quality audio signal, and $x_l$ the low quality signal.
 
@@ -68,11 +68,11 @@ $$L_D = - [log D(x_h) + log(1-D(G(x_l)))]$$
 
 When training our model, we first train our generator and discriminator separatly for a while, and once the loss of the discriminar is low enough, we edit the generator loss $L_G$ to
 
-$$L_G = L_{L2} + \lambda_{adv}L_{adv}$$
+$$mathcal{L}_G = mathcal{L}_{L2} + \lambda_{adv}mathcal{L}_{adv}$$
 
 with
 
-$$L_{adv} = - log D(G(x_l))$$
+$$mathcal{L}_{adv} = - log D(G(x_l))$$
 
 Meaning that our generator will not only look at its own loss (i.e. how far are we from the target sample), but it will also try to generate more realistic samples to fool the discriminator.
 
