@@ -38,6 +38,8 @@ IMAGE HERE
   <img src="/img/products/helpful_vs_number_Books.png" width="90%" />
 </p>
 
+**TELL WHAT BLOCK WE HAVE**
+
 We train this network using the $L2$ loss, i.e. $L_{L2} = \frac{1}{W}\sum_{i=1}^W \left\|x_{h,i} - G(x_l)_i\right\|$, where $x_h$ is the high quality audio signal, and $x_l$ the low quality signal.
 
 #### Sub-pixel operation
