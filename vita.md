@@ -38,6 +38,8 @@ IMAGE HERE
   <img src="/img/products/helpful_vs_number_Books.png" width="90%" />
 </p>
 
+We train this network using the $L2$ loss, i.e. $L_{L2} = \frac{1}{W}\sum_{i=1}^W \left\|\mathbf{x_{h,i}} - G(\mathbf{x_l})_i\right\|$
+
 #### Sub-pixel operation
 
 The sub-pixel operation is a simple operation that can rehsape a tensor of size $N\times C \times \ W$ into a tensor of size $N\times C/2 \times \ 2W$. This is used to have the correct dimension before stacking some data with what is given by the skip connection.
