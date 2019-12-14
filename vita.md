@@ -213,6 +213,10 @@ optional arguments:
 ## Potential improvements
 
 
+<a name="conclusion_"></a>
+
+## Conclusion
+
 <a name="sources_"></a>
 # Week 2 : Learning pytorch, finding data
 
