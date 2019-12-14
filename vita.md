@@ -551,5 +551,4 @@ Some script that can generate noisy data
 
 Piano recording from virtuosic piano performances, ~200 hours in total, available in midi (precisly recorded from the piano, 85MB) or in WAV (122 GB).
 
-Might be a very good complement to the Beethoven dataset, and maybe better quality ? 
 
