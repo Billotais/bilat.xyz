@@ -2,10 +2,12 @@
 layout: git
 title: Denoising with Generative Models
 published: true
-description: Project at VITA lab - Preliminary notes
+description: Loïs Bilat
 github: 'https://github.com/Billotais/Denoising-with-Generative-Models'
 ---
-# Final Report
+Semester Project at VITA Lab - EPFL - Fall 2019 
+
+Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifringer](mailto:brian.sifringer@epfl.ch).
 
 
 
@@ -531,5 +533,3 @@ Some script that can generate noisy data
 [https://magenta.tensorflow.org/datasets/maestro](https://magenta.tensorflow.org/datasets/maestro)
 
 Piano recording from virtuosic piano performances, ~200 hours in total, available in midi (precisly recorded from the piano, 85MB) or in WAV (122 GB).
-
-
