@@ -5,8 +5,18 @@ published: true
 description: Project at VITA lab - Preliminary notes
 github: 'https://github.com/Billotais/Denoising-with-Generative-Models'
 ---
-# Final README
+# Final Report
 
+
+
+
+# Table of Contents
+1. [Introduction](#introduction_)
+2. [Architecture](#architecture_)
+3. [Code](#code_)
+4. [Experiments](#experiments_) 
+
+<a name="introduction_"></a>
 ## Introduction
 
 **Description of the problem**
@@ -24,6 +34,7 @@ Moreover, If we are able to improve the quality of an audio signal, we might als
 
 For instance, it could be used to improve the precision of the LIDAR technology that can be very useful for autonomous cars.
 
+<a name="architecture"></a>
 
 ## Architecture
 
@@ -93,6 +104,8 @@ $$\mathcal{L}_f = \frac{1}{C_f W_f} \sum_{c=1}^{C_f} \sum_{i=1}^{W_f} \left\| \p
 Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ and $W_f$ are the number of channels and the width of the data at the bottleneck
 
 ### Collaborative GAN
+
+<a name="code_"></a>
 
 ## Code
 
@@ -180,6 +193,8 @@ optional arguments:
 ```
 ### How to edit
 
+<a name="experiments_"></a>
+
 ## Experiments
 
 ### Datasets
@@ -190,9 +205,15 @@ optional arguments:
 
 ### Results
 
+<a name="potential_improvements_"></a>
+
 ## Potential improvements
 
+
+<a name="sources_"></a>
 # Week 2 : Learning pytorch, finding data
+
+
 
 ## Beethoven dataset
 
