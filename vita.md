@@ -219,24 +219,11 @@ optional arguments:
 
 <a name="sources_"></a>
 
-## Sources
+## Sources and notes
 
+Here you can find some short summaries of the papers studied for this project, as well as a few useful links.
 
-# Week 2 : Learning pytorch, finding data
-
-## Beethoven dataset
-
-Downloaded, 
-
-## MAESTRO Dataset
-
-
-
-[here](https://magenta.tensorflow.org/datasets/maestro)
-## Lakh MIDI dataset
-
-176k+ midi files, [here](https://colinraffel.com/projects/lmd/)
-## Pytorch 
+### Pytorch 
 
 Big tutorial [here](https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html). 
 
@@ -259,11 +246,13 @@ out = self.up(32, 16, out32)
 out = self.out_tr(out)
 ```
 
+[https://github.com/eriklindernoren/PyTorch-GAN](https://github.com/eriklindernoren/PyTorch-GAN) : Collection of code file to implement a GAN in pytorch.
 
 
-## Audio specific 
 
-torchaudio seems to be able to do resampling, and can handle waveform audio. Can do many other transformations. Probably good to use this if we do super resolution, so we can generate our intput data. Tuto [here](https://pytorch.org/tutorials/beginner/audio_preprocessing_tutorial.html) Wasn't able to install it, always an error.
+### Audio specific 
+
+torchaudio seems to be able to do resampling, and can handle waveform audio. Can do many other transformations. Probably good to use this if we do super resolution, so we can generate our intput data. Tuto [here](https://pytorch.org/tutorials/beginner/audio_preprocessing_tutorial.html) Doesn't work with anaconda
 
 Could also try to use [Librosa](https://stackoverflow.com/questions/30619740/python-downsampling-wav-audio-file) that can open files downsampled directly.
 
@@ -275,11 +264,9 @@ Need to check how to train the external network
 
 Input : fixed size audio sample from the data, going through low pass filter. They don't seem to give the input size, but they use 8 layers => 2^8 as the input size maybe ?
 
-Downsampling : 4 filters, 1 of each size. Then is goes through PRelU (Parametric relu) : $f(x) = alpha * x for x < 0, f(x) = x for x >= 0$ And then it goes throught the Superpixel block (similar to a pooling block) which reduces the dimension by 2 and double the number of filters (alternate values, even goes in one output, odd goes in the other output). This seem straight forward.
+Downsampling : 4 filters, 1 of each size. Then is goes through PRelU (Parametric relu) : $f(x) = alpha * x for x < 0, f(x) = x for x >= 0$ And then it goes throught the Superpixel block (similar to a pooling block) which reduces the dimension by 2 and double the number of filters (alternate values, even goes in one output, odd goes in the other output). This seems straight forward.
 
 Upsampling block : Once again we have the same 4 filters. I'm not sure how we are supposed to upsample if we have convolutional filters again. Then a dropout, the same PRelU, a subpixel block which this times interleaves two "samples" to make one larger. And then we stack with the input of the corresponding downsampling block.
-
-# Week 1 : Audio denoising papers
 
 ## Noise Reduction Techniques and Algorithms For Speech Signal Processing (Algo_Speech.pdf)
 
@@ -318,13 +305,9 @@ Some filters : Butterworth filter, Chebyshev filter, Elliptical filter
 
 ## Employing phase information for audio denoising (Phase.pdf)
 
-TODO
-
 [Link](http://bilat.xyz/vita/Phase.pdf)
 
 ## Audio Denoising by Time-Frequency Block Thresholding (Block_Threshold.pdf)
-
-TODO
 
 [Link](http://bilat.xyz/vita/Block_Threshold.pdf)
 
@@ -446,8 +429,6 @@ They first present the WaveNet network, which was used to synthesize natural sou
 Their model is similair to WaveNet, but the convolution is "symetrically centerd" since we know both future and passed data unlinke for speech generation. They also have a different loss function, the output is not a probability but the clean data directly, 
 
 [Link](http://bilat.xyz/vita/WaveNet.pdf)
-
-# Audio super-resolution papers
 
 ## Audio Super-Resolution using Neural Nets (SuperRes_NN.pdf)
 
