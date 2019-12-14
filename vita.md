@@ -218,9 +218,11 @@ optional arguments:
 ## Conclusion
 
 <a name="sources_"></a>
+
+## Sources
+
+
 # Week 2 : Learning pytorch, finding data
-
-
 
 ## Beethoven dataset
 
@@ -542,3 +544,7 @@ Not sure where to find it as the link was dead, but it might be this [https://gi
 ## 7: Magnatagatune dataset
 
 [http://mirg.city.ac.uk/codeapps/the-magnatagatune-dataset](http://mirg.city.ac.uk/codeapps/the-magnatagatune-dataset) 200 hours of music from 188 different gernres.
+
+## 8: Maestro Dataset
+
+[https://magenta.tensorflow.org/datasets/maestro](https://magenta.tensorflow.org/datasets/maestro)
