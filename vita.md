@@ -15,6 +15,7 @@ github: 'https://github.com/Billotais/Denoising-with-Generative-Models'
 2. [Architecture](#architecture_)
 3. [Code](#code_)
 4. [Experiments](#experiments_) 
+5. [Potential Improvements](#potential_improvements_) 
 
 <a name="introduction_"></a>
 ## Introduction
