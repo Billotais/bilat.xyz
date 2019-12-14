@@ -37,7 +37,7 @@ Moreover, If we are able to improve the quality of an audio signal, we might als
 
 For instance, it could be used to improve the precision of the LIDAR technology that can be very useful for autonomous cars.
 
-<a name="architecture"></a>
+<a name="architecture_"></a>
 
 ## Architecture
 
