@@ -221,7 +221,7 @@ optional arguments:
 
 ## Sources and notes
 
-Here you can find some short summaries of the papers studied for this project, as well as a few useful links.
+Here you can find some short summaries of the papers studied for this project, as well as a few useful links. Those should not be considered as part of the report, but more as some help and additional ressources if needed.
 
 ### Pytorch 
 
