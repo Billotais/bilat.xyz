@@ -226,13 +226,11 @@ optional arguments:
 
 ## Beethoven dataset
 
-Downloaded, ~350MB, OGG format, bitrate between 96 and 112 kbps
+Downloaded, 
 
 ## MAESTRO Dataset
 
-Piano recording from virtuosic piano performances, ~200 hours in total, available in midi (precisly recorded from the piano, 85MB) or in WAV (122 GB).
 
-Might be a very good complement to the Beethoven dataset, and maybe better quality ? 
 
 [here](https://magenta.tensorflow.org/datasets/maestro)
 ## Lakh MIDI dataset
@@ -537,6 +535,8 @@ Some script that can generate noisy data
 
 Not sure where to find it as the link was dead, but it might be this [https://gist.github.com/moodoki/654877be611ef63bb32d58c428d6e7ba](https://gist.github.com/moodoki/654877be611ef63bb32d58c428d6e7ba)
 
+~350MB, OGG format, bitrate between 96 and 112 kbps
+
 ## 6: CSTR VCTK Corpus
 
 [https://datashare.is.ed.ac.uk/handle/10283/2651](https://datashare.is.ed.ac.uk/handle/10283/2651)
@@ -548,3 +548,8 @@ Not sure where to find it as the link was dead, but it might be this [https://gi
 ## 8: Maestro Dataset
 
 [https://magenta.tensorflow.org/datasets/maestro](https://magenta.tensorflow.org/datasets/maestro)
+
+Piano recording from virtuosic piano performances, ~200 hours in total, available in midi (precisly recorded from the piano, 85MB) or in WAV (122 GB).
+
+Might be a very good complement to the Beethoven dataset, and maybe better quality ? 
+
