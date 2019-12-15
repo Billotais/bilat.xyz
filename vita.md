@@ -268,8 +268,13 @@ does ....
 	- `train()` : All the code to trian the model, tracks the evolution, draw some plots, etc
     - `make_train_step()` : used by `train()` to define one step of the training process.
 - `test.py` 
-	- `tes()` : All the code to test the model, tracks the evolution, draw some plots, etc
+	- `test()` : All the code to test the model, tracks the evolution, draw some plots, etc
     - `make_test_step()` : used by `test()` to define one step of the testing process.
+- `network.py` 
+	- `class Generator` : Implementation of the Generator Network
+    - `class Discriminator` : Implementation of the Discriminator Network
+    - `class AutoEncoder` : Implementation of the AutoEncoder Network
+    - other classes are juste submodules fused by the other main modules.
 
 
 ### How to edit
