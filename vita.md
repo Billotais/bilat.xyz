@@ -283,6 +283,8 @@ does ....
 - `preprocessing.py`
 	- `preprocess()` : Given a file name and a preprocessing chain, returns pair of file names corresponding to the outputs of the preprocessing.
     - `sample, noise, reverb` :  implementation of the options accepted by the preprocess chain
+    
+- `utils.py` : various functions used in multiple places in the code
 
 
 
