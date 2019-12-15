@@ -249,6 +249,17 @@ optional arguments:
                         enable the scheduler [bool], default=False
 
 ```
+
+For instance, the following command
+
+```
+command
+```
+does ....
+ 
+### Code structure
+
+
 ### How to edit
 
 <a name="experiments_"></a>
