@@ -275,6 +275,9 @@ does ....
     - `class Discriminator` : Implementation of the Discriminator Network
     - `class AutoEncoder` : Implementation of the AutoEncoder Network
     - other classes are juste submodules fused by the other main modules.
+- `files.py` 
+	- `SimpleFiles` : simple representation of a dataset, with methods to get train/test/val data
+    - `MAESTROFiles` : specific representation for the MAESTRO Dataset, with methods to get train/test/val data
 
 
 ### How to edit
