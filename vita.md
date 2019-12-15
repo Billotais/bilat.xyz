@@ -276,10 +276,14 @@ does ....
     - `class AutoEncoder` : Implementation of the AutoEncoder Network
     - other classes are juste submodules fused by the other main modules.
 - `files.py` 
-	- `SimpleFiles` : simple representation of a dataset, with methods to get train/test/val data
-    - `MAESTROFiles` : specific representation for the MAESTRO Dataset, with methods to get train/test/val data
+	- `class SimpleFiles` : simple representation of a dataset, with methods to get train/test/val data
+    - `class MAESTROFiles` : specific representation for the MAESTRO Dataset, with methods to get train/test/val data
 - `datasets.py`
 	- `class AudioDataset` : Pytorch dataset class that takes a filename and loads it as a pair `(input,target)` into memeory
+- `preprocessing.py`
+	- `preprocess()` : Given a file name and a preprocessing chain, returns pair of file names corresponding to the outputs of the preprocessing.
+    - `sample, noise, reverb` :  implementation of the options accepted by the preprocess chain
+
 
 
 ### How to edit
