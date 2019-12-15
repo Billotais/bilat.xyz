@@ -267,6 +267,9 @@ does ....
 - `train.py` 
 	- `train()` : All the code to trian the model, tracks the evolution, draw some plots, etc
     - `make_train_step()` : used by `train()` to define one step of the training process.
+- `test.py` 
+	- `tes()` : All the code to test the model, tracks the evolution, draw some plots, etc
+    - `make_test_step()` : used by `test()` to define one step of the testing process.
 
 
 ### How to edit
