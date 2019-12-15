@@ -119,7 +119,6 @@ and you can see how the stacking connections are used. Moreover, you can see her
 ```
 
 
-**TELL WHAT BLOCK WE HAVE**
 
 We train this network using the $L2$ loss
 
