@@ -96,8 +96,8 @@ and you can see how the stacking connections are used. Moreover, you can see her
                                                                =     |
                                                            (256,512) |                                                                                                    |
            (256,256)->conv(2,9)->(2,512)-sp->(1, 1024)---------------+
-		                                                             =	
-                                                                  (1, 1024)
+                                                                     =	
+                                                                 (1, 1024)
 ```
 
 
