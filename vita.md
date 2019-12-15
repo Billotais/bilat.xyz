@@ -278,6 +278,8 @@ does ....
 - `files.py` 
 	- `SimpleFiles` : simple representation of a dataset, with methods to get train/test/val data
     - `MAESTROFiles` : specific representation for the MAESTRO Dataset, with methods to get train/test/val data
+- `datasets.py`
+	- `class AudioDataset` : Pytorch dataset class that takes a filename and loads it as a pair `(input,target)` into memeory
 
 
 ### How to edit
