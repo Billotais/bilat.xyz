@@ -58,6 +58,12 @@ Each domnsampling block consists of a convolutional block, and a ReLU block. The
 
 The bottleneck block is the same as a downsampling block, but with a dropout with probabilty 0.5 after the convolutional layer.
 
+In the upsampling blocks, the convolutional layer uses the same filter sizes as the downsampling blocks, but in reversed order. The number of channels outputed by the convolution is double the one in the corresponding downsampling block. We then have a dropout of 0.5 and a LeakyReLU with a slope of 0.2. Following this, we have the *DimShuffle* operation, more precisely the Sub-pixel operation, that takes some data of shape $N\times C \times \ W$ and transform it into data of shape $N\times C/2 \times \ 2W$ by interleaving elements from two channels together. 
+
+IMAGE SUBPIXEL
+
+Finaly, we have the stacking block that takes the output of the corresponding downsampling block and concatenate tehm on the channel dimension.
+
 
 **TELL WHAT BLOCK WE HAVE**
 
