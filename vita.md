@@ -9,8 +9,7 @@ Semester Project at VITA Lab - EPFL - Fall 2019
 
 Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifringer](mailto:brian.sifringer@epfl.ch).
 
-
-
+**NOT FINISHED YET, MISTAKES TO BE EXPECTED**
 
 # Table of Contents
 1. [Introduction](#introduction_)
@@ -316,6 +315,7 @@ does ....
 ## Sources and notes
 
 Here you can find some short summaries of the papers studied for this project, as well as a few useful links. Those should not be considered as part of the report, but more as some help and additional ressources if needed.
+
 
 ### Pytorch 
 
