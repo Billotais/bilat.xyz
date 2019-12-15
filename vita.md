@@ -54,15 +54,38 @@ IMAGE FROM PAPER
   <img src="/img/products/helpful_vs_number_Books.png" width="90%" />
 </p>
 
-Each domnsampling block consists of a convolutional block, and a ReLU block. The number of channels outputed by each convolutional block is given by the array `[126, 256, 512, 512, 512, ...]`, and the size of filters is given by the array `[63, 33, 17, 9, 9, 9, ...]`. The ReLU block is more precisely a Leaky rectified linear block with a slope of 0.2 on the negative side.
+Each domnsampling block consists of a convolutional block, and a ReLU block. These have a stride of 2, the number of channels outputed by each convolutional block is given by the array `[126, 256, 512, 512, 512, ...]`, and the size of filters is given by the array `[63, 33, 17, 9, 9, 9, ...]`. The ReLU block is more precisely a Leaky rectified linear block with a slope of 0.2 on the negative side.
 
 The bottleneck block is the same as a downsampling block, but with a dropout with probabilty 0.5 after the convolutional layer.
 
-In the upsampling blocks, the convolutional layer uses the same filter sizes as the downsampling blocks, but in reversed order. The number of channels outputed by the convolution is double the one in the corresponding downsampling block. We then have a dropout of 0.5 and a LeakyReLU with a slope of 0.2. Following this, we have the *DimShuffle* operation, more precisely the Sub-pixel operation, that takes some data of shape $N\times C \times \ W$ and transform it into data of shape $N\times C/2 \times \ 2W$ by interleaving elements from two channels together. 
+In the upsampling blocks, the convolutional layer uses the same filter sizes as the downsampling blocks, but in reversed order. The number of channels outputed by the convolution is double the one in the corresponding downsampling block, and we have a stride of 1. We then have a dropout of 0.5 and a LeakyReLU with a slope of 0.2. Following this, we have the *DimShuffle* operation, more precisely the Sub-pixel operation, that takes some data of shape $N\times C \times \ W$ and transform it into data of shape $N\times C/2 \times \ 2W$ by interleaving elements from two channels together. 
 
 IMAGE SUBPIXEL
 
 Finaly, we have the stacking block that takes the output of the corresponding downsampling block and concatenate tehm on the channel dimension.
+
+After all the upsampling blocks, we finish with a final block that makes of convolution with 2 outptus channels, a filter size of 9 and a stride of 1, the subpixel operation, and then we add the output of this to our input data to get the output of the network. 
+
+To undersand better this architecture, you can see here a schema of the network 
+
+IMAGE NETWORK
+
+and you can see how the stacking connections are used. Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what is the size of each layer and the parameters of the convolution. 
+
+```
+
+
+	    (1, 1025) -> conv(128,63,2) -> (128, 512)
+	  (128,512) -> conv(256,33,2) -> (256, 256)
+    (256,256) -> conv(512,17,2) -> (512, 128)
+  (512,128) -> conv(512,9,2) -> (512, 64) --------------
+(512,64) -> conv(512,9,2) -> (512,32)				   |
+  (512,32) -> (512x2,9,1) -> (1024,32) --sp-> (512,64) + (1024,64)
+	(1024,64) -> (512x2,17,1) -> (1024,64) --sp-> (512,128)      + (1024,64)
+
+
+
+```
 
 
 **TELL WHAT BLOCK WE HAVE**
@@ -73,17 +96,6 @@ $$\mathcal{L}_{L2} = \frac{1}{W}\sum_{i=1}^W \left\|x_{h,i} - G(x_l)_i\right\|$$
 
 where $x_h$ is the high quality audio signal, and $x_l$ the low quality signal.
 
-#### Sub-pixel operation
-
-The sub-pixel operation is a simple operation that can rehsape a tensor of size $N\times C \times \ W$ into a tensor of size $N\times C/2 \times \ 2W$. This is used to have the correct dimension before stacking some data with what is given by the skip connection.
-
-IMAGE HERE
-
-#### Stacking residual connection
-
-The stacking connection takes two tensor, and concatenate them on the chanell dimension
-
-IMAGE HERE
 
 ### GAN
 
