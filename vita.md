@@ -264,6 +264,9 @@ does ....
     - `init_net()` : Initialize the generator, discriminator and autoencoder networks
     - `load_data()` : preprocesses the datafiles, load them into memory and return dataloaders
     - `pipeline()` : call above functions, then train/evalutate the model. Create output file.
+- `train.py` 
+	- `train()` : All the code to trian the model, tracks the evolution, draw some plots, etc
+    - `make_train_step()` : used by `train()` to define one step of the training process.
 
 
 ### How to edit
