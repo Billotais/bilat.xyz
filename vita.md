@@ -49,11 +49,12 @@ The architecture proposed here is a concolutional autoencoder with skip connecti
 
 The original architecture is, as mentionned before, a convolutional autoencoder, inspired by [this paper](http://bilat.xyz/vita/SuperRes_NN.pdf). I consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsamplign and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
-IMAGE HERE
+IMAGE FROM PAPER
 <p float="left">
   <img src="/img/products/helpful_vs_number_Books.png" width="90%" />
 </p>
 
+Each domnsampling block consists of a convolutional block, and a ReLU block. The number of channels outputed by each convolutional block is given by the array `[126, 256, 512, 512, 512, ...]`, and the size of filters is given by the array `[63, 33, 17, 9, 9, 9, ...]`. The ReLU block is more precisely a Leaky rectified linear block with a slope of 0.2 on the negative side.
 **TELL WHAT BLOCK WE HAVE**
 
 We train this network using the $L2$ loss
