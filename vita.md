@@ -259,6 +259,12 @@ does ....
  
 ### Code structure
 
+- `main.py` 
+	- `init()` : Contains the parsing of the arguments, 
+    - `init_net()` : Initialize the generator, discriminator and autoencoder networks
+    - `load_data()` : preprocesses the datafiles, load them into memory and return dataloaders
+    - `pipeline()` : call above functions, then train/evalutate the model. Create output file.
+
 
 ### How to edit
 
