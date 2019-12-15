@@ -55,6 +55,10 @@ IMAGE FROM PAPER
 </p>
 
 Each domnsampling block consists of a convolutional block, and a ReLU block. The number of channels outputed by each convolutional block is given by the array `[126, 256, 512, 512, 512, ...]`, and the size of filters is given by the array `[63, 33, 17, 9, 9, 9, ...]`. The ReLU block is more precisely a Leaky rectified linear block with a slope of 0.2 on the negative side.
+
+The bottleneck block is the same as a downsampling block, but with a dropout with probabilty 0.5 after the convolutional layer.
+
+
 **TELL WHAT BLOCK WE HAVE**
 
 We train this network using the $L2$ loss
