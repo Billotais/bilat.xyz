@@ -73,13 +73,30 @@ IMAGE NETWORK
 and you can see how the stacking connections are used. Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what is the size of each layer and the parameters of the convolution. 
 
 ```
-
+   
            input : (1, 1024) -----------------------------------------
+                                                                     |      
+                                                                     |    
+                                                                     |
         (1, 1024)->conv(128,63,2)->(128, 512)-------------------     |
+                                                               |     |
+                                                               |     |
+                                                               |     |
       (128,512)->conv(256,33,2)->(256, 256)---------------     |     |
+                                                         |     |     |    
+                                                         |     |     |
+                                                         |     |     |
     (256,256)->conv(512,17,2)->(512, 128)----------      |     |     |
+                                                   |     |     |     | 
+                                                   |     |     |     |  
+                                                   |     |     |     |
   (512,128)->conv(512,9,2)->(512, 64)---------     |     |     |     |
+                                             |     |     |     |     |
+                                             |     |     |     |     |
+                                             |     |     |     |     |
 (512,64)->conv(512,9,2)->(512,32)            |     |     |     |     |
+                                             |     |     |     |     |
+                                             |     |     |     |     |
   (512,32)->(512x2,9)->(1024,32)-sp->(512,64):     |     |     |     |
                                              =     |     |     |     |
                                          (1024,64) |     |     |     |
