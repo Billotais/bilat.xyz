@@ -2,10 +2,10 @@
 layout: git
 title: Denoising with Generative Models
 published: true
-description: Loïs Bilat
+description: Semester Project - EPFL
 github: 'https://github.com/Billotais/Denoising-with-Generative-Models'
 ---
-Semester Project at VITA Lab - EPFL - Fall 2019 
+Semester Project by [Loïs Bilat](mailto:lois@bilat.xyz) at VITA Lab - EPFL - Fall 2019 
 
 Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifringer](mailto:brian.sifringer@epfl.ch).
 
