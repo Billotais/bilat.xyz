@@ -184,6 +184,8 @@ Therefore, for the evaluation phase, we still split the data using a sliding win
 
 IMAGE HERE
 
+With this technique, we don't have any audio artefact at the junction between two samples.
+
 ## Code
 
 You can find on this [github page](https://github.com/Billotais/Denoising-with-Generative-Models) all the code used for this project. Required libraries are the following 
