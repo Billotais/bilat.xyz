@@ -172,8 +172,17 @@ Since this model should work with any audio file provided, we need to do some pr
 
 Since the goal of this project is to improve audio quality, we need to create our dataset. We use the MAESTRO Dataset (as described later), which constists of only high quality audio files. We therefore need to degrade those files to have our training data pairs. Three type of pre-processing are supported; Noise, Downsampling and reverberation. All of those are done using the `sox` library, and can be chained together.
 
-For the downsampling, we have two arguments, *target_res* and "input_res*. If we name our pair of input/output data samples (x, y), we can create y by simply downsampling our audio to *target_rate*. To create x, we first downsample our data to *input_res*, and then upsample it to *target_rate* using simple linear interpolation. We do it thi way so we can have a symatrical network, which is necessary for our skip connections to work properly.
+For the downsampling, we have two arguments, *target_res* and "input_res*. If we name our pair of input/output data samples (x, y), we can create y by simply downsampling our audio to *target_rate*. To create x, we first downsample our data to *input_res*, and then upsample it to *target_rate* using simple linear interpolation. We do it thi way so we can have a symetrical network, which is necessary for our skip connections to work properly.
 
+### Audio split
+
+Since our network takes as input some data with a given size, we need to split our original audio file into mutliple small segments. We do this using a sliding window with a stride (usually a window of 2048 and a stride of 1024). This gives us some redundency in the data, and this way any part of the music is seen twice, at a different postion in the input. 
+
+During the evaluation phase, when we want to reconstruct an audio file, we need to put samples of the music back together. The naive way would be to split the audio file using a stride of the same value as the window size (i.e. no overlap), improve each sample individually, and then concatenate all the blocks together. This, however, doesn't give us good results, and we can hear a distincitve noise at the junction between two samples. This happens because our network handles the border of a sample differently than data in the middle of the sample (we have to use some padding on the border, so the sound is distorded).
+
+Therefore, for the evaluation phase, we still split the data using a sliding window with some overlap. When putting the blocks together, we will only keep a part of each samples, and the borders will be croped. This can be seen in the following illustration.
+
+IMAGE HERE
 
 ## Code
 
