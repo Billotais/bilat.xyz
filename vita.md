@@ -172,7 +172,7 @@ Since this model should work with any audio file provided, we need to do some pr
 
 Since the goal of this project is to improve audio quality, we need to create our dataset. We use the MAESTRO Dataset (as described later), which constists of only high quality audio files. We therefore need to degrade those files to have our training data pairs. Three type of pre-processing are supported; Noise, Downsampling and reverberation. All of those are done using the `sox` library, and can be chained together.
 
-For the downsampling, we have two arguments, *target_res* and "input_res*. If we name our pair of input/output data samples (x, y), we can create y by simply downsampling our audio to *target_rate*. To create x, we first downsample our data to *input_res*, and then upsample it to *target_rate* using simple linear interpolation. We do it thi way so we can have a symetrical network, which is necessary for our skip connections to work properly.
+For the downsampling, we have two arguments, *target_res* and *input_res*. If we name our pair of input/output data samples (x, y), we can create y by simply downsampling our audio to *target_rate*. To create x, we first downsample our data to *input_res*, and then upsample it to *target_rate* using simple linear interpolation. We do it thi way so we can have a symetrical network, which is necessary for our skip connections to work properly.
 
 ### Audio split
 
