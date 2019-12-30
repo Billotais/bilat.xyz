@@ -21,6 +21,9 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 7. [Sources](#sources_) 
 
 <a name="introduction_"></a>
+
+
+
 ## Introduction
 
 **Description of the problem**
@@ -52,6 +55,10 @@ IMAGE FROM PAPER
 <p float="left">
   <img src="/img/products/helpful_vs_number_Books.png" width="90%" />
 </p>
+
+![architecture.png]({{site.baseurl}}/img/architecture.png)
+
+
 
 Each domnsampling block consists of a convolutional block, and a ReLU block. These have a stride of 2, the number of channels outputed by each convolutional block is given by the array `[126, 256, 512, 512, 512, ...]`, and the size of filters is given by the array `[63, 33, 17, 9, 9, 9, ...]`. The ReLU block is more precisely a Leaky rectified linear block with a slope of 0.2 on the negative side.
 
