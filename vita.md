@@ -196,6 +196,9 @@ Therefore, for the evaluation phase, we still split the data using a sliding win
 
 IMAGE HERE
 
+![Illustration of audio reconstruction]({{site.baseurl}}/img/merge.png)
+
+
 With this technique, we don't have any audio artefact at the junction between two samples.
 
 ## Code
