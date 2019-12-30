@@ -56,7 +56,7 @@ IMAGE FROM PAPER
   <img src="" width="90%" />
 </p>
 
-![architecture.png]({{site.baseurl}}/img/architecture.png)
+![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
 
 
 
@@ -68,7 +68,7 @@ In the upsampling blocks, the convolutional layer uses the same filter sizes as 
 
 IMAGE SUBPIXEL
 
-![Subpixel operation]({{site.baseurl}}/img/subpixel.png)
+![Subpixel operation]({{site.baseurl}}/img/vita/subpixel.png)
 
 Finaly, we have the stacking block that takes the output of the corresponding downsampling block and concatenate tehm on the channel dimension.
 
@@ -78,7 +78,7 @@ To undersand better this architecture, you can see here a schema of the network
 
 IMAGE NETWORK
 
-![Detailed architecture]({{site.baseurl}}/img/detailed.png)
+![Detailed architecture]({{site.baseurl}}/img/vita/detailed.png)
 
 
 and you can see how the stacking connections are used. Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what is the size of each layer and the parameters of the convolution. 
@@ -196,7 +196,7 @@ Therefore, for the evaluation phase, we still split the data using a sliding win
 
 IMAGE HERE
 
-![Illustration of audio reconstruction]({{site.baseurl}}/img/merge.png)
+![Illustration of audio reconstruction]({{site.baseurl}}/img/vita/merge.png)
 
 
 With this technique, we don't have any audio artefact at the junction between two samples.
