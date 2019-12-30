@@ -53,7 +53,7 @@ The original architecture is, as mentionned before, a convolutional autoencoder,
 
 IMAGE FROM PAPER
 <p float="left">
-  <img src="/img/products/helpful_vs_number_Books.png" width="90%" />
+  <img src="/img/architecture.png" width="90%" />
 </p>
 
 ![architecture.png]({{site.baseurl}}/img/architecture.png)
