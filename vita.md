@@ -78,6 +78,9 @@ To undersand better this architecture, you can see here a schema of the network
 
 IMAGE NETWORK
 
+![Detailed architecture]({{site.baseurl}}/img/detailed.png)
+
+
 and you can see how the stacking connections are used. Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what is the size of each layer and the parameters of the convolution. 
 
 ```
