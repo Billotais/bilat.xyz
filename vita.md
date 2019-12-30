@@ -68,6 +68,9 @@ In the upsampling blocks, the convolutional layer uses the same filter sizes as 
 
 IMAGE SUBPIXEL
 
+![Subpixel operation]({{site.baseurl}}/img/subpixel.png)
+
+
 Finaly, we have the stacking block that takes the output of the corresponding downsampling block and concatenate tehm on the channel dimension.
 
 After all the upsampling blocks, we finish with a final block that makes of convolution with 2 outptus channels, a filter size of 9 and a stride of 1, the subpixel operation, and then we add the output of this to our input data to get the output of the network. 
