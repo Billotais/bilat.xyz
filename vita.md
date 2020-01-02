@@ -347,7 +347,7 @@ By default, once the model has finished training, it will take a file and try to
 
 ## Experiments
 
-### Datasets
+### Dataset
 
 #### MAESTRO Dataset
 
@@ -356,6 +356,8 @@ This dataset constists of more than 200 hours of recorded piano, in high quality
 It was the highest quality data that we found, but it had the problem of having a little bit of background noise (since it was recorded in a concert hall, you can hear poeple mobing chairs and so on). What could maybe be done to not have this noise in the high quality data is to generate realistic piano sound from the midi file (either artificially, or even with one of those piano that play midi files for you), but it is clearly out of scope for this project.
 
 ### Results
+
+
 
 <a name="potential_improvements_"></a>
 
