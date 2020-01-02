@@ -251,7 +251,6 @@ optional arguments:
                         default=0.5
   --train_n TRAIN_N     number of songs used to train [int], default=-1 (use
                         all songs)
-  --test_n TEST_N       number of songs used to test [int], default=1
   --load LOAD           load already trained model to evaluate [bool],
                         default=False
   --continue CONTINUE   load already trained model to continue training
@@ -289,7 +288,10 @@ optional arguments:
 For instance, the following command
 
 ```
-main.py --count -1 --out 1000 -e 10 --batch 32 --window 2048 --stride 1024 --depth 8 --train_n -1 --test_n 1 --name gan_10 --data_root /data/lois-data/models/maestro --rate 10000 --lr_g 0.0001 --lr_d 0.0001 --gan 0.0001 --preprocessing "sample 5000 10000"
+main.py --count -1 --out 1000 -e 10 --batch 32 --window 2048 --stride 1024 \\
+		--depth 8 --train_n -1  --name gan_10 --data_root /data/lois-data/models/maestro \\
+        --rate 10000 --lr_g 0.0001 --lr_d 0.0001 --gan 0.0001 \\
+        --preprocessing "sample 5000 10000"
 ```
 
 will run the model for 10 epochs, using minibatches of 32 samples. The network will have a depth of 8, and we split the data into sub-samples of 2048 of width, and some overlap (stride of 1024). We train on all avalailable training data, but create an improved version for only one output file. Our data is stored in the `/data/lois-data/maestro` folder. Our target rate is 10kHz, the learning rate for the generator and the discriminator is 0.0001, the lambda used for the discriminator part of the composite loss is 0.0001. Finally, we want to do some  upsampling from 5kHz to 10kHz.
