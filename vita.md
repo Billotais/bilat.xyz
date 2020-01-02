@@ -303,6 +303,10 @@ You can apply the following types of preprocessing by putting the followijng arg
 - Reverberation : `"reverb variance reverberance hf_damping room_scal stereo_depth pre_delay wet_gain=0"` to apply some reverberation with various parameters. Default values can be found in the code.
 
 You can also apply different preprocessing one after the other, by concatenating the commands with a comma in between, e.g. --preprocessing "sample 5000 10000,whitenoise 0 0.002"
+
+#### Evaluation 
+
+By default, once the model has finished training, it will take a file and try to improve it. This file will be `out.wav`. If you want to evaluate other files, you can run the original command, but with the `--load filename` argument added. This will look for a model save file `out/name/models/model.tar` (don't forget to rename the model file you want to use.
  
 ### Code structure
 
