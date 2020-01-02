@@ -302,7 +302,7 @@ You can apply the following types of preprocessing by putting the followijng arg
 - Noise : `"noisetype variance volume"`, where `noisetype` can be among `["whitenoise", "pinknoise", "brownnoise", "tpdfnoise"]`, `volumne` the intensity of the noise (good values are around 0.001). You can add some variance if desired, so that for each audio file the noise level will be a little bit different.
 - Reverberation : `"reverb variance reverberance hf_damping room_scal stereo_depth pre_delay wet_gain=0"` to apply some reverberation with various parameters. Default values can be found in the code.
 
-You can also apply different preprocessing one after the other, by concatenating the commands with a comma in between, e.g. --preprocessing "sample 5000 10000,whitenoise 0 0.002"
+You can also apply different preprocessing one after the other, by concatenating the commands with a comma in between, e.g. `--preprocessing "sample 5000 10000,whitenoise 0 0.002"`
 
 #### Evaluation 
 
