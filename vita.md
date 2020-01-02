@@ -351,7 +351,7 @@ By default, once the model has finished training, it will take a file and try to
 
 #### MAESTRO Dataset
 
-200 hours of recorded piano in high quality (44.1kHz
+This dataset constists of more than 200 hours of recorded piano, in high quality (44.1kHz), and in the wav format. Each file is also availible in MIDI format, but those weren't used as we wanted to use some more realistic data.
 
 ### Results
 
