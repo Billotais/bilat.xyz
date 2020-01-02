@@ -289,7 +289,7 @@ For instance, the following command
 
 ```
 main.py --count -1 --out 1000 -e 10 --batch 32 --window 2048 --stride 1024 \\
-		--depth 8 --train_n -1  --name gan_10 --data_root /data/lois-data/models/maestro \\
+        --depth 8 --train_n -1  --name gan_10 --data_root /data/lois-data/models/maestro \\
         --rate 10000 --lr_g 0.0001 --lr_d 0.0001 --gan 0.0001 \\
         --preprocessing "sample 5000 10000"
 ```
