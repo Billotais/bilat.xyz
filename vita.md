@@ -356,6 +356,7 @@ By default, once the model has finished training, it will take a file and try to
 	- `class Generator` : Implementation of the Generator Network
     - `class Discriminator` : Implementation of the Discriminator Network
     - `class AutoEncoder` : Implementation of the AutoEncoder Network
+    - `class ConditionalDiscriminator` : Implementation of the Conditional Discriminator network.
     - other classes are juste submodules fused by the other main modules.
 - `files.py` 
 	- `class SimpleFiles` : simple representation of a dataset, with methods to get train/test/val data
