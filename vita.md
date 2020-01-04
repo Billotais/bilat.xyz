@@ -27,7 +27,7 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 
 
 
-## Introduction
+# Introduction
 
 **Description of the problem**
 
@@ -46,11 +46,11 @@ For instance, it could be used to improve the precision of the LIDAR technology 
 
 <a name="architecture_"></a>
 
-## Architecture
+# Architecture
 
 The architecture proposed here is a concolutional autoencoder with skip connections. Starting from this base model, I added a few improvments, such as a discriminator network to transform my model into a GAN, another autoencoder to further improve the learning process, and finally I implemented a Collaborative GAN hoping to make the generated files better.
 
-### Original Architecture
+## Original Architecture
 
 The original architecture is, as mentionned before, a convolutional autoencoder, inspired by [this paper](http://bilat.xyz/vita/SuperRes_NN.pdf). I consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsamplign and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
@@ -147,11 +147,11 @@ $$\mathcal{L}_G = \mathcal{L}_{L1} = \frac{1}{W}\sum_{i=1}^W |x_{h,i} - G(x_l)_i
 by simply changing a parameter in the command.
 
 
-### GAN
+## GAN
 
 To transform our system into a Generative Adversarial Network (GAN), we need to add a discriminator network, whose goal is to classify given samples as *real* or *fake*. In our case, we want that the original high quality audio should be classify as *real*, and the genereated improved files should be classified as *fake*. The goal of our first network, called generator here, is to create improved samples that will be classified as *true* by the discriminator.
 
-The architecture of the discirminator, is basically the first half ot the generator network, with a Batch normalization added between the convolutional and ReLu layers. At the end, everthing is sent into a linear layer and a sigmoid activation function that will input one value between 0 and 1, the probability that a given sample is *real*. This Discriminator is trained with the following loss function. 
+The architecture of the discirminator, is basically the first half ot the generator network, with a Batch normalization added between the convolutional and ReLu layers. At the end, everything is sent into a linear layer and a sigmoid activation function that will input one value between 0 and 1, the probability that a given sample is *real*. This Discriminator is trained with the following loss function. 
 
 $$\mathcal{L}_D = - [\log D(x_h) + \log(1-D(G(x_l)))]$$
 
@@ -165,7 +165,7 @@ $$\mathcal{L}_{adv} = - \log D(G(x_l))$$
 
 Meaning that our generator will not only look at its own loss (i.e. how far are we from the target sample), but it will also try to generate more realistic samples to fool the discriminator.
 
-### Autoencoder
+## Autoencoder
 
 To improve our model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently).
 
@@ -181,12 +181,12 @@ $$\mathcal{L}_f = \frac{1}{C_f W_f} \sum_{c=1}^{C_f} \sum_{i=1}^{W_f} \left\| \p
 
 Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ and $W_f$ are the number of channels and the width of the data at the bottleneck
 
-### Collaborative GAN
+## Collaborative GAN
 
 
 
 
-### Conditional GAN
+## Conditional GAN
 
 Another technique that can be used to improve the results of our model is conditional generative adversarial network (also known as CGAN). This technique is for instance used by [pix2pix](https://phillipi.github.io/pix2pix/), where the goal is to transform an image into another (often starting from a schematic images, i.e. only the borders, or maybe a segmentation map, and trying to create a realistic image correspondign to this input). 
 
@@ -200,28 +200,29 @@ You can see here an illustration of this change, taken from the original pix2pix
 
 ![Conditional gan]({{site.baseurl}}/img/vita/cgan.png)
 
-Here they use images, but the idea is the same. Your input x (the drawn shoe, respectively the low quality audio file) is given to the generator to create an improved version (the grey shoe / improved audio). Then, you give both the generated sample (grey shoe / improved audio) and the original data (drawn show / low quality audio) to the discriminator). Moreover, when training the discriminator, you will also give two samples as the input, namely the original image (drawn shoe / low quality audio) and the target image (brown shoe / high quality audio)
+Here they use images, but the idea is the same. Your input x (the drawn shoe, respectively the low quality audio file) is given to the generator to create an improved version (the grey shoe / improved audio). Then, you give both the generated sample (grey shoe / improved audio) and the original data (drawn show / low quality audio) to the discriminator). Moreover, when training the discriminator, you will also give two samples as the input, namely the original image (drawn shoe / low quality audio) and the target image (brown shoe / high quality audio).
+
+The architecture for this conditional discriminator is exactly the same as the original discriminator, with simply a different input shape. The rest of the network doesn't change.
 
 
-## Preprocessing
+
+# Preprocessing
 
 Since this model should work with any audio file provided, we need to do some preprocessing beforehand. There are two parts for this. 
 
-### Audio degradation
+## Audio degradation
 
 Since the goal of this project is to improve audio quality, we need to create our dataset. We use the MAESTRO Dataset (as described later), which constists of only high quality audio files. We therefore need to degrade those files to have our training data pairs. Three type of pre-processing are supported; Noise, Downsampling and reverberation. All of those are done using the `sox` library, and can be chained together.
 
 For the downsampling, we have two arguments, *target_res* and *input_res*. If we name our pair of input/output data samples (x, y), we can create y by simply downsampling our audio to *target_rate*. To create x, we first downsample our data to *input_res*, and then upsample it to *target_rate* using simple linear interpolation. We do it thi way so we can have a symetrical network, which is necessary for our skip connections to work properly.
 
-### Audio split
+## Audio split
 
 Since our network takes as input some data with a given size, we need to split our original audio file into mutliple small segments. We do this using a sliding window with a stride (usually a window of 2048 and a stride of 1024). This gives us some redundency in the data, and this way any part of the music is seen twice, at a different postion in the input. 
 
 During the evaluation phase, when we want to reconstruct an audio file, we need to put samples of the music back together. The naive way would be to split the audio file using a stride of the same value as the window size (i.e. no overlap), improve each sample individually, and then concatenate all the blocks together. This, however, doesn't give us good results, and we can hear a distincitve noise at the junction between two samples. This happens because our network handles the border of a sample differently than data in the middle of the sample (we have to use some padding on the border, so the sound is distorded).
 
 Therefore, for the evaluation phase, we still split the data using a sliding window with some overlap. When putting the blocks together, we will only keep a part of each samples, and the borders will be croped. This can be seen in the following illustration.
-
-IMAGE HERE
 
 ![Illustration of audio reconstruction]({{site.baseurl}}/img/vita/merge.png)
 
@@ -230,7 +231,7 @@ With this technique, we don't have any audio artefact at the junction between tw
 
 <a name="code_"></a>
 
-## Code
+# Code
 
 You can find on this [github page](https://github.com/Billotais/Denoising-with-Generative-Models) all the code used for this project. Required libraries are the following 
 
@@ -245,7 +246,7 @@ graphviz
 
 and can be found in `requirements.txt`. `pandas` and `graphviz` are not required in a standard execution of the code.
 
-### How to run
+## How to run
 ```
 usage: main.py [-h] [-c COUNT] [-o OUT] [-e EPOCHS] [-b BATCH] [-w WINDOW]
                [-s STRIDE] [-d DEPTH] -n NAME [--dropout DROPOUT]
@@ -325,7 +326,7 @@ main.py --count -1 --out 1000 -e 10 --batch 32 --window 2048 --stride 1024 \\
 
 will run the model for 10 epochs, using minibatches of 32 samples. The network will have a depth of 8, and we split the data into sub-samples of 2048 of width, and some overlap (stride of 1024). We train on all avalailable training data, but create an improved version for only one output file. Our data is stored in the `/data/lois-data/maestro` folder. Our target rate is 10kHz, the learning rate for the generator and the discriminator is 0.0001, the lambda used for the discriminator part of the composite loss is 0.0001. Finally, we want to do some  upsampling from 5kHz to 10kHz.
 
-#### Preprocessing
+### Preprocessing
 
 You can apply the following types of preprocessing by putting the followijng arguments as a string for the `--preprocessing` option: 
 
@@ -335,11 +336,11 @@ You can apply the following types of preprocessing by putting the followijng arg
 
 You can also apply different preprocessing one after the other, by concatenating the commands with a comma in between, e.g. `--preprocessing "sample 5000 10000,whitenoise 0 0.002"`
 
-#### Evaluation 
+### Evaluation 
 
 By default, once the model has finished training, it will take a file and try to improve it. This file will be `out.wav`. If you want to evaluate other files, you can run the original command, but with the `--load filename` argument added. This will look for a model save file `out/name/models/model.tar` (don't forget to rename the model file you want to use).
  
-### Code structure
+## Code structure
 
 - `main.py` 
 	- `init()` : Contains the parsing of the arguments, 
@@ -371,47 +372,46 @@ By default, once the model has finished training, it will take a file and try to
 
 
 
-### How to edit
 
 <a name="experiments_"></a>
 
-## Experiments
+# Experiments
 
-### Dataset
+## Dataset
 
-#### MAESTRO Dataset
+### MAESTRO Dataset
 
 This dataset constists of more than 200 hours of recorded piano, in high quality (44.1kHz), and in the wav format. Each file is also availible in MIDI format, but those were not used as we wanted to use some more realistic data. Due to the huge amount of data, no all of it was used (only ~3.3GB).
 
 It was the highest quality data that we found, but it had the problem of having a little bit of background noise (since it was recorded in a concert hall, you can hear poeple mobing chairs and so on). What could maybe be done to not have this noise in the high quality data is to generate realistic piano sound from the midi file (either artificially, or even with one of those piano that play midi files for you), but it is clearly out of scope for this project.
 
-### Results
+## Results
 
 
 
 <a name="potential_improvements_"></a>
 
-## Potential improvements
+# Potential improvements
 
 
 <a name="conclusion_"></a>
 
-## Conclusion
+# Conclusion
 
 <a name="sources_"></a>
 
-## Sources and notes
+# Sources and notes
 
 Here you can find some short summaries of the papers studied for this project, as well as a few useful links. Those should not be considered as part of the report, but more as some help and additional ressources if needed.
 
 
-### Conditional GAN
+## Conditional GAN
 
 [https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/](https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/)
 
 [pix2pix](https://arxiv.org/pdf/1611.07004.pdf)
 
-### Pytorch 
+## Pytorch 
 
 Big tutorial [here](https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html). 
 
@@ -438,7 +438,7 @@ out = self.out_tr(out)
 
 
 
-### Audio specific 
+## Audio specific 
 
 torchaudio seems to be able to do resampling, and can handle waveform audio. Can do many other transformations. Probably good to use this if we do super resolution, so we can generate our intput data. Tuto [here](https://pytorch.org/tutorials/beginner/audio_preprocessing_tutorial.html) Doesn't work with anaconda
 
