@@ -6,6 +6,7 @@ baseurl:      ""
 paginate:     1
 locale:       "en"
 google_analytics: UA-58165571-2
+markdown: kramdown
 
 # About/contact
 author:
