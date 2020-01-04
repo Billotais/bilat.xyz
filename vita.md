@@ -11,6 +11,9 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 
 **NOT FINISHED YET, MISTAKES TO BE EXPECTED**
 
+
+{% include toc.html html=content %}
+
 # Table of Contents
 1. [Introduction](#introduction_)
 2. [Architecture](#architecture_)
@@ -56,7 +59,7 @@ IMAGE FROM PAPER
   <img src="" width="90%" />
 </p>
 
-![architecture.png]({{site.baseurl}}/img/architecture.png)
+![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
 
 
 
@@ -68,7 +71,7 @@ In the upsampling blocks, the convolutional layer uses the same filter sizes as 
 
 IMAGE SUBPIXEL
 
-![Subpixel operation]({{site.baseurl}}/img/subpixel.png)
+![Subpixel operation]({{site.baseurl}}/img/vita/subpixel.png)
 
 Finaly, we have the stacking block that takes the output of the corresponding downsampling block and concatenate tehm on the channel dimension.
 
@@ -78,7 +81,7 @@ To undersand better this architecture, you can see here a schema of the network
 
 IMAGE NETWORK
 
-![Detailed architecture]({{site.baseurl}}/img/detailed.png)
+![Detailed architecture]({{site.baseurl}}/img/vita/detailed.png)
 
 
 and you can see how the stacking connections are used. Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what is the size of each layer and the parameters of the convolution. 
@@ -174,7 +177,25 @@ Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ an
 
 ### Collaborative GAN
 
-<a name="code_"></a>
+
+
+
+### Conditional GAN
+
+Another technique that can be used to improve the results of our model is conditional generative adversarial network (also known as CGAN). This technique is for instance used by [pix2pix](https://phillipi.github.io/pix2pix/), where the goal is to transform an image into another (often starting from a schematic images, i.e. only the borders, or maybe a segmentation map, and trying to create a realistic image correspondign to this input). 
+
+This was implemented in this project since this idea (image to image instead of random latent data to image) is actually guite similar to what we are trying to do here. Indeed, we already start from an image, and therefore this model might be more appropriated that the usual generator model.
+
+The basic idea of CGAN is this: You take the same model as for our previous GAN (a generator, and a discriminator that takes improved samples and classifies them as *real* or fake*), but you edit the discriminator so that it takes both the improved data, but also the original data as an input (WE simply concatenate them on the channel dimension). 
+
+This change means that now the goal of the discriminator is to ask "Is this a real-sounding improved sample, given what the original data is ?", instead of only "Is this a real-sounding improved sample ?" (therfore the name *conditional* GAN).
+
+You can see here an illustration of this change, taken from the original pix2pix paper.
+
+![Conditional gan]({{site.baseurl}}/img/vita/cgan.png)
+
+Here they use images, but the idea is the same. Your input x (the drawn shoe, respectively the low quality audio file) is given to the generator to create an improved version (the grey shoe / improved audio). Then, you give both the generated sample (grey shoe / improved audio) and the original data (drawn show / low quality audio) to the discriminator). Moreover, when training the discriminator, you will also give two samples as the input, namely the original image (drawn shoe / low quality audio) and the target image (brown shoe / high quality audio)
+
 
 ## Preprocessing
 
@@ -196,10 +217,12 @@ Therefore, for the evaluation phase, we still split the data using a sliding win
 
 IMAGE HERE
 
-![Illustration of audio reconstruction]({{site.baseurl}}/img/merge.png)
+![Illustration of audio reconstruction]({{site.baseurl}}/img/vita/merge.png)
 
 
 With this technique, we don't have any audio artefact at the junction between two samples.
+
+<a name="code_"></a>
 
 ## Code
 
@@ -251,7 +274,6 @@ optional arguments:
                         default=0.5
   --train_n TRAIN_N     number of songs used to train [int], default=-1 (use
                         all songs)
-  --test_n TEST_N       number of songs used to test [int], default=1
   --load LOAD           load already trained model to evaluate [bool],
                         default=False
   --continue CONTINUE   load already trained model to continue training
@@ -289,9 +311,27 @@ optional arguments:
 For instance, the following command
 
 ```
-command
+main.py --count -1 --out 1000 -e 10 --batch 32 --window 2048 --stride 1024 \\
+        --depth 8 --train_n -1  --name gan_10 --data_root /data/lois-data/models/maestro \\
+        --rate 10000 --lr_g 0.0001 --lr_d 0.0001 --gan 0.0001 \\
+        --preprocessing "sample 5000 10000"
 ```
-does ....
+
+will run the model for 10 epochs, using minibatches of 32 samples. The network will have a depth of 8, and we split the data into sub-samples of 2048 of width, and some overlap (stride of 1024). We train on all avalailable training data, but create an improved version for only one output file. Our data is stored in the `/data/lois-data/maestro` folder. Our target rate is 10kHz, the learning rate for the generator and the discriminator is 0.0001, the lambda used for the discriminator part of the composite loss is 0.0001. Finally, we want to do some  upsampling from 5kHz to 10kHz.
+
+#### Preprocessing
+
+You can apply the following types of preprocessing by putting the followijng arguments as a string for the `--preprocessing` option: 
+
+- Downsample : `"sample low_res high_res"`, if you want your input data to have a resolution of `low_res` Hz, and the target data to have resolution `high_res` data. Do not forget to also put the value of `high_res` for the `--rate` argument.
+- Noise : `"noisetype variance volume"`, where `noisetype` can be among `["whitenoise", "pinknoise", "brownnoise", "tpdfnoise"]`, `volumne` the intensity of the noise (good values are around 0.001). You can add some variance if desired, so that for each audio file the noise level will be a little bit different.
+- Reverberation : `"reverb variance reverberance hf_damping room_scal stereo_depth pre_delay wet_gain=0"` to apply some reverberation with various parameters. Default values can be found in the code.
+
+You can also apply different preprocessing one after the other, by concatenating the commands with a comma in between, e.g. `--preprocessing "sample 5000 10000,whitenoise 0 0.002"`
+
+#### Evaluation 
+
+By default, once the model has finished training, it will take a file and try to improve it. This file will be `out.wav`. If you want to evaluate other files, you can run the original command, but with the `--load filename` argument added. This will look for a model save file `out/name/models/model.tar` (don't forget to rename the model file you want to use).
  
 ### Code structure
 
@@ -330,13 +370,17 @@ does ....
 
 ## Experiments
 
-### Datasets
+### Dataset
 
 #### MAESTRO Dataset
 
-200 hours of recorded piano in high quality (44.1kHz
+This dataset constists of more than 200 hours of recorded piano, in high quality (44.1kHz), and in the wav format. Each file is also availible in MIDI format, but those were not used as we wanted to use some more realistic data. Due to the huge amount of data, no all of it was used (only ~3.3GB).
+
+It was the highest quality data that we found, but it had the problem of having a little bit of background noise (since it was recorded in a concert hall, you can hear poeple mobing chairs and so on). What could maybe be done to not have this noise in the high quality data is to generate realistic piano sound from the midi file (either artificially, or even with one of those piano that play midi files for you), but it is clearly out of scope for this project.
 
 ### Results
+
+
 
 <a name="potential_improvements_"></a>
 
@@ -353,6 +397,12 @@ does ....
 
 Here you can find some short summaries of the papers studied for this project, as well as a few useful links. Those should not be considered as part of the report, but more as some help and additional ressources if needed.
 
+
+### Conditional GAN
+
+[https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/](https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/)
+
+[pix2pix](https://arxiv.org/pdf/1611.07004.pdf)
 
 ### Pytorch 
 
