@@ -140,6 +140,10 @@ $$\mathcal{L}_G = \mathcal{L}_{L2} = \frac{1}{W}\sum_{i=1}^W \left\|x_{h,i} - G(
 
 where $x_h$ is the high quality audio signal, and $x_l$ the low quality signal.
 
+It is also possible to use the $L1$ loss
+
+$$\mathcal{L}_G = \mathcal{L}_{L2} = \frac{1}{W}\sum_{i=1}^W |x_{h,i} - G(x_l)_i\|$$
+
 
 ### GAN
 
