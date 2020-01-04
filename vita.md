@@ -12,7 +12,7 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 **NOT FINISHED YET, MISTAKES TO BE EXPECTED**
 
 
-
+{:toc}
 
 # Table of Contents
 1. [Introduction](#introduction_)
