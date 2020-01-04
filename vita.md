@@ -11,6 +11,9 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 
 **NOT FINISHED YET, MISTAKES TO BE EXPECTED**
 
+
+{% include toc.html html=content %}
+
 # Table of Contents
 1. [Introduction](#introduction_)
 2. [Architecture](#architecture_)
