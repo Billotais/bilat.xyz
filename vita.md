@@ -16,6 +16,7 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 
 # Table of Contents
 1. [Introduction](#introduction_)
+	1.1[Original Architecture](#original_architecture_)
 2. [Architecture](#architecture_)
 3. [Code](#code_)
 4. [Experiments](#experiments_) 
@@ -50,14 +51,13 @@ For instance, it could be used to improve the precision of the LIDAR technology 
 
 The architecture proposed here is a concolutional autoencoder with skip connections. Starting from this base model, I added a few improvments, such as a discriminator network to transform my model into a GAN, another autoencoder to further improve the learning process, and finally I implemented a Collaborative GAN hoping to make the generated files better.
 
+
+<a name="original_architecture_"></a>
+
 ## Original Architecture
 
 The original architecture is, as mentionned before, a convolutional autoencoder, inspired by [this paper](http://bilat.xyz/vita/SuperRes_NN.pdf). I consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsamplign and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
-IMAGE FROM PAPER
-<p float="left">
-  <img src="" width="90%" />
-</p>
 
 ![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
 
