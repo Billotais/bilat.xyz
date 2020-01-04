@@ -183,7 +183,17 @@ Another technique that can be used to improve the results of our model is condit
 
 This was implemented in this project since this idea (image to image instead of random latent data to image) is actually guite similar to what we are trying to do here. Indeed, we already start from an image, and therefore this model might be more appropriated that the usual generator model.
 
-The idea of CGAN is very simple. 
+The basic idea of CGAN is this: You take the same model as for our previous GAN (a generator, and a discriminator that takes improved samples and classifies them as *real* or fake*), but you edit the discriminator so that it takes both the improved data, but also the original data as an input (WE simply concatenate them on the channel dimension). 
+
+This change means that now the goal of the discriminator is to ask "Is this a real-sounding improved sample, given what the original data is ?", instead of only "Is this a real-sounding improved sample ?" (therfore the name *conditional* GAN).
+
+You can see here an illustration of this change, taken from the original pix2pix paper.
+
+![Conditional gan]({{site.baseurl}}/img/vita/cgan.png)
+
+Here they use images, but the idea is the same. Your input x (the drawn shoe, respectively the low quality audio file) is given to the generator to create an improved version (the grey shoe / improved audio). Then, you give both the generated sample (grey shoe / improved audio) and the original data (drawn show / low quality audio) to the discriminator). Moreover, when training the discriminator, you will also give two samples as the input, namely the original image (drawn shoe / low quality audio) and the target image (brown shoe / high quality audio)
+
+
 ## Preprocessing
 
 Since this model should work with any audio file provided, we need to do some preprocessing beforehand. There are two parts for this. 
