@@ -16,8 +16,8 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 
 # Table of Contents
 1. [Introduction](#introduction_)
-	1.1[Original Architecture](#original_architecture_)
 2. [Architecture](#architecture_)
+	2.1[Original Architecture](#original_architecture_)
 3. [Code](#code_)
 4. [Experiments](#experiments_) 
 5. [Potential Improvements](#potential_improvements_) 
@@ -69,7 +69,6 @@ The bottleneck block is the same as a downsampling block, but with a dropout wit
 
 In the upsampling blocks, the convolutional layer uses the same filter sizes as the downsampling blocks, but in reversed order. The number of channels outputed by the convolution is double the one in the corresponding downsampling block, and we have a stride of 1. We then have a dropout of 0.5 and a LeakyReLU with a slope of 0.2. Following this, we have the *DimShuffle* operation, more precisely the Sub-pixel operation, that takes some data of shape $N\times C \times \ W$ and transform it into data of shape $N\times C/2 \times \ 2W$ by interleaving elements from two channels together. 
 
-IMAGE SUBPIXEL
 
 ![Subpixel operation]({{site.baseurl}}/img/vita/subpixel.png)
 
@@ -79,7 +78,6 @@ After all the upsampling blocks, we finish with a final block that makes of conv
 
 To undersand better this architecture, you can see here a schema of the network 
 
-IMAGE NETWORK
 
 ![Detailed architecture]({{site.baseurl}}/img/vita/detailed.png)
 
@@ -147,6 +145,8 @@ $$\mathcal{L}_G = \mathcal{L}_{L1} = \frac{1}{W}\sum_{i=1}^W |x_{h,i} - G(x_l)_i
 by simply changing a parameter in the command.
 
 
+<a name="gan_"></a>
+
 ## GAN
 
 To transform our system into a Generative Adversarial Network (GAN), we need to add a discriminator network, whose goal is to classify given samples as *real* or *fake*. In our case, we want that the original high quality audio should be classify as *real*, and the genereated improved files should be classified as *fake*. The goal of our first network, called generator here, is to create improved samples that will be classified as *true* by the discriminator.
@@ -165,6 +165,8 @@ $$\mathcal{L}_{adv} = - \log D(G(x_l))$$
 
 Meaning that our generator will not only look at its own loss (i.e. how far are we from the target sample), but it will also try to generate more realistic samples to fool the discriminator.
 
+<a name="autoencoder_"></a>
+
 ## Autoencoder
 
 To improve our model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently).
@@ -181,10 +183,13 @@ $$\mathcal{L}_f = \frac{1}{C_f W_f} \sum_{c=1}^{C_f} \sum_{i=1}^{W_f} \left\| \p
 
 Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ and $W_f$ are the number of channels and the width of the data at the bottleneck
 
+<a name="collaborative_gan_"></a>
+
 ## Collaborative GAN
 
 
 
+<a name="conditional_gan_"></a>
 
 ## Conditional GAN
 
