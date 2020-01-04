@@ -179,7 +179,11 @@ Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ an
 
 ### Conditional GAN
 
-Another technique that can be used to improve the results of our model is conditional generative adversarial network (also known as CGAN).
+Another technique that can be used to improve the results of our model is conditional generative adversarial network (also known as CGAN). This technique is for instance used by [pix2pix](https://phillipi.github.io/pix2pix/), where the goal is to transform an image into another (often starting from a schematic images, i.e. only the borders, or maybe a segmentation map, and trying to create a realistic image correspondign to this input). 
+
+This was implemented in this project since this idea (image to image instead of random latent data to image) is actually guite similar to what we are trying to do here. Indeed, we already start from an image, and therefore this model might be more appropriated that the usual generator model.
+
+The idea of CGAN is very simple. 
 ## Preprocessing
 
 Since this model should work with any audio file provided, we need to do some preprocessing beforehand. There are two parts for this. 
@@ -384,6 +388,8 @@ Here you can find some short summaries of the papers studied for this project, a
 ### Conditional GAN
 
 [https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/](https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/)
+
+[pix2pix](https://arxiv.org/pdf/1611.07004.pdf)
 
 ### Pytorch 
 
