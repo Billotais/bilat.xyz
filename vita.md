@@ -176,6 +176,8 @@ Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ an
 
 <a name="code_"></a>
 
+
+### Conditional GAN
 ## Preprocessing
 
 Since this model should work with any audio file provided, we need to do some preprocessing beforehand. There are two parts for this. 
@@ -374,6 +376,10 @@ It was the highest quality data that we found, but it had the problem of having 
 
 Here you can find some short summaries of the papers studied for this project, as well as a few useful links. Those should not be considered as part of the report, but more as some help and additional ressources if needed.
 
+
+### Conditional GAN
+
+[https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/](https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/)
 
 ### Pytorch 
 
