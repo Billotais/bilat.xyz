@@ -448,9 +448,27 @@ It was the highest quality data that we found, but it had the problem of having 
 # Sources
 
 
-# How to Develop a Conditional GAN (cGAN) From Scratch
+## How to Develop a Conditional GAN (cGAN) From Scratch
 
-By Jason Brownlee, July 12, 2019, [https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/](link)
+By Jason Brownlee, 2019, [link](https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/))
+
+## Image-to-Image Translation with Conditional Adversarial Networks
+
+By Phillip Isola, Jun-Yan Zhu, Tinghui Zhou and Alexei A. Efros, 2018, [link](https://arxiv.org/pdf/1611.07004.pdf)
+
+## Pytorch Tutorial and Documentation
+
+[link](https://pytorch.org/)
+
+## PyTorch-GAN
+
+Collection of code samples implementing GAN in pytorch. [link](https://github.com/eriklindernoren/PyTorch-GAN)
+
+
+
+
+
+
 
 
 
