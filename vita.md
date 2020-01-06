@@ -457,7 +457,7 @@ By Phillip Isola, Jun-Yan Zhu, Tinghui Zhou and Alexei A. Efros, 2018, [link](ht
 
 ## Pytorch Tutorial and Documentation
 
-[link](https://pytorch.org/)
+Pytorch official website, [link](https://pytorch.org/)
 
 ## PyTorch-GAN
 
