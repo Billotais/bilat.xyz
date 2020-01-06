@@ -211,13 +211,13 @@ To sum up :
 
 - Compute $y = G(x)$, a generated sample
 - Compute $p = D(y)$, the confidence of the sample being "real"
-- If $p<\nu$ :
+- If $p<\eta$ :
 	- Compute the gradiant $\frac{d \mathcal{L}_D}{d x_l}, where x_l$ is the internal activation at layer $l$ of the upsampling blocks.
     - Update $x_l$ by gradiant descent, i.e. $x_l = x_l - \lambda \frac{d \mathcal{L}_D}{d x_l}$
     - Do another forward pass $G(x)$, but when reaching layer $l$, replace the values by the new value of $x_l$.
     - Continue the forward pass until we have a new generated sample.
     - If it is still classified as "fake", and we have not reached the maximum number of iterations, repeat.
-- If $p>\nu$ : we have our sample, nothing else to do.
+- If $p>\eta$ : we have our sample, nothing else to do.
 
 
 <a name="conditional_gan_"></a>
