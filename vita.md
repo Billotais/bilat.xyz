@@ -219,6 +219,12 @@ To sum up :
     - If it is still classified as "fake", and we have not reached the maximum number of iterations, repeat.
 - If $p>\eta$ : we have our sample, nothing else to do.
 
+This whole algorithm is done at the complete end of our pipeline, when we generate samples for our output audio file. 
+
+However, our discriminator, despite being able to classifiy samples as real and fake, it is not really capable of helping the refining process. For this reasoon, we have to train it beforehand. This step is called discriminator shaping.
+
+### Discriminator shaping
+
 
 <a name="conditional_gan_"></a>
 
