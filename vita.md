@@ -227,7 +227,9 @@ However, our discriminator, despite being able to classifiy samples as real and 
 
 Discriminator shaping happens after the normal training, but before the generation of the final audio file using collaborative sampling. I works as follows :
 
-For a given number of iterations, and given a pair $(x_l, x_h)$ of low quality and high quality audio, train the discriminator with $x_h$ given as "real" data, and the collaboratively sampled data generated from $x_l$ as "fake" data. 
+For a given number of iterations, and given a pair $(x_l, x_h)$ of low quality and high quality audio, train the discriminator with $x_h$ given as "real" data, and the collaboratively sampled data generated from $x_l$ as "fake" data.
+
+
 <a name="conditional_gan_"></a>
 
 ## Conditional GAN
