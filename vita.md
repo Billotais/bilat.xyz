@@ -447,46 +447,50 @@ It was the highest quality data that we found, but it had the problem of having 
 
 # Sources
 
-## How to Develop a Conditional GAN (cGAN) From Scratch
+**How to Develop a Conditional GAN (cGAN) From Scratch**
 
 By Jason Brownlee, 2019, [link](https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/))
 
-## Image-to-Image Translation with Conditional Adversarial Networks
+**Image-to-Image Translation with Conditional Adversarial Networks**
 
 By Phillip Isola, Jun-Yan Zhu, Tinghui Zhou and Alexei A. Efros, 2018, [link](https://arxiv.org/pdf/1611.07004.pdf)
 
-## Pytorch Tutorial and Documentation
+**Pytorch Tutorial and Documentation**
 
 Pytorch official website, [link](https://pytorch.org/)
 
-## PyTorch-GAN
+**PyTorch-GAN**
 
 Collection of code samples implementing GAN in pytorch. [link](https://github.com/eriklindernoren/PyTorch-GAN)
 
-## Speech Denoising with Deep Feature Losses 
+**Speech Denoising with Deep Feature Losses**
 
 By François G. Germain, Qifeng Chen, and Vladlen Koltun, 2018, [link](https://arxiv.org/pdf/1806.10522.pdf)
 
-## Recurrent Neural Networks for Noise Reduction in Robust ASR 
+**Recurrent Neural Networks for Noise Reduction in Robust ASR**
 
 by Andrew L. Maas1, Quoc V. Le, Tyler M. O’Neil, Oriol Vinyals, Patrick Nguyen, Andrew Y. Ng, 2012, [link](http://www1.icsi.berkeley.edu/~vinyals/Files/rnn_denoise_2012.pdf)
 
 
-## Raw Waveform-based Speech Enhancement by Fully Convolutional Networks
+**Raw Waveform-based Speech Enhancement by Fully Convolutional Networks**
 
 By Szu-Wei Fu, Yu Tsao, Xugang Lu, Hisashi Kawai, 2017, [link](https://arxiv.org/pdf/1703.02205.pdf)
 
-## SEGAN: Speech Enhancement Generative Adversarial Network
+**SEGAN: Speech Enhancement Generative Adversarial Network**
 
 By Santiago Pascual, Antonio Bonafonte, Joan Serrà, 2017, [link](https://arxiv.org/pdf/1703.09452.pdf), [github](https://github.com/santi-pdp/segan). 
 
-## Audio Super-Resolution using Neural Nets
+**Audio Super-Resolution using Neural Nets**
 
 By Volodymyr Kuleshov, S. Zayd Enam, and Stefano Ermon, 2017, [link](https://arxiv.org/pdf/1708.00853.pdf), [website](https://kuleshov.github.io/audio-super-res/#), [github](https://github.com/kuleshov/audio-super-res)
 
-## Adversarial Audio Super-Resolution with Unsupervised Feature Losses
+**Adversarial Audio Super-Resolution with Unsupervised Feature Losses**
 
 By Sung Kim, Visvesh Sathe, 2018, [link](https://openreview.net/forum?id=H1eH4n09KX)
+
+**Enabling Factorized Piano Music Modeling and Generation with the MAESTRO Dataset**
+ 
+Curtis Hawthorne, Andriy Stasyuk, Adam Roberts, Ian Simon, Cheng-Zhi Anna Huang, Sander Dieleman, Erich Elsen, Jesse Engel, and Douglas Eck, 2019, [link](https://magenta.tensorflow.org/datasets/maestro)
 
 
 
