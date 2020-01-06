@@ -191,14 +191,33 @@ Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ an
 
 ## Collaborative GAN
 
-In a normal GAN architecture, once the model is trained, we only use the generator to create our final samples. Collaborative GAN is a technique where the discriminator is also used during the sampling phase, to hopefully get better results. 
+In a normal GAN architecture, once the model is trained, we only use the generator to create our final samples. Collaborative GAN is a technique where the discriminator is also used during the sampling phase, to hopefully get better results. Collaborative GAN is used only once the original training of the model is completly done. I will present here the modified version of this method, adapted from the original paper.
 
 There are two main part to this method :
 
 ### Collaborative sampling
 
+This step happens when you want to generate a sample, but also want to improve it using information provided by the discriminator. Since this happens after the training, we want to freeze the parameters of both the generator and the discriminator.
+
+Suppose we have an input sample, i.e. a low quality audio sample. We send it as an input to the generator, to generate an improved version. We then take the output, and give it to the discirminator. If the discriminator classifies it as "real" with a high enough confidence (in the code *0.5* is used, but higher values may be required for better results), we stop, as we consider our sample is good enough. However, if our sample is classified as "fake", we will try to improve it. This is illustrated here:
 
 ![Collaborative GAN]({{site.baseurl}}/img/vita/collab_gan.png)
+
+For this, we will look at the internal activations of the generator network, in particular the activations at one layer (we call it $x_l$). $x_l$ corresponds to the activation at the output of the l$l$th upsampling block of our generator. We then compute the gradiant of this tensor of activations relative to the loss of the discriminator, and then update the value of $x_l$ by gradiant descent. The values of $x_l$ are then once again propagated to the end of the network, which will give us a new sample. (Note that during this second pass with the modified $x_l$, the values provided by the skip connections come from the original propagation of x. 
+
+Finally, we repeat this while our sample is not classified as "real" by the discriminator. We nevertheless stop after a maximum number of iterations to not spent to much time with problematic samples.
+
+To sum up : 
+
+- Compute $y = G(x)$, a generated sample
+- Compute $p = D(y)$, the confidence of the sample being "real"
+- If $p<\nu$ :
+	- Compute the gradiant $\frac{d \mathcal{L}_D}{d x_l}, where $x_$$ is the internal activation at layer $l$ of the upsampling blocks.
+    - Update $x_l$ by gradiant descent, i.e. $x_l = x_l - \lambda \frac{d \mathcal{L}_D}{d x_l}$
+    - Do another forward pass $G(x)$, but when reaching layer $l$, replace the values by the new value of $x_l$.
+    - Continue the forward pass until we have a new generated sample.
+    - If it is still classified as "fake", and we have not reached the maximum number of iterations, repeat.
+- If $p>\nu$ : we have our sample, nothing else to do.
 
 
 <a name="conditional_gan_"></a>
