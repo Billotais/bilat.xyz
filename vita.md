@@ -191,6 +191,14 @@ Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ an
 
 ## Collaborative GAN
 
+In a normal GAN architecture, once the model is trained, we only use the generator to create our final samples. Collaborative GAN is a technique where the discriminator is also used during the sampling phase, to hopefully get better results. 
+
+There are two main part to this method :
+
+### Collaborative sampling
+
+
+![Collaborative GAN]({{site.baseurl}}/img/vita/collab_gan.png)
 
 
 <a name="conditional_gan_"></a>
