@@ -464,6 +464,10 @@ By Phillip Isola, Jun-Yan Zhu, Tinghui Zhou and Alexei A. Efros, 2018, [link](ht
 
 Collection of code samples implementing GAN in pytorch. [link](https://github.com/eriklindernoren/PyTorch-GAN)
 
+## Adversarial Audio Super-Resolution with Unsupervised Feature Losses
+
+By Sung Kim, Visvesh Sathe, 2018, [link](https://openreview.net/forum?id=H1eH4n09KX)
+
 
 
 
