@@ -71,7 +71,7 @@ After this, techniques like Collaborative GAN, Conditional GAN **and Patch GAN**
 
 ## Original Architecture
 
-The original architecture is, as mentionned before, a convolutional autoencoder, inspired by [this paper](http://bilat.xyz/vita/SuperRes_NN.pdf). I consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsamplign and an upsampling block at the same level, and an additive residual connection between the input and the final block.
+The original architecture is, as mentionned before, a convolutional autoencoder with skip connections. It consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsampling and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
 
 ![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
@@ -87,9 +87,9 @@ In the upsampling blocks, the convolutional layer uses the same filter sizes as 
 
 ![Subpixel operation]({{site.baseurl}}/img/vita/subpixel.png)
 
-Finaly, we have the stacking block that takes the output of the corresponding downsampling block and concatenate tehm on the channel dimension.
+Finaly, we have the stacking block that takes the output of the corresponding downsampling block and concatenate it on the channel dimension with the output of the dimshuffle block.
 
-After all the upsampling blocks, we finish with a final block that makes of convolution with 2 outptus channels, a filter size of 9 and a stride of 1, the subpixel operation, and then we add the output of this to our input data to get the output of the network. 
+After all the upsampling blocks, we finish with a final block that makes of convolution with 2 outputs channels, a filter size of 9 and a stride of 1, then the subpixel operation (this will reshape our data so that we are left with only one channel, and then we add the output of this to our input data to get the output of the network (this is the additive skip connection. What this connection implies is that the netork doesn't exactly learn how to create denoised sound directly, but rather it learns how to create "denoising data" that when added to the audio itself improves it.
 
 To undersand better this architecture, you can see here a schema of the network 
 
