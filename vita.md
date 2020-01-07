@@ -263,7 +263,6 @@ Here they use images, but the idea is the same. Your input x (the drawn shoe, re
 The architecture for this conditional discriminator is exactly the same as the original discriminator, with simply a different input shape. The rest of the network doesn't change.
 
 
-
 # Preprocessing
 
 Since this model should work with any audio file provided, we need to do some preprocessing beforehand. There are two parts for this. 
@@ -445,12 +444,9 @@ It was the highest quality data that we found, but it had the problem of having 
 
 ## Results
 
-
-
 <a name="potential_improvements_"></a>
 
 # Potential improvements
-
 
 <a name="conclusion_"></a>
 
