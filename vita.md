@@ -180,13 +180,13 @@ with
 
 $$\mathcal{L}_{adv} = - \log D(G(x_l))$$
 
-Meaning that our generator will not only look at its own loss (i.e. how far are we from the target sample), but it will also try to generate more realistic samples to fool the discriminator.
+Meaning that the generator will not only look at its own loss (i.e. how far are we from the target sample), but it will also try to generate more realistic samples to fool the discriminator.
 
 <a name="autoencoder_"></a>
 
 ## Autoencoder
 
-To improve our model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently).
+To improve the model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently).
 
 This autoencoder is trained using the $\mathcal{L}_{L2}$ loss, on the *identity task* (meaning that the target is the same as the input). The goal of this is to find a lower dimnesion representation of our data (at the bottlneck), that can give some useful information to our optimisation problem.
 
@@ -198,7 +198,7 @@ with
 
 $$\mathcal{L}_f = \frac{1}{C_f W_f} \sum_{c=1}^{C_f} \sum_{i=1}^{W_f} \left\| \psi (x_h)_{i.c} - \psi(G(x_l))_{i,c}\right\|$$
 
-Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ and $W_f$ are the number of channels and the width of the data at the bottleneck
+Where $\psi(x)$ is the output of the network at the bottlneck layer, and $C_f$ and $W_f$ are the number of channels and the width of the data at the bottleneck
 
 <a name="collaborative_gan_"></a>
 
