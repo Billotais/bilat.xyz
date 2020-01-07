@@ -71,6 +71,8 @@ After this, techniques like Collaborative GAN, Conditional GAN **and Patch GAN**
 
 ## Original model
 
+**Architecture**
+
 The original architecture is, as mentionned before, a convolutional autoencoder with skip connections. It consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsampling and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
 ![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
@@ -146,6 +148,7 @@ Moreover, you can see here for a toy example with depth 4 and where inputs have 
 ```
 
 
+**Training**
 
 We train this network using the $L2$ loss
 
@@ -158,6 +161,8 @@ It is also possible to use the $L1$ loss
 $$\mathcal{L}_G = \mathcal{L}_{L1} = \frac{1}{W}\sum_{i=1}^W |x_{h,i} - G(x_l)_i |$$
 
 by simply changing a parameter in the command.
+
+The adam optimizer is used
 
 
 <a name="gan_"></a>
