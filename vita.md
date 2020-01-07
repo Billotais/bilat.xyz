@@ -16,8 +16,8 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 
 # Table of Contents
 1. [Introduction](#introduction_)
-2. [Architecture](#architecture_)
-	- [Original Architecture](#original_architecture_)
+2. [Model](#model_)
+	- [Original Architecture](#original_model_)
     - [GAN](#gan_)
     - [Auto-encoder](#autoencoder_)
     - [Collaborative GAN](#collaborative_gan_)
@@ -59,23 +59,21 @@ Therefore, the paper _Audio Super-Resolution using Neural Nets_ was chosen as a 
 
 
 
-<a name="architecture_"></a>
+<a name="model_"></a>
 
-# Architecture
+# Model
 
-The architecture proposed here is a concolutional autoencoder with skip connections, also known as *U-net*. Starting from this base model, a dew improvments were then added, such as a discriminator network to transform the model into a GAN and an autoencoder to further improve the learning process.
+The model proposed here is a concolutional autoencoder with skip connections, also known as *U-net*. Starting from this base model, a dew improvments were then added, such as a discriminator network to transform the model into a GAN and an autoencoder to further improve the learning process.
 
 After this, techniques like Collaborative GAN, Conditional GAN **and Patch GAN** were also implemented.
 
-<a name="original_architecture_"></a>
+<a name="original_model_"></a>
 
-## Original Architecture
+## Original model
 
 The original architecture is, as mentionned before, a convolutional autoencoder with skip connections. It consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsampling and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
-
 ![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
-
 
 
 Each domnsampling block consists of a convolutional block, and a ReLU block. These have a stride of 2, the number of channels outputed by each convolutional block is given by the array `[126, 256, 512, 512, 512, ...]`, and the size of filters is given by the array `[63, 33, 17, 9, 9, 9, ...]`. The ReLU block is more precisely a Leaky rectified linear block with a slope of 0.2 on the negative side.
@@ -97,7 +95,9 @@ To undersand better this architecture, you can see here a schema of the network
 ![Detailed architecture]({{site.baseurl}}/img/vita/detailed.png)
 
 
-and you can see how the stacking connections are used. Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what is the size of each layer and the parameters of the convolution. 
+and you can see how the stacking connections are used. In the upsampling block, the goal of the convolution is to merge the data from the previous upsampling block and from the corresponding downsampling block, whereas the sub-pixel operation's goal is simply to reshape it so that it has the correct shape to be concatennated later.
+
+Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what is the size of each layer and the parameters of the convolution. 
 
 ```
    
@@ -130,17 +130,17 @@ and you can see how the stacking connections are used. Moreover, you can see her
                                                    |     |     |     |
     (1024,64)->(512x2,17)->(1024,64)-sp->(512,128)-:     |     |     |
                                                    =     |     |     |
-                                               (1024,64) |     |     |
+                                               (1024,128)|     |     |
                                                          |     |     |
-      (1024,128)->conv(256x2,33)->(1024,64)-sp->(256,256):     |     |
+      (1024,128)->conv(256x2,33)->(512,128)-sp->(256,256):     |     |
                                                          =     |     |
                                                      (512,256) |     |
                                                                |     |
         (512,256)->conv(128x2,63)->(256,256)-sp->(128.512)-----:     |
                                                                =     |
                                                            (256,512) |    
-                                                           
-           (256,256)->conv(2,9)->(2,512)-sp->(1, 1024)---------------+
+                                                                     |
+           (256,512)->conv(2,9)->(2,512)-sp->(1, 1024)---------------+
                                                                      =	
                                                                  (1, 1024)
 ```
