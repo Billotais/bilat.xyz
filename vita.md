@@ -49,12 +49,23 @@ Moreover, If we are able to improve the quality of an audio signal, we might als
 
 For instance, it could be used to improve the precision of the LIDAR technology that can be very useful for autonomous cars.
 
+**Goal of the project**
+
+Most of the research on audio denoising is done on speech, as it is probably the domain where such techniques might be the most usefull (intelligent assistants and so on). Thefore, there are very few papers that tried these techniques on music, and when they did it often was as an afterthought, and the not primary goal of their project.
+
+The goal of this project was to study the state of the art in audio denoising and super-resolution, and then improve it by adding some other ideas comming from image processing research. At the time of the start of the project, the state of the art in speech super-resolution seemed to be _Speech Denoising with Deep Feature Losses_ (complete reference at the end), and the state of the art for speech denoising seemed to be _Adversarial Audio Super-Resolution with Unsupervised Feature Losses_. The plan was to first implement this second paper as a baseline, and then try to improve it. Unfortunatly, it proved more challening than expected to implement this model, as some details were not clear enough to implement it correctly. 
+
+Therefore, the paper _Audio Super-Resolution using Neural Nets_ was chosen as a baseline for this project, as the paper was very clear and a github repository was also available for more details. 
+
+
+
 <a name="architecture_"></a>
 
 # Architecture
 
-The architecture proposed here is a concolutional autoencoder with skip connections. Starting from this base model, I added a few improvments, such as a discriminator network to transform my model into a GAN, another autoencoder to further improve the learning process, and finally I implemented a Collaborative GAN hoping to make the generated files better.
+The architecture proposed here is a concolutional autoencoder with skip connections, also known as *U-net*. Starting from this base model, a dew improvments were then added, such as a discriminator network to transform the model into a GAN and an autoencoder to further improve the learning process.
 
+After this, techniques like Collaborative GAN, Conditional GAN **and Patch GAN** were also implemented.
 
 <a name="original_architecture_"></a>
 
@@ -491,11 +502,3 @@ By Sung Kim, Visvesh Sathe, 2018, [link](https://openreview.net/forum?id=H1eH4n0
 **Enabling Factorized Piano Music Modeling and Generation with the MAESTRO Dataset**
  
 Curtis Hawthorne, Andriy Stasyuk, Adam Roberts, Ian Simon, Cheng-Zhi Anna Huang, Sander Dieleman, Erich Elsen, Jesse Engel, and Douglas Eck, 2019, [link](https://magenta.tensorflow.org/datasets/maestro)
-
-
-
-
-
-
-
-
