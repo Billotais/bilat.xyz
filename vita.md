@@ -162,9 +162,6 @@ $$\mathcal{L}_G = \mathcal{L}_{L1} = \frac{1}{W}\sum_{i=1}^W |x_{h,i} - G(x_l)_i
 
 by simply changing a parameter in the command.
 
-The adam optimizer is used
-
-
 <a name="gan_"></a>
 
 ## GAN
