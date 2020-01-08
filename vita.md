@@ -16,8 +16,8 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 
 # Table of Contents
 1. [Introduction](#introduction_)
-2. [Architecture](#architecture_)
-	- [Original Architecture](#original_architecture_)
+2. [Model](#model_)
+	- [Original Architecture](#original_model_)
     - [GAN](#gan_)
     - [Auto-encoder](#autoencoder_)
     - [Collaborative GAN](#collaborative_gan_)
@@ -49,22 +49,33 @@ Moreover, If we are able to improve the quality of an audio signal, we might als
 
 For instance, it could be used to improve the precision of the LIDAR technology that can be very useful for autonomous cars.
 
-<a name="architecture_"></a>
+**Goal of the project**
 
-# Architecture
+Most of the research on audio denoising is done on speech, as it is probably the domain where such techniques might be the most usefull (intelligent assistants and so on). Thefore, there are very few papers that tried these techniques on music, and when they did it often was as an afterthought, and the not primary goal of their project.
 
-The architecture proposed here is a concolutional autoencoder with skip connections. Starting from this base model, I added a few improvments, such as a discriminator network to transform my model into a GAN, another autoencoder to further improve the learning process, and finally I implemented a Collaborative GAN hoping to make the generated files better.
+The goal of this project was to study the state of the art in audio denoising and super-resolution, and then improve it by adding some other ideas comming from image processing research. At the time of the start of the project, the state of the art in speech super-resolution seemed to be _Speech Denoising with Deep Feature Losses_ (complete reference at the end), and the state of the art for speech denoising seemed to be _Adversarial Audio Super-Resolution with Unsupervised Feature Losses_. The plan was to first implement this second paper as a baseline, and then try to improve it. Unfortunatly, it proved more challening than expected to implement this model, as some details were not clear enough to implement it correctly. 
+
+Therefore, the paper _Audio Super-Resolution using Neural Nets_ was chosen as a baseline for this project, as the paper was very clear and a github repository was also available for more details. 
 
 
-<a name="original_architecture_"></a>
 
-## Original Architecture
+<a name="model_"></a>
 
-The original architecture is, as mentionned before, a convolutional autoencoder, inspired by [this paper](http://bilat.xyz/vita/SuperRes_NN.pdf). I consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsamplign and an upsampling block at the same level, and an additive residual connection between the input and the final block.
+# Model
 
+The model proposed here is a concolutional autoencoder with skip connections, also known as *U-net*. Starting from this base model, a dew improvments were then added, such as a discriminator network to transform the model into a GAN and an autoencoder to further improve the learning process.
+
+After this, techniques like Collaborative GAN, Conditional GAN **and Patch GAN** were also implemented.
+
+<a name="original_model_"></a>
+
+## Original model
+
+**Architecture**
+
+The original architecture is, as mentionned before, a convolutional autoencoder with skip connections. It consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsampling and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
 ![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
-
 
 
 Each domnsampling block consists of a convolutional block, and a ReLU block. These have a stride of 2, the number of channels outputed by each convolutional block is given by the array `[126, 256, 512, 512, 512, ...]`, and the size of filters is given by the array `[63, 33, 17, 9, 9, 9, ...]`. The ReLU block is more precisely a Leaky rectified linear block with a slope of 0.2 on the negative side.
@@ -76,9 +87,9 @@ In the upsampling blocks, the convolutional layer uses the same filter sizes as 
 
 ![Subpixel operation]({{site.baseurl}}/img/vita/subpixel.png)
 
-Finaly, we have the stacking block that takes the output of the corresponding downsampling block and concatenate tehm on the channel dimension.
+Finaly, we have the stacking block that takes the output of the corresponding downsampling block and concatenate it on the channel dimension with the output of the dimshuffle block.
 
-After all the upsampling blocks, we finish with a final block that makes of convolution with 2 outptus channels, a filter size of 9 and a stride of 1, the subpixel operation, and then we add the output of this to our input data to get the output of the network. 
+After all the upsampling blocks, we finish with a final block that makes of convolution with 2 outputs channels, a filter size of 9 and a stride of 1, then the subpixel operation (this will reshape our data so that we are left with only one channel, and then we add the output of this to our input data to get the output of the network (this is the additive skip connection. What this connection implies is that the netork doesn't exactly learn how to create denoised sound directly, but rather it learns how to create "denoising data" that when added to the audio itself improves it.
 
 To undersand better this architecture, you can see here a schema of the network 
 
@@ -86,7 +97,9 @@ To undersand better this architecture, you can see here a schema of the network
 ![Detailed architecture]({{site.baseurl}}/img/vita/detailed.png)
 
 
-and you can see how the stacking connections are used. Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what is the size of each layer and the parameters of the convolution. 
+and you can see how the stacking connections are used. In the upsampling block, the goal of the convolution is to merge the data from the previous upsampling block and from the corresponding downsampling block, whereas the sub-pixel operation's goal is simply to reshape it so that it has the correct shape to be concatennated later.
+
+Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what is the size of each layer and the parameters of the convolution. 
 
 ```
    
@@ -119,22 +132,23 @@ and you can see how the stacking connections are used. Moreover, you can see her
                                                    |     |     |     |
     (1024,64)->(512x2,17)->(1024,64)-sp->(512,128)-:     |     |     |
                                                    =     |     |     |
-                                               (1024,64) |     |     |
+                                               (1024,128)|     |     |
                                                          |     |     |
-      (1024,128)->conv(256x2,33)->(1024,64)-sp->(256,256):     |     |
+      (1024,128)->conv(256x2,33)->(512,128)-sp->(256,256):     |     |
                                                          =     |     |
                                                      (512,256) |     |
                                                                |     |
         (512,256)->conv(128x2,63)->(256,256)-sp->(128.512)-----:     |
                                                                =     |
                                                            (256,512) |    
-                                                           
-           (256,256)->conv(2,9)->(2,512)-sp->(1, 1024)---------------+
+                                                                     |
+           (256,512)->conv(2,9)->(2,512)-sp->(1, 1024)---------------+
                                                                      =	
                                                                  (1, 1024)
 ```
 
 
+**Training**
 
 We train this network using the $L2$ loss
 
@@ -148,18 +162,17 @@ $$\mathcal{L}_G = \mathcal{L}_{L1} = \frac{1}{W}\sum_{i=1}^W |x_{h,i} - G(x_l)_i
 
 by simply changing a parameter in the command.
 
-
 <a name="gan_"></a>
 
 ## GAN
 
 To transform our system into a Generative Adversarial Network (GAN), we need to add a discriminator network, whose goal is to classify given samples as *real* or *fake*. In our case, we want that the original high quality audio should be classify as *real*, and the genereated improved files should be classified as *fake*. The goal of our first network, called generator here, is to create improved samples that will be classified as *true* by the discriminator.
 
-The architecture of the discirminator, is basically the first half ot the generator network, with a Batch normalization added between the convolutional and ReLu layers. At the end, everything is sent into a linear layer and a sigmoid activation function that will input one value between 0 and 1, the probability that a given sample is *real*. This Discriminator is trained with the following loss function. 
+The architecture of the discirminator, is basically the first half ot the generator network, with a Batch normalization added between the convolutional and ReLu layers. At the end, everything is sent into a linear layer and a sigmoid activation function that will input one value between 0 and 1, the probability that a given sample is *real*. This Discriminator is trained with the following loss function
 
 $$\mathcal{L}_D = - [\log D(x_h) + \log(1-D(G(x_l)))]$$
 
-When training our model, we first train our generator and discriminator separatly for a while, and once the loss of the discriminar is low enough, we edit the generator loss $L_G$ to
+When training the model, we first train the generator and discriminator separatly for a while, and once the loss of the discriminar is low enough, we change the generator loss $L_G$ to
 
 $$\mathcal{L}_G = \mathcal{L}_{L2} + \lambda_{adv}\mathcal{L}_{adv}$$
 
@@ -167,13 +180,13 @@ with
 
 $$\mathcal{L}_{adv} = - \log D(G(x_l))$$
 
-Meaning that our generator will not only look at its own loss (i.e. how far are we from the target sample), but it will also try to generate more realistic samples to fool the discriminator.
+Meaning that the generator will not only look at its own loss (i.e. how far are we from the target sample), but it will also try to generate more realistic samples to fool the discriminator.
 
 <a name="autoencoder_"></a>
 
 ## Autoencoder
 
-To improve our model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently).
+To improve the model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently).
 
 This autoencoder is trained using the $\mathcal{L}_{L2}$ loss, on the *identity task* (meaning that the target is the same as the input). The goal of this is to find a lower dimnesion representation of our data (at the bottlneck), that can give some useful information to our optimisation problem.
 
@@ -185,7 +198,7 @@ with
 
 $$\mathcal{L}_f = \frac{1}{C_f W_f} \sum_{c=1}^{C_f} \sum_{i=1}^{W_f} \left\| \psi (x_h)_{i.c} - \psi(G(x_l))_{i,c}\right\|$$
 
-Where $\psi(x)$ is the output of the network a the bottlneck layer, and $C_f$ and $W_f$ are the number of channels and the width of the data at the bottleneck
+Where $\psi(x)$ is the output of the network at the bottlneck layer, and $C_f$ and $W_f$ are the number of channels and the width of the data at the bottleneck
 
 <a name="collaborative_gan_"></a>
 
@@ -248,7 +261,6 @@ You can see here an illustration of this change, taken from the original pix2pix
 Here they use images, but the idea is the same. Your input x (the drawn shoe, respectively the low quality audio file) is given to the generator to create an improved version (the grey shoe / improved audio). Then, you give both the generated sample (grey shoe / improved audio) and the original data (drawn show / low quality audio) to the discriminator). Moreover, when training the discriminator, you will also give two samples as the input, namely the original image (drawn shoe / low quality audio) and the target image (brown shoe / high quality audio).
 
 The architecture for this conditional discriminator is exactly the same as the original discriminator, with simply a different input shape. The rest of the network doesn't change.
-
 
 
 # Preprocessing
@@ -371,6 +383,8 @@ main.py --count -1 --out 1000 -e 10 --batch 32 --window 2048 --stride 1024 \\
 
 will run the model for 10 epochs, using minibatches of 32 samples. The network will have a depth of 8, and we split the data into sub-samples of 2048 of width, and some overlap (stride of 1024). We train on all avalailable training data, but create an improved version for only one output file. Our data is stored in the `/data/lois-data/maestro` folder. Our target rate is 10kHz, the learning rate for the generator and the discriminator is 0.0001, the lambda used for the discriminator part of the composite loss is 0.0001. Finally, we want to do some  upsampling from 5kHz to 10kHz.
 
+Note that you need to create a `out` folder inside then `src` directory. All the results will be saved inside.
+
 ### Preprocessing
 
 You can apply the following types of preprocessing by putting the followijng arguments as a string for the `--preprocessing` option: 
@@ -422,15 +436,32 @@ By default, once the model has finished training, it will take a file and try to
 
 # Experiments
 
-## Dataset
+**MAESTRO Dataset**
 
-### MAESTRO Dataset
-
-This dataset constists of more than 200 hours of recorded piano, in high quality (44.1kHz), and in the wav format. Each file is also availible in MIDI format, but those were not used as we wanted to use some more realistic data. Due to the huge amount of data, no all of it was used (only ~3.3GB).
+This dataset consists of more than 200 hours of recorded piano, in high quality (44.1kHz), and in the wav format. Each file is also availible in MIDI format, but those were not used as we wanted to use some more realistic data. Due to the huge amount of data, no all of it was used (only ~3.3GB).
 
 It was the highest quality data that we found, but it had the problem of having a little bit of background noise (since it was recorded in a concert hall, you can hear poeple mobing chairs and so on). What could maybe be done to not have this noise in the high quality data is to generate realistic piano sound from the midi file (either artificially, or even with one of those piano that play midi files for you), but it is clearly out of scope for this project.
 
+**Metrics**
+
+To measure the performance of the model, the log-spectral distance (LSD) is used. This is defined as follows
+
+$$LSD(x,y) =  \frac{1}{L} \sum_{l=1}^L \sqrt{\frac{1}{K} \sum_{k=1}^K (X(l,k) -\hat{X}(l,k))^2}$$
+
+where $X$ and $\hat{X}$ are the log-spectral power magnitudes of $y$ and $x$, respectively. These are defined as $X=\log{|S|^2}$, where $S$ is the short-time Fourier transform (STFT) of the signal. $l$ and $k$ to index framces and frequencies, repectively. For the following results, frames of length 1024 were used.
+
 ## Results
+
+For the following experiments, as there are a lot of paramters, only a few of them are changed while the others stay fixed. 
+
+For all the experiment, we do super-resolution from 5kHz to 10kHz, with no noise added. Approximatly 1.4 GB of raw data was used, corresponding to a little over 2 hours of music. 
+
+For each experiment, the data is split into samples of 4096 of length, with an overlap of 2048. The main network is initialized with a depth of 8 (i.e. 8 downsampling blocks and 8 upsampling blocks). The discriminator and the autoencoder will have the same depth aswell. Each experiment is for 10 epochs, using mini-bacthes of size 32. For the generator, the L2 loss is used by default. 
+
+For all the experiments, the same file is used as the "test data" to create the plots that will follow. Moreover, the measure the metrics, another file is used, but once again always the same. 
+
+
+
 
 
 
@@ -438,329 +469,57 @@ It was the highest quality data that we found, but it had the problem of having 
 
 # Potential improvements
 
-
 <a name="conclusion_"></a>
 
 # Conclusion
 
 <a name="sources_"></a>
 
-# Sources and notes
+# Sources
 
-Here you can find some short summaries of the papers studied for this project, as well as a few useful links. Those should not be considered as part of the report, but more as some help and additional ressources if needed.
+**How to Develop a Conditional GAN (cGAN) From Scratch**
 
+By Jason Brownlee, 2019, [link](https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/))
 
-## Conditional GAN
+**Image-to-Image Translation with Conditional Adversarial Networks**
 
-[https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/](https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/)
+By Phillip Isola, Jun-Yan Zhu, Tinghui Zhou and Alexei A. Efros, 2018, [link](https://arxiv.org/pdf/1611.07004.pdf)
 
-[pix2pix](https://arxiv.org/pdf/1611.07004.pdf)
+**Pytorch Tutorial and Documentation**
 
-## Pytorch 
+Pytorch official website, [link](https://pytorch.org/)
 
-Big tutorial [here](https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html). 
+**PyTorch-GAN**
 
-U-net in paytorch [here](https://github.com/milesial/Pytorch-UNet). Seems really easy to creates sub-modules in a seperate file, and then call them from the main entwork. So it will be quite easy to create a class for the downsampling block and the class for the upsampling block, and then put them one after the other. Similarly, for the discriminator, they repeat a block 7 times, so we can create it and reuse it.
+Collection of code samples implementing GAN in pytorch. [link](https://github.com/eriklindernoren/PyTorch-GAN)
 
+**Speech Denoising with Deep Feature Losses**
 
+By François G. Germain, Qifeng Chen, and Vladlen Koltun, 2018, [link](https://arxiv.org/pdf/1806.10522.pdf)
 
-Note : to add skip connections, we just need to keep the variable representing the ouput of the downsampling block, and give it to the upsampling block as, for instace, a class argument. We can then just "add" it.
+**Recurrent Neural Networks for Noise Reduction in Robust ASR**
 
-ex : 
-
-```
-out16 = self.in_tr(x)
-out32 = self.down(16, 32, out16)
-out64 = self.down(32, 64, out32)
-out128 = self.down(64, 128, out64)
-out = self.up(128, 64, out128)
-out = self.up(64, 32, out64)
-out = self.up(32, 16, out32)
-out = self.out_tr(out)
-```
-
-[https://github.com/eriklindernoren/PyTorch-GAN](https://github.com/eriklindernoren/PyTorch-GAN) : Collection of code file to implement a GAN in pytorch.
+by Andrew L. Maas1, Quoc V. Le, Tyler M. O’Neil, Oriol Vinyals, Patrick Nguyen, Andrew Y. Ng, 2012, [link](http://www1.icsi.berkeley.edu/~vinyals/Files/rnn_denoise_2012.pdf)
 
 
+**Raw Waveform-based Speech Enhancement by Fully Convolutional Networks**
 
-## Audio specific 
+By Szu-Wei Fu, Yu Tsao, Xugang Lu, Hisashi Kawai, 2017, [link](https://arxiv.org/pdf/1703.02205.pdf)
 
-torchaudio seems to be able to do resampling, and can handle waveform audio. Can do many other transformations. Probably good to use this if we do super resolution, so we can generate our intput data. Tuto [here](https://pytorch.org/tutorials/beginner/audio_preprocessing_tutorial.html) Doesn't work with anaconda
+**SEGAN: Speech Enhancement Generative Adversarial Network**
 
-Could also try to use [Librosa](https://stackoverflow.com/questions/30619740/python-downsampling-wav-audio-file) that can open files downsampled directly.
+By Santiago Pascual, Antonio Bonafonte, Joan Serrà, 2017, [link](https://arxiv.org/pdf/1703.09452.pdf), [github](https://github.com/santi-pdp/segan). 
 
-## Paper
+**Audio Super-Resolution using Neural Nets**
 
-Will probably follow [this paper](https://bilat.xyz/vita/Adversarial.pdf) (MUGAN), but it is "under review" so there isn't any names. How will this work ?
+By Volodymyr Kuleshov, S. Zayd Enam, and Stefano Ermon, 2017, [link](https://arxiv.org/pdf/1708.00853.pdf), [website](https://kuleshov.github.io/audio-super-res/#), [github](https://github.com/kuleshov/audio-super-res)
 
-Need to check how to train the external network
+**Adversarial Audio Super-Resolution with Unsupervised Feature Losses**
 
-Input : fixed size audio sample from the data, going through low pass filter. They don't seem to give the input size, but they use 8 layers => 2^8 as the input size maybe ?
+By Sung Kim, Visvesh Sathe, 2018, [link](https://openreview.net/forum?id=H1eH4n09KX)
 
-Downsampling : 4 filters, 1 of each size. Then is goes through PRelU (Parametric relu) : $f(x) = alpha * x for x < 0, f(x) = x for x >= 0$ And then it goes throught the Superpixel block (similar to a pooling block) which reduces the dimension by 2 and double the number of filters (alternate values, even goes in one output, odd goes in the other output). This seems straight forward.
-
-Upsampling block : Once again we have the same 4 filters. I'm not sure how we are supposed to upsample if we have convolutional filters again. Then a dropout, the same PRelU, a subpixel block which this times interleaves two "samples" to make one larger. And then we stack with the input of the corresponding downsampling block.
-
-## Noise Reduction Techniques and Algorithms For Speech Signal Processing (Algo_Speech.pdf)
-
-Different types of noise : 
-
-- Background noise
-- Echo
-- Acoustic / audio feedback (Mic capture loudspeaker sound and send it back)
-- Amplifier noise
-- Quantization noise when transformning analog to digital (round values), neglectable at sampling higher than 8kHz/16bit 
-- Loss of quality due to compression
-
-Linear filterning (Time domain) : Simple convolutation 
-
-Spectral filtering (Frequency domain) : DFT and back
-
-ANC needs a recording of the noise to compare it to the audio
-
-Adaptive Line Enhancer (ALE) doesn't need it.
-
-Smoothing : noise is often random and fast change, so smoothing can help again white and blue (high freq) noise.
-
-[Link](http://bilat.xyz/vita/Algo_Speech.pdf)
+**Enabling Factorized Piano Music Modeling and Generation with the MAESTRO Dataset**
  
-## A Review of Adaptive Line Enhancers for Noise Cancellation (ALE.pdf)
+Curtis Hawthorne, Andriy Stasyuk, Adam Roberts, Ian Simon, Cheng-Zhi Anna Huang, Sander Dieleman, Erich Elsen, Jesse Engel, and Douglas Eck, 2019, [link](https://magenta.tensorflow.org/datasets/maestro)
 
-Doesn't need recording of noise. Adaptive self-tuning filter that can spearate periodic and stochastic component. Detect low-level sin-waves in noise
-
-[Link](http://bilat.xyz/vita/ALE.pdf)
-
-## A review: Audio noise reduction and various techniques (Techniques.pdf)
-
-Some filters : Butterworth filter, Chebyshev filter, Elliptical filter
-
-[Link](http://bilat.xyz/vita/Techniques.pdf)
-
-## Employing phase information for audio denoising (Phase.pdf)
-
-[Link](http://bilat.xyz/vita/Phase.pdf)
-
-## Audio Denoising by Time-Frequency Block Thresholding (Block_Threshold.pdf)
-
-[Link](http://bilat.xyz/vita/Block_Threshold.pdf)
-
-## Speech Denoising with Deep Feature Losses (Speech_DL.pdf)
-
-Fully convolutional network, work on the raw waveform. For the loss, use the internal activation of another network trainned for domestic audio tagging, and environnement detection (classification network). It's a little bit like a GAN.
-
-Most approaches today are done on the spectrogram domain, this one not. Prevents some artefacts due do IFT. Methods that are in the time domain often use regression loss between input and output wave. Here, the loss is the dissimilarity between hidden activations of input and ouput waves. Inspired from computer vision (-> Perceptual_Losses.pdf)
-
-Details of The main network are given in papers, section II-A-a.Different layers in the classification/feature/loss network correspond to different time scales. The classification network is inspired by VGG architecture from CV, details in paper II-B-a. II-B-b explain how to transoorm activations / weights to a loss.
-
-Train the feature loss network using multiple classification tasks (scene classification, audio tagging). Train the speech denoising using the [1] database. They used the clean speeches and some noise samples and created the training data by combining them together, then they are downsampled.
-
-Experimental setup : compared with Wiener filterning pipeline, SEGAN, and the WaveNet based one used as a baseline. Used different score metrics (overall (OVL), the signal (SIG), and the background (BAK) scores)). It was better than all the baselines. Also evaluated with human testers, also better than the others.
-
-Now this is for speech, and it might not work as well for general sound/music
-
-[Link](http://bilat.xyz/vita/Speech_DL.pdf)
-
-## Recurrent Neural Networks for Noise Reduction in Robust ASR (RNN.pdf)
-
-SPLICE algorithm  is a model that can reduce noise by finding a joint distribution between clean and noisy data, ref to article in the paper's reference, but could not find it online for free.
-
-We could simply engineer a filter, but it's hard, and not perfect .
-
-Basic idea : We can use L1 norm as the loss function. This type of network is known as denoising autoencoder (DAE). Since input has variable length, we train on a small moving window
-
-More advanced : Deep recurrent denoising audtoencoder, we add conection "between the windows" $\implies$ Input is [0 1 2] [1 2 3] [2 3 0], we give each one one to a NN with e.g. 3 hidden layer, with layer 2 recursively connected, and it gives [1] [2] [3] as the output. Uses Aurora2 corpus, with noisy variants synthetically generated
-
-[Link](http://bilat.xyz/vita/RNN.pdf)
-
-## Investigating RNN-based speech enhancement methods for noise-robust Text-to-Speech (RNN_Speech_Enhancement.pdf)
-
-Shows the two alternative approaches (time vs frequency) on a graph
-
-[Link](http://bilat.xyz/vita/RNN_Speech_Enhancement.pdf)
-
-
-## Audio Denoising with Deep Network Priors (DN_Priors.pdf)
-
-Combines time and frequency domain, unsuppervised, you try to fit the noisy audio and since we only partialy fit the output of the network helps to find the clean audio. Link to github repo with some data and the code [github](https://github.com/mosheman5/DNP).
-
-Usually we first create a mask that tells us what frequency are noise, then we use an algo that removes those frequencies.
-
-Here the assumption is that it is hard by definition to fit noise, so the NN will only fit the clean part of the input. 
-
-Technique already used in CV. Diff : in CV, the output is already the cleaned image, not here, so they create a spectral mask from the ouput to then denoise the audiio. Better than other unsupervised methods, almost as good the the supervised ones.
-
-=> Probably not usefull for GANs.
-
-[Link](http://bilat.xyz/vita/DN_Priors.pdf)
-
-## Spectral and Cepstral Audio Noise Reduction Techniques in Speech Emotion Recognition (Spectral_Cepstral.pdf)
-
-They will compare their method to methods of "Spectral substraction", where you remove the noise spectrum from the audio spectrum.
-
-Need to look in more details at "Spectral domain", "Power Spectral"; "log-sepstral", "cepstral domain", ...
-
-One again no NN are used here, this is mostly some signal processing, so I don't think it will be very usefull.
-
-They also talk about "accurancy measures", e.g. "Itakura distance", "Toeplotz autocorrelation matrix", "euclidian distance between two mel-frequency cepstral vectors".
-
-Probably more informations about signal processing techniques in the references.
-
-[Link](http://bilat.xyz/vita/Spectral_Cepstral.pdf)
-
-## Raw Waveform-based Speech Enhancement by Fully Convolutional Networks (RawWave_CNN.pdf)
-
-Convolutional, waveform to waveform. Mentions like most "Wiener filtering", "spectral substraction", "non-negative matrix factorisation". Also mentions "Deep denoising autoencoder" from (RNN.pdf), also see (DDAE.pdf) that they are citing.
-
-Explain that most models use the magnitude spectrogram (-> log-power spcetra), which will leave the phase noisy (as it used the phase from the noisy signal to reconstruct the output signal). Also mentions that it is important to use the phase information to reconstruct the signal afterwards. Apparently DL based models that use the raw form often get better results.
-
-Fully connected is not very good since it won't keep local informaton (think high frequencies). They use A "Fully convolutional network FCN" and not a CNN, see (FCN.pdf). A FCN also mean a lot less paramters.
-
-Convolutional is considered better since we need adjacent information to make sense of frequencies in the time domain. Fully connected layers cause problems (can't moel high and low frequencies together), so that's why we don't have one at the end in a FCN (FCN = CNN without fully-connected layers). 
-
-For the experiment, as some of the others papers, they took clean data and corrupted it with some noise (e.g. Babble, Car, Jackhammer, pink, street, white gaussian, ...)
-
-They also mention at the end the difference between the "shift step" for the input in the case of a DNN, but it's not very clear what they did with the FCN. They say the took 512 samples from the input wave, but does it seems really low if we use e.g. 44kHz sampling for our music.
-
-[Link](http://bilat.xyz/vita/RawWave_CNN.pdf)
-
-## Speech Enhancement Based on Deep Denoising Autoencoder (DDAE.pdf)
-
-They meantion a DAE where they only trained using clean speech : Clean as in and out, then when we give a noisy signal it tries to express it on the "clean subspace/basis function", they try to model "what makes a clean speech", need to look into that. This time, they use dirty-clean pairs, so they want to know "what is the statistical difference between noisy and clean.
-
-Once again, they create their dataset by adding some noise artificially. They mention (RNN.pdf), which uses a recurrent network, this won't be the case here.
-
-The architecture looks like a classical DNN. They stack "neural autoencoders" together, and each AE seems to be layer - non-linear - layer. They also use regularization. For training, they first pretrain each AE individually which adequate parameters, then put them together and train again.
-
-Measurement are specific to speech, they use "noise reduction", "speech distortion" and "perceptual evalutation for speech qualty - PESQ" / not clear what this is.
-
-For the features they use "Mel frequency power spectrum (MFP)" on 16ms intervals
-
-Their results are mostly better than traditional methods.
-
-[Link](http://bilat.xyz/vita/DDAE.pdf)
-
-## SEGAN: Speech Enhancement Generative Adversarial Network (Speech_GAN.pdf)
-
-As some other papers, mention that most use spectral form, but here they use the raw waveform.
-
-Explains GAN : The generator which creates some data by learning the real data distribution and trying to approximate it, and the discriminator, usually a binary classifier, that tries to tell us if our sample is a real one or one generated by the generator. The goal for the generator is to fool the discriminator.
-
-To train : D back-props a batch of real examples classified as "true", and then a batch of fake example (generated by G) and mark them as "false". Then we fix D's parameters, and G does the backpropagation with the false example to try to make D missclassify. They then give more mathematical details and techniques (e.g. LSGAN).
-
-They use a fully convolutional network (FCN), with a encoder-decoeer layout, were the signal is "compressed", concateneted with the latent representation (?) and then decoded. They also use skip connections so we don't lose some details about the structure (we have speech in and out some we have some similarities). e.g. they transmit phase and alignment information. They then use some information from the D network to create their loss.
-
-Their dataset is the usual one we saw previously [1], and they use both artificial and natural noise to create their tran/test set. THey use a sliding window of the raw data (downsampled a little bit), and they also used a minor high freqency filter.
-
-All the code is on [github](https://github.com/santi-pdp/segan). Results are positive and are mostly done by people's opinions.
-
-[Link](http://bilat.xyz/vita/Speech_GAN.pdf)
-
-## A Wavenet for Speech Denoising (WaveNet.pdf)
-
-They first present the WaveNet network, which was used to synthesize natural sounding speech.
-
-Their model is similair to WaveNet, but the convolution is "symetrically centerd" since we know both future and passed data unlinke for speech generation. They also have a different loss function, the output is not a probability but the clean data directly, 
-
-[Link](http://bilat.xyz/vita/WaveNet.pdf)
-
-## Audio Super-Resolution using Neural Nets (SuperRes_NN.pdf)
-
-Paper + webpage + github on super resolution with deep networks
-[https://kuleshov.github.io/audio-super-res/#](https://kuleshov.github.io/audio-super-res/#)
-
-Supervized model on low/high quality pairs, deep convolutional network, doesn't need specialized audio processing techniques.
-
-Explain that processing raw audio is usefull but computationally intensive.
-
-Model is fully feed-forward and inspired from image super-resolution. They consider the sample rate as the resolution we want to improve. it will work on raw audio and (bonus) is one of the rare paper that also tried to work with non-speech audio.
-
-Architecture : successive downsampling and upsampling blocks, each doing a convolution + batch norm + ReLU. Called "Bottleneck architecture", similar to the "autoencoders from previous papers. Also have some skip connectionn between "similar layers". This seems very similar to SEGAN.
-
-They also use something called "Subpixel shuffling layer", it seems to be what is used in the upsampling block to half the number of filters while increasing the spatial dimension.
-
-Two datasets, one piano [5], one with voices [6], with noisy version automaticaly generated with Chebyshev filter. They give a few metrics (Signal to Noise ratio SNR, log-spectral distance LSD)
-
-Results are good, and the model is fast enough for real-time on their GPU, but slow to train.
-
-When they tried with a more diverse musical dataset, it wasn't sucessfull and the model was underfitting.
-
-[Link](http://bilat.xyz/vita/SuperRes_NN.pdf)
-
-## Adversarial Audio Super-resolution with Unsuppervised Feature Losses (Adversarial.pdf)
-
-Called MU-GAN
-GAN are hard to train, people sometimes replace the sample-space loss with a feature loss (instead of distance between two samples in the ssample space, we use the feature maps of an auxiliary nn).
-
-Their explanations of a GAN is very similar to the one for SEGAN. They have the generator (G), the discriminator (D), and they also have the convolutional autoencoder (A) that they use to create a loss (see first paragraph above). A is unsupervised
-
-The generator is a convolutional u-net (as a few other papers), where each level works has many filter sizes, and we have skip-connections. They use "Subpixel nlocks" in the upsampling block, and the opposite, a "superpixel block" in the downsampling block. Subpixels were mentionend in the previous paper, and superpixel lets you decrease the dimensionality, a little like pooling/strided convolutions. They have good illustrations explaining this.
-
-For the loss, they use the simple L2 loss from the G network, the adversarial loss from the D network. This alone doesn't give better results that a model with no GAN, so they also use the feature loss generated by the A network.
-
-They used the [6] dataset for voices, and [5] for the piano dataset. As metrics, signal-to-noise-ratio (SNR), log-spectral distance (LSD) and mean opinion score (MOS). Good results. A being unsuppervised is on-par to the classifier based loss.
-
-[Link](http://bilat.xyz/vita/Adversarial.pdf)
-
-## Time Series Super Resolution with Temporal Adaptive Batch Normalization (TimeSerie_Batch.pdf)
-
-[Link](http://bilat.xyz/vita/TimeSerie_Batch.pdf)
-
-They want to combine recurent and convolutional, in a new type of layer called "temporal adaptive normalization". This allows the filters to be turned on and off by long range information coming from the recurrent part. Some illustration explain the architecture in more details, but once again it looks like a u-net.
-
-Super-resolutation has some spatial invariance, which implies the CNN, but we still might some usefull information furhter away, so the recurrent part can help us with that.
-
-Need to look in more details at this layer. They also use the [5] and [6] datasets
-
-# Ideas from images
-
-## Perceptual Losses for Real-Time Style Transfer and Super-Resolution (Perceptual_Losses.pdf)
-
-[Link](http://bilat.xyz/vita/Perceptual_Losses.pdf)
-
-## The Unreasonable Effectiveness of Deep Features as a Perceptual Metric (Perceptual_Metric.pdf)
-
-[Link](http://bilat.xyz/vita/Perceptual_Metric.pdf)
-
-## Fully Convolutional Networks for Semantic Segmentation (FCN.pdf)
-
-[Link](http://bilat.xyz/vita/FCN.pdf)
-
-# Datasets 
-
-## 1: Voice database with noisy and clean version
-
-[https://datashare.is.ed.ac.uk/handle/10283/1942](https://datashare.is.ed.ac.uk/handle/10283/1942)
-
-## 2: New version of [1], also voice
-
-[https://datashare.is.ed.ac.uk/handle/10283/2791](https://datashare.is.ed.ac.uk/handle/10283/2791)
-
-## 3: Speech database with clean and noisy
-
-[https://github.com/dingzeyuli/SpEAR-speech-database](https://github.com/dingzeyuli/SpEAR-speech-database)
-
-## 4: Aurora2
-
-[http://aurora.hsnr.de/aurora-2.html](http://aurora.hsnr.de/aurora-2.html)
-
-Some script that can generate noisy data
-
-## 5: Piano dataset Beethoven
-
-[https://gist.github.com/moodoki/654877be611ef63bb32d58c428d6e7ba](https://gist.github.com/moodoki/654877be611ef63bb32d58c428d6e7ba)
-
-~350MB, OGG format, bitrate between 96 and 112 kbps
-
-## 6: CSTR VCTK Corpus
-
-[https://datashare.is.ed.ac.uk/handle/10283/2651](https://datashare.is.ed.ac.uk/handle/10283/2651)
-
-## 7: Magnatagatune dataset
-
-[http://mirg.city.ac.uk/codeapps/the-magnatagatune-dataset](http://mirg.city.ac.uk/codeapps/the-magnatagatune-dataset) 200 hours of music from 188 different gernres.
-
-## 8: Maestro Dataset
-
-[https://magenta.tensorflow.org/datasets/maestro](https://magenta.tensorflow.org/datasets/maestro)
-
-Piano recording from virtuosic piano performances, ~200 hours in total, available in midi (precisly recorded from the piano, 85MB) or in WAV (122 GB).
+A summary of every reading and additional sources can be found [here](https://bilat.xyz/vita-notes).
