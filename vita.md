@@ -463,7 +463,10 @@ For all the experiments, the same file is used as the "test data" to create the 
 
 [audio](https://bilat.xyz/audio/in.wav)
 
-{% include https://bilat.xyz/audio/in.wav %}
+<audio controls>
+  <source src="https://bilat.xyz/audio/in.wav" type="audio/wav">
+Your browser does not support the audio element.
+</audio>
 
 
 
