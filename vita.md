@@ -508,3 +508,5 @@ By Sung Kim, Visvesh Sathe, 2018, [link](https://openreview.net/forum?id=H1eH4n0
 **Enabling Factorized Piano Music Modeling and Generation with the MAESTRO Dataset**
  
 Curtis Hawthorne, Andriy Stasyuk, Adam Roberts, Ian Simon, Cheng-Zhi Anna Huang, Sander Dieleman, Erich Elsen, Jesse Engel, and Douglas Eck, 2019, [link](https://magenta.tensorflow.org/datasets/maestro)
+
+A summary of every reading and additional sources can be found [here](https://bilat.xyz/vita-notes
