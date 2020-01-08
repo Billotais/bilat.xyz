@@ -446,9 +446,9 @@ It was the highest quality data that we found, but it had the problem of having 
 
 To measure the performance of the model, the log-spectral distance (LSD) is used. This is defined as follows
 
-$$LSD(x,y) =  \frac{1}{L} \sum_{l=1}^L \sqrt{\frac{1}{K} \sum_{k=1}^K (X(l,k) -\hat{X}(l,k))^2}$$
+$$LSD(x,y) =  \frac{1}{L} \sum_{l=1}^L \sqrt{\frac{1}{K} \sum_{k=1}^K (X(l,k) - \hat{X}(l,k))^2}$$
 
-where $X$ and $\hat{X}$ are the log-spectral power magnitudes of $y$ and $x$, respectively. These are defined as $X=\log{|S|^2}$, where $S$ is the short-time Fourier transform (STFT) of the signal. $l$ and $k$ to index framces and frequencies, repectively. For the following results, frames of length 1024 were used.
+where $X$ and $\hat{X}$ are the log-spectral power magnitudes of $y$ and $x$, respectively. These are defined as $X=\log{\left\| S\right\|^2}$, where $S$ is the short-time Fourier transform (STFT) of the signal. $l$ and $k$ to index framces and frequencies, repectively. For the following results, frames of length 1024 were used.
 
 ## Results
 
