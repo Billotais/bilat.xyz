@@ -477,6 +477,8 @@ Your browser does not support the audio element.
 
 
 
+
+
 <a name="potential_improvements_"></a>
 
 # Potential improvements
@@ -491,7 +493,7 @@ Your browser does not support the audio element.
 
 **How to Develop a Conditional GAN (cGAN) From Scratch**
 
-By Jason Brownlee, 2019, [link](https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/))
+By Jason Brownlee, 2019, [link](https://machinelearningmastery.com/how-to-develop-a-conditional-generative-adversarial-network-from-scratch/)
 
 **Image-to-Image Translation with Conditional Adversarial Networks**
 
