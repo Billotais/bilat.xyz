@@ -452,6 +452,15 @@ where $X$ and $\hat{X}$ are the log-spectral power magnitudes of $y$ and $x$, re
 
 ## Results
 
+For the following experiments, as there are a lot of paramters, only a few of them are changed while the others stay fixed. 
+
+For all the experiment, we do super-resolution from 5kHz to 10kHz, with no noise added. Approximatly 1.4 GB of raw data was used, corresponding to a little over 2 hours of music. 
+
+For each experiment, the data is split into samples of 4096 of length, with an overlap of 2048. The main network is initialized with a depth of 8 (i.e. 8 downsampling blocks and 8 upsampling blocks). The discriminator and the autoencoder will have the same depth aswell. Each experiment is for 10 epochs, using mini-bacthes of size 32. For the generator, the L2 loss is used by default. 
+
+
+
+
 <a name="potential_improvements_"></a>
 
 # Potential improvements
