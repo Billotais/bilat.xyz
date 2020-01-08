@@ -448,7 +448,7 @@ To measure the performance of the model, the log-spectral distance (LSD) is used
 
 $$LSD(x,y) =  \frac{1}{L} \sum_{l=1}^L \sqrt{\frac{1}{K} \sum_{k=1}^K (X(l,k) - \hat{X}(l,k))^2}$$
 
-where $X$ and $\hat{X}$ are the log-spectral power magnitudes of $y$ and $x$, respectively. These are defined as $X=\log{\left\| S\right\|^2}$, where $S$ is the short-time Fourier transform (STFT) of the signal. $l$ and $k$ to index framces and frequencies, repectively. For the following results, frames of length 1024 were used.
+where $X$ and $\hat{X}$ are the log-spectral power magnitudes of $y$ and $x$, respectively. These are defined as $X=\log{\left\| S\right\|^2}$, where $S$ is the short-time Fourier transform (STFT) of the signal. $l$ and $k$ are used to index frames and frequencies, repectively. For the following results, frames of length 1024 were used.
 
 ## Results
 
@@ -474,6 +474,8 @@ High quality audio, i.e. what we want to achieve, the target
   <source src="https://bilat.xyz/audio/target.wav" type="audio/wav">
 Your browser does not support the audio element.
 </audio>
+
+As you can hear, the degradation in the first file is clear. It sound like it was recorded in a box, and it is actually due to the loss of high freqencies following the down-sampling of the file.
 
 
 
