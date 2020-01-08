@@ -463,8 +463,15 @@ For all the experiments, the same file is used as the "test data" to create the 
 
 
 <p>Low quality audio</p>
+Low quality audio, i.e. what we want to improve
 <audio controls>
   <source src="https://bilat.xyz/audio/in.wav" type="audio/wav">
+Your browser does not support the audio element.
+</audio>
+
+High quality audio, i.e. what we want to achieve
+<audio controls>
+  <source src="https://bilat.xyz/audio/out.wav" type="audio/wav">
 Your browser does not support the audio element.
 </audio>
 
