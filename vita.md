@@ -458,6 +458,10 @@ For all the experiment, we do super-resolution from 5kHz to 10kHz, with no noise
 
 For each experiment, the data is split into samples of 4096 of length, with an overlap of 2048. The main network is initialized with a depth of 8 (i.e. 8 downsampling blocks and 8 upsampling blocks). The discriminator and the autoencoder will have the same depth aswell. Each experiment is for 10 epochs, using mini-bacthes of size 32. For the generator, the L2 loss is used by default. 
 
+For all the experiments, the same file is used as the "test data" to create the plots that will follow. Moreover, the measure the metrics, another file is used, but once again always the same. 
+
+
+
 
 
 
