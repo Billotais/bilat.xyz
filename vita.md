@@ -490,7 +490,7 @@ As you can hear, the degradation in the first file is clear. It sound like it wa
 
 Audio denoising is a very complicated task, and as we have seen with the results, it is really hard to get a result that really sounds better. Unlike with images and videos, were a little artefact or defect will maybe go unseen by the untraine eye, something similar in an audio file is immediatly noticeable, especially with music file with little variation (everybody knows what a piano is supposed to sound like, so any variation will be noticable). With more general sound, like speech mixed with background music, it can maybe be less problematic as there is anyway more variation in the original audio. 
 
-Nevertheless, this project can hopefully can be of help for anybody that want to start working with audio denoising. It can serve as a starting point for the implementation of many advanced machine learning or processing methods that might be able to solve this problem. 
+Nevertheless, this project can hopefully be of help for anybody that want to start working with audio denoising. It can serve as a starting point for the implementation of many advanced machine learning or processing methods that might be able to solve this problem. 
 
 <a name="sources_"></a>
 
