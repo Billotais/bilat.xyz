@@ -483,17 +483,17 @@ As you can hear, the degradation in the first file is clear. It sounds like it w
 
 # Discussion
 
-When creating a neural network, one important aspect it to chose the appropriate loss. There are a few types of losses that can be considered. 
+When creating a neural network, one important aspect it to choose the appropriate loss. There are a few types of losses that can be considered. 
 
 First, the reconstruction loss. This one is the simple loss that we usually think of at first. It looks at how far away are we from the target data, in a "mathematical" way. We often use the mean squared error, but other types of distance exist.
 
 The perceptual loss also looks at the distance between two signals, but at a higher level. For instance, we can look at the difference in frequencies between the two signals, and create a loss function from this. We still compute the loss between two accurate representations of the data, but we look at it from a different angle. We could have for instance used the Log-spectral distance (LSD) used in the metrics, and it might have been helpful, especially for super-resolution where it is important to recreate high frequencies.
 
-The adverarial loss is the one that is implemented by the discriminator. The adversarial network tries to learn that the generator creates fake samples, and meanwhile the generator tries to create samples that are classified as real by the discriminator. This is a kind of minimax game, and there are also multiple possible loss. 
+The adversarial loss is the one that is implemented by the discriminator. The adversarial network tries to learn that the generator creates fake samples, and meanwhile the generator tries to create samples that are classified as real by the discriminator. This is a kind of minimax game, and there are also multiple possible loss. 
 
-Finally, there is also the style loss that is often use in image processing to create images "in the style of" another image. This time, it looks at very high features of the data, and compute the loss from this. In the context of this project, style loss doesn't seem very usefull. Indeed, the style of a music file would be something like the pace of the song, the tonalities, the rythm, the instruments or maybe the compositor. However here this is basically the same for all the data, as all of it is classical music. 
+Finally, there is also the style loss that is often use in image processing to create images "in the style of" another image. This time, it looks at very high features of the data, and compute the loss from this. In the context of this project, style loss doesn't seem very useful. Indeed, the style of a music file would be something like the pace of the song, the tonalities, the rhythm, the instruments or maybe the compositor. However here this is basically the same for all the data, as all of it is classical music. 
 
-On the other hand, if we were to expand this project to different types of music, it could be usefull to prevent the generated audio from sounding too different, e.g. if the input is a guitar melody, you don't want it to sound like a violin after removing the noise.
+On the other hand, if we were to expand this project to different types of music, it could be useful to prevent the generated audio from sounding too different, e.g. if the input is a guitar melody, you don't want it to sound like a violin after removing the noise.
 
 The idea behind the additional autoencoder is actually to try to automatically find those specific losses. It tries to find a low dimension representation of the data, which could be anything from just a low resolution version of the audio, or features about "sadness" or "color" or "speed" of the music. This is the goal, but since the architecture of this autoencoder is still quite simple, it is probable that is not able to learn such complicated features. 
 
@@ -502,7 +502,7 @@ The idea behind the additional autoencoder is actually to try to automatically f
 
 # Conclusion
 
-Audio denoising is a very complicated task, and as we have seen with the results, it is really hard to get a result that really sounds better. Unlike with images and videos, were a little artefact or defect will maybe go unseen by the untraine eye, something similar in an audio file is immediatly noticeable, especially with music file with little variation (everybody knows what a piano is supposed to sound like, so any variation will be noticable). With more general sound, like speech mixed with background music, it can maybe be less problematic as there is anyway more variation in the original audio. 
+Audio denoising is a very complicated task, and as we have seen with the results, it is really hard to get a result that really sounds better. Unlike with images and videos, were a little artifact or defect will maybe go unseen by the untrained eye, something similar in an audio file is immediately noticeable, especially with music file with little variation (everybody knows what a piano is supposed to sound like, so any variation will be noticeable). With more general sound, like speech mixed with background music, it can maybe be less problematic as there is anyway more variation in the original audio. 
 
 Nevertheless, this project can hopefully be of help for anybody that want to start working with audio denoising. It can serve as a starting point for the implementation of many advanced machine learning or processing methods that might be able to solve this problem. 
 
