@@ -215,7 +215,7 @@ Suppose we have an input sample, i.e. a low quality audio sample. We send it as 
 
 For this, we will look at the internal activations of the generator network, in particular the activations at one layer (we call it $x_l$). $x_l$ corresponds to the activation at the output of the l$l$th upsampling block of our generator. We then compute the gradient of this tensor of activations relative to the loss of the discriminator, and then update the value of $x_l$ by gradient descent. The values of $x_l$ are then once again propagated to the end of the network, which will give us a new sample. (Note that during this second pass with the modified $x_l$, the values provided by the skip connections come from the original propagation of x. 
 
-Finally, we repeat this while our sample is not classified as "real" by the discriminator. We still stop after a maximum number of iterations to not spent to much time with problematic samples.
+Finally, we repeat this while our sample is not classified as "real" by the discriminator. We still stop after a maximum number of iterations to not spent too much time with problematic samples.
 
 To sum up : 
 
