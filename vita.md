@@ -87,7 +87,7 @@ In the upsampling blocks, the convolutional layer uses the same filter sizes as 
 
 Finally, we have the stacking block that takes the output of the corresponding downsampling block and concatenates it on the channel dimension with the output of the sub-pixel block.
 
-After all the upsampling blocks, we finish with a final block that makes of convolution with 2 outputs channels, a filter size of 9 and a stride of 1, then the subpixel operation (this will reshape our data so that we are left with only one channel, and then we add the output of this to our input data to get the output of the network (this is the additive skip connection). What this connection implies is that the netork doesn't learn how to create denoised sound directly, but rather it learns how to create "denoising data" that when added to the audio itself improves it.
+After all the upsampling blocks, we finish with a final block that makes of convolution with 2 outputs channels, a filter size of 9 and a stride of 1, then the subpixel operation (this will reshape our data so that we are left with only one channel, and then we add the output of this to our input data to get the output of the network (this is the additive skip connection). What this connection implies is that the network doesn't learn how to create denoised sound directly, but rather it learns how to create "denoising data" that when added to the audio itself improves it.
 
 To better understand this architecture, you can see here a schema of the network 
 
