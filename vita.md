@@ -415,12 +415,12 @@ By default, once the model has finished training, it will take a file and try to
     - `class Discriminator` : Implementation of the Discriminator Network
     - `class AutoEncoder` : Implementation of the AutoEncoder Network
     - `class ConditionalDiscriminator` : Implementation of the Conditional Discriminator network.
-    - other classes are juste submodules fused by the other main modules.
+    - other classes are juste submodules used by the other main modules.
 - `files.py` 
 	- `class SimpleFiles` : simple representation of a dataset, with methods to get train/test/val data
     - `class MAESTROFiles` : specific representation for the MAESTRO Dataset, with methods to get train/test/val data
 - `datasets.py`
-	- `class AudioDataset` : Pytorch dataset class that takes a filename and loads it as a pair `(input,target)` into memeory
+	- `class AudioDataset` : Pytorch dataset class that takes a filename and loads it as a pair `(input,target)` into memory
 - `preprocessing.py`
 	- `preprocess()` : Given a file name and a preprocessing chain, returns pair of file names corresponding to the outputs of the preprocessing.
     - `sample, noise, reverb` :  implementation of the options accepted by the preprocess chain
