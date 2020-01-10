@@ -495,6 +495,8 @@ Finally, there is also the style loss that is often use in image processing to c
 On the other hand, if we were to expand this project to different types of music, it could be usefull to prevent the generated audio from sounding too different, e.g. if the input is a guitar melody, you don't want it to sound like a violin after removing the noise.
 
 The idea behind the additional autoencoder is actually to try to automatically find those specific losses. It tries to find a low dimension representation of the data, which could be anything from just a low resolution version of the audio, or features about "sadness" or "color" or "speed" of the music. This is the goal, but since the architecture of this autoencoder is still quite simple, it is probable that is not able to learn such complicated features. 
+
+
 <a name="conclusion_"></a>
 
 # Conclusion
