@@ -71,14 +71,14 @@ After this, techniques like Collaborative GAN, Conditional GAN **and Patch GAN**
 
 **Architecture**
 
-The original architecture is, as mentionned before, a convolutional autoencoder with skip connections. It consists of $B$ downsampling blocks, one bottleneck block, $B$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsampling and an upsampling block at the same level, and an additive residual connection between the input and the final block.
+The original architecture is, as mentioned before, a convolutional autoencoder with skip connections. It consists of $B$ downsampling blocks, one bottleneck block, $B$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsampling and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
 ![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
 
 
 Each domnsampling block consists of a convolutional block, and a ReLU block. These have a stride of 2, the number of channels outputed by each convolutional block is given by the array `[126, 256, 512, 512, 512, ...]`, and the size of filters is given by the array `[63, 33, 17, 9, 9, 9, ...]`. The ReLU block is more precisely a Leaky rectified linear block with a slope of 0.2 on the negative side.
 
-The bottleneck block is the same as a downsampling block, but with a dropout with probabilty 0.5 after the convolutional layer.
+The bottleneck block is the same as a downsampling block, but with a dropout with probability 0.5 after the convolutional layer.
 
 In the upsampling blocks, the convolutional layer uses the same filter sizes as the downsampling blocks, but in reversed order. The number of channels outputed by the convolution is double the one in the corresponding downsampling block, and we have a stride of 1. We then have a dropout of 0.5 and a LeakyReLU with a slope of 0.2. Following this, we have the *DimShuffle* operation, more precisely the Sub-pixel operation, that takes some data of shape $N\times C \times \ W$ and transform it into data of shape $N\times C/2 \times \ 2W$ by interleaving elements from two channels together. 
 
