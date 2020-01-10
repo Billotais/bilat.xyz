@@ -426,6 +426,7 @@ By default, once the model has finished training, it will take a file and try to
     - `sample, noise, reverb` :  implementation of the options accepted by the preprocess chain
     
 - `utils.py` : various functions used in multiple places in the code
+- `metrics.py` : file where metrics are implemented. Everything inside the main function will be called at the end of the training after an audio file has been generated.
 
 
 
