@@ -201,7 +201,7 @@ Where $\psi(x)$ is the output of the network at the bottlneck layer, and $C_f$ a
 
 ## Collaborative GAN
 
-In a normal GAN architecture, once the model is trained, we only use the generator to create our final samples. Collaborative GAN is a technique where the discriminator is also used during the sampling phase, to hopefully get better results. Collaborative GAN is used only once the original training of the model is completly done. I will present here the modified version of this method, adapted from the original paper.
+In a normal GAN architecture, once the model is trained, we only use the generator to create our final samples. Collaborative GAN is a technique where the discriminator is also used during the sampling phase, to hopefully get better results. Collaborative GAN is used only once the original training of the model is completely done. I will present here the modified version of this method, adapted from the original paper.
 
 There are two main part to this method :
 
@@ -209,13 +209,13 @@ There are two main part to this method :
 
 This step happens when you want to generate a sample, but also want to improve it using information provided by the discriminator. Since this happens after the training, we want to freeze the parameters of both the generator and the discriminator.
 
-Suppose we have an input sample, i.e. a low quality audio sample. We send it as an input to the generator, to generate an improved version. We then take the output, and give it to the discirminator. If the discriminator classifies it as "real" with a high enough confidence (in the code *0.5* is used, but higher values may be required for better results), we stop, as we consider our sample is good enough. However, if our sample is classified as "fake", we will try to improve it. This is illustrated here:
+Suppose we have an input sample, i.e. a low quality audio sample. We send it as an input to the generator, to generate an improved version. We then take the output, and give it to the discriminator. If the discriminator classifies it as "real" with a high enough confidence (in the code *0.5* is used, but higher values may be required for better results), we stop, as we consider our sample is good enough. However, if our sample is classified as "fake", we will try to improve it. This is illustrated here:
 
 ![Collaborative GAN]({{site.baseurl}}/img/vita/collab_gan.png)
 
-For this, we will look at the internal activations of the generator network, in particular the activations at one layer (we call it $x_l$). $x_l$ corresponds to the activation at the output of the l$l$th upsampling block of our generator. We then compute the gradiant of this tensor of activations relative to the loss of the discriminator, and then update the value of $x_l$ by gradiant descent. The values of $x_l$ are then once again propagated to the end of the network, which will give us a new sample. (Note that during this second pass with the modified $x_l$, the values provided by the skip connections come from the original propagation of x. 
+For this, we will look at the internal activations of the generator network, in particular the activations at one layer (we call it $x_l$). $x_l$ corresponds to the activation at the output of the l$l$th upsampling block of our generator. We then compute the gradient of this tensor of activations relative to the loss of the discriminator, and then update the value of $x_l$ by gradient descent. The values of $x_l$ are then once again propagated to the end of the network, which will give us a new sample. (Note that during this second pass with the modified $x_l$, the values provided by the skip connections come from the original propagation of x. 
 
-Finally, we repeat this while our sample is not classified as "real" by the discriminator. We nevertheless stop after a maximum number of iterations to not spent to much time with problematic samples.
+Finally, we repeat this while our sample is not classified as "real" by the discriminator. We still stop after a maximum number of iterations to not spent to much time with problematic samples.
 
 To sum up : 
 
