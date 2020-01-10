@@ -231,11 +231,11 @@ To sum up :
 
 This whole algorithm is done at the complete end of our pipeline, when we generate samples for our output audio file. 
 
-However, our discriminator, despite being able to classifiy samples as real and fake, it is not really capable of helping the refining process. For this reasoon, we have to train it beforehand. This step is called discriminator shaping.
+However, our discriminator, despite being able to classify samples as real and fake, it is not really capable of helping the refining process. For this reason, we have to train it beforehand. This step is called discriminator shaping.
 
 ### Discriminator shaping
 
-Discriminator shaping happens after the normal training, but before the generation of the final audio file using collaborative sampling. I works as follows :
+Discriminator shaping happens after the normal training, but before the generation of the final audio file using collaborative sampling. It works as follows :
 
 For a given number of iterations, and given a pair $(x_l, x_h)$ of low quality and high quality audio, we train the discriminator with $x_h$ given as "real" data, and the collaboratively sampled data generated from $x_l$ as "fake" data.
 
@@ -243,19 +243,19 @@ For a given number of iterations, and given a pair $(x_l, x_h)$ of low quality a
 
 ## Conditional GAN
 
-Another technique that can be used to improve the results of our model is conditional generative adversarial network (also known as CGAN). This technique is for instance used by [pix2pix](https://phillipi.github.io/pix2pix/), where the goal is to transform an image into another (often starting from a schematic images, i.e. only the borders, or maybe a segmentation map, and trying to create a realistic image correspondign to this input). 
+Another technique that can be used to improve the results of our model is conditional generative adversarial network (also known as CGAN). This technique is for instance used by [pix2pix](https://phillipi.github.io/pix2pix/), where the goal is to transform an image into another (often starting from a schematic images, i.e. only the borders, or maybe a segmentation map, and trying to create a realistic image corresponding to this input). 
 
-This was implemented in this project since this idea (image to image instead of random latent data to image) is actually guite similar to what we are trying to do here. Indeed, we already start from an image, and therefore this model might be more appropriated that the usual generator model.
+This was implemented in this project since this idea (image to image instead of random latent data to image) is actually quite similar to what we are trying to do here. Indeed, we already start from an image, and therefore this model might be more appropriated that the usual generator model.
 
 The basic idea of CGAN is this: You take the same model as for our previous GAN (a generator, and a discriminator that takes improved samples and classifies them as *real* or fake*), but you edit the discriminator so that it takes both the improved data, but also the original data as an input (WE simply concatenate them on the channel dimension). 
 
-This change means that now the goal of the discriminator is to ask "Is this a real-sounding improved sample, given what the original data is ?", instead of only "Is this a real-sounding improved sample ?" (therfore the name *conditional* GAN).
+This change means that now the goal of the discriminator is to ask "Is this a real-sounding improved sample, given what the original data is ?", instead of only "Is this a real-sounding improved sample ?" (therefore the name *conditional* GAN).
 
 You can see here an illustration of this change, taken from the original pix2pix paper.
 
 ![Conditional gan]({{site.baseurl}}/img/vita/cgan.png)
 
-Here they use images, but the idea is the same. Your input x (the drawn shoe, respectively the low quality audio file) is given to the generator to create an improved version (the grey shoe / improved audio). Then, you give both the generated sample (grey shoe / improved audio) and the original data (drawn show / low quality audio) to the discriminator). Moreover, when training the discriminator, you will also give two samples as the input, namely the original image (drawn shoe / low quality audio) and the target image (brown shoe / high quality audio).
+Here they use images, but the idea is the same. Your input x (the drawn shoe, respectively the low quality audio file) is given to the generator to create an improved version (the gray shoe / improved audio). Then, you give both the generated sample (gray shoe / improved audio) and the original data (drawn show / low quality audio) to the discriminator. Moreover, when training the discriminator, you will also give two samples as the input, namely the original image (drawn shoe / low quality audio) and the target image (brown shoe / high quality audio).
 
 The architecture for this conditional discriminator is exactly the same as the original discriminator, with simply a different input shape. The rest of the network doesn't change.
 
@@ -266,13 +266,13 @@ Since this model should work with any audio file provided, we need to do some pr
 
 ## Audio degradation
 
-Since the goal of this project is to improve audio quality, we need to create our dataset. We use the MAESTRO Dataset (as described later), which constists of only high quality audio files. We therefore need to degrade those files to have our training data pairs. Three type of pre-processing are supported; Noise, Downsampling and reverberation. All of those are done using the `sox` library, and can be chained together.
+Since the goal of this project is to improve audio quality, we need to create our dataset. We use the MAESTRO Dataset (as described later), which consists of only high quality audio files. We therefore need to degrade those files to have our training data pairs. Three type of preprocessing are supported; Noise, Downsampling and reverberation. All of those are done using the `sox` library, and can be chained together.
 
-For the downsampling, we have two arguments, *target_res* and *input_res*. If we name our pair of input/output data samples (x, y), we can create y by simply downsampling our audio to *target_rate*. To create x, we first downsample our data to *input_res*, and then upsample it to *target_rate* using simple linear interpolation. We do it thi way so we can have a symetrical network, which is necessary for our skip connections to work properly.
+For the downsampling, we have two arguments, *target_res* and *input_res*. If we name our pair of input/output data samples (x, y), we can create y by simply downsampling our audio to *target_rate*. To create x, we first downsample our data to *input_res*, and then upsample it to *target_rate* using simple linear interpolation. We do it thi way so we can have a symmetrical network, which is necessary for our skip connections to work properly.
 
 ## Audio split
 
-Since our network takes as input some data with a given size, we need to split our original audio file into mutliple small segments. We do this using a sliding window with a stride (usually a window of 2048 and a stride of 1024). This gives us some redundency in the data, and this way any part of the music is seen twice, at a different postion in the input. 
+Since our network takes as input some data with a given size, we need to split our original audio file into multiple small segments. We do this using a sliding window with a stride (usually a window of 2048 and a stride of 1024). This gives us some redundancy in the data, and this way any part of the music is seen twice, at a different position in the input. 
 
 During the evaluation phase, when we want to reconstruct an audio file, we need to put samples of the music back together. The naive way would be to split the audio file using a stride of the same value as the window size (i.e. no overlap), improve each sample individually, and then concatenate all the blocks together. This, however, doesn't give us good results, and we can hear a distincitve noise at the junction between two samples. This happens because our network handles the border of a sample differently than data in the middle of the sample (we have to use some padding on the border, so the sound is distorded).
 
