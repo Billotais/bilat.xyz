@@ -274,14 +274,14 @@ For the downsampling, we have two arguments, *target_res* and *input_res*. If we
 
 Since our network takes as input some data with a given size, we need to split our original audio file into multiple small segments. We do this using a sliding window with a stride (usually a window of 2048 and a stride of 1024). This gives us some redundancy in the data, and this way any part of the music is seen twice, at a different position in the input. 
 
-During the evaluation phase, when we want to reconstruct an audio file, we need to put samples of the music back together. The naive way would be to split the audio file using a stride of the same value as the window size (i.e. no overlap), improve each sample individually, and then concatenate all the blocks together. This, however, doesn't give us good results, and we can hear a distincitve noise at the junction between two samples. This happens because our network handles the border of a sample differently than data in the middle of the sample (we have to use some padding on the border, so the sound is distorded).
+During the evaluation phase, when we want to reconstruct an audio file, we need to put samples of the music back together. The naive way would be to split the audio file using a stride of the same value as the window size (i.e. no overlap), improve each sample individually, and then concatenate all the blocks together. This, however, doesn't give us good results, and we can hear a distinctive noise at the junction between two samples. This happens because our network handles the border of a sample differently than data in the middle of the sample (we have to use some padding on the border, so the sound is distorted).
 
-Therefore, for the evaluation phase, we still split the data using a sliding window with some overlap. When putting the blocks together, we will only keep a part of each samples, and the borders will be croped. This can be seen in the following illustration.
+Therefore, for the evaluation phase, we still split the data using a sliding window with some overlap. When putting the blocks together, we will only keep a part of each sample, and the borders will be cropped. This can be seen in the following illustration.
 
 ![Illustration of audio reconstruction]({{site.baseurl}}/img/vita/merge.png)
 
 
-With this technique, we don't have any audio artefact at the junction between two samples.
+With this technique, we don't have any audio artifact at the junction between two samples.
 
 <a name="code_"></a>
 
