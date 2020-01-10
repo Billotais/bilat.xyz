@@ -473,7 +473,7 @@ High quality audio, i.e. what we want to achieve, the target
 Your browser does not support the audio element.
 </audio>
 
-As you can hear, the degradation in the first file is clear. It sound like it was recorded in a box, and it is actually due to the loss of high freqencies following the down-sampling of the file.
+As you can hear, the degradation in the first file is clear. It sounds like it was recorded in a box, and it is due to the loss of high freqencies following the down-sampling of the file.
 
 
 
