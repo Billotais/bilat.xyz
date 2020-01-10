@@ -97,10 +97,9 @@ To better understand this architecture, you can see here a schema of the network
 
 and you can see how the stacking connections are used. In the upsampling block, the goal of the convolution is to merge the data from the previous upsampling block and from the corresponding downsampling block, whereas the sub-pixel operation's goal is simply to reshape it so that it has the correct shape to be concatenated later.
 
-Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what are the size of each layer and the parameters of the convolution. 
+Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what are the sizes of each layer and the parameters of the convolution. 
 
 ```
-   
            input : (1, 1024) -----------------------------------------
                                                                      |   
                                                                      |
