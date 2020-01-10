@@ -378,9 +378,11 @@ main.py --count -1 --out 1000 -e 10 --batch 32 --window 2048 --stride 1024 \\
         --preprocessing "sample 5000 10000"
 ```
 
-will run the model for 10 epochs, using minibatches of 32 samples. The network will have a depth of 8, and we split the data into sub-samples of 2048 of width, and some overlap (stride of 1024). We train on all avalailable training data, but create an improved version for only one output file. Our data is stored in the `/data/lois-data/maestro` folder. Our target rate is 10kHz, the learning rate for the generator and the discriminator is 0.0001, the lambda used for the discriminator part of the composite loss is 0.0001. Finally, we want to do some  upsampling from 5kHz to 10kHz.
+will run the model for 10 epochs, using minibatches of 32 samples. The network will have a depth of 8, and we split the data into sub-samples of 2048 of width, with some overlap (stride of 1024). We train on all avalailable training data, but create an improved version for only one output file. Our data is stored in the `/data/lois-data/maestro` folder. Our target rate is 10kHz, the learning rate for the generator and the discriminator is 0.0001, the lambda used for the discriminator part of the composite loss is 0.0001. Finally, we want to do some upsampling from 5kHz to 10kHz.
 
 Note that you need to create a `out` folder inside then `src` directory. All the results will be saved inside.
+
+If you want to load an existing model to evaluate a new file, use the `--load test_file` argument. The other arguments should still be present. The model will look into the folder `out/{name}/models` for a file named `model.tar` that contains the desired model.
 
 ### Preprocessing
 
