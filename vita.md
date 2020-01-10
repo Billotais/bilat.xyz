@@ -424,7 +424,6 @@ By default, once the model has finished training, it will take a file and try to
 - `preprocessing.py`
 	- `preprocess()` : Given a file name and a preprocessing chain, returns pair of file names corresponding to the outputs of the preprocessing.
     - `sample, noise, reverb` :  implementation of the options accepted by the preprocess chain
-    
 - `utils.py` : various functions used in multiple places in the code
 - `metrics.py` : file where metrics are implemented. Everything inside the main function will be called at the end of the training after an audio file has been generated.
 
