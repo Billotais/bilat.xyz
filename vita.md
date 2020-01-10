@@ -436,9 +436,9 @@ By default, once the model has finished training, it will take a file and try to
 
 **MAESTRO Dataset**
 
-This dataset consists of more than 200 hours of recorded piano, in high quality (44.1kHz), and in the wav format. Each file is also availible in MIDI format, but those were not used as we wanted to use some more realistic data. Due to the huge amount of data, no all of it was used (only ~3.3GB).
+This dataset consists of more than 200 hours of recorded piano, in high quality (44.1kHz), and in the wav format. Each file is also available in MIDI format, but those were not used as we wanted to use some more realistic data. Due to the huge amount of data, no all of it was used.
 
-It was the highest quality data that we found, but it had the problem of having a little bit of background noise (since it was recorded in a concert hall, you can hear poeple mobing chairs and so on). What could maybe be done to not have this noise in the high quality data is to generate realistic piano sound from the midi file (either artificially, or even with one of those piano that play midi files for you), but it is clearly out of scope for this project.
+It was the highest quality data that we found, but it had the problem of having a little bit of background noise (since it was recorded in a concert hall, you can hear people moving chairs and so on). What could maybe be done to not have this noise in the high quality data is to generate realistic piano sound from the midi file (either artificially, or even with one of those piano that play midi files for you), but it is clearly out of scope for this project.
 
 **Metrics**
 
@@ -446,15 +446,15 @@ To measure the performance of the model, the log-spectral distance (LSD) is used
 
 $$LSD(x,y) =  \frac{1}{L} \sum_{l=1}^L \sqrt{\frac{1}{K} \sum_{k=1}^K (X(l,k) - \hat{X}(l,k))^2}$$
 
-where $X$ and $\hat{X}$ are the log-spectral power magnitudes of $y$ and $x$, respectively. These are defined as $X=\log{\left\| S\right\|^2}$, where $S$ is the short-time Fourier transform (STFT) of the signal. $l$ and $k$ are used to index frames and frequencies, repectively. For the following results, frames of length 1024 were used.
+where $X$ and $\hat{X}$ are the log-spectral power magnitudes of $y$ and $x$, respectively. These are defined as $X=\log{\left\| S\right\|^2}$, where $S$ is the short-time Fourier transform (STFT) of the signal. $l$ and $k$ are used to index frames and frequencies, respectively. For the following results, frames of length 1024 were used.
 
 ## Results
 
-For the following experiments, as there are a lot of paramters, only a few of them are changed while the others stay fixed. 
+For the following experiments, as there are a lot of parameters, only a few of them are changed while the others stay fixed. 
 
-For all the experiment, we do super-resolution from 5kHz to 10kHz, with no noise added. Approximatly 1.4 GB of raw data was used, corresponding to a little over 2 hours of music. 
+For all the experiment, we do super-resolution from 5kHz to 10kHz, with no noise added. Approximately 1.4 GB of raw data was used, corresponding to a little over 2 hours of music. 
 
-For each experiment, the data is split into samples of 4096 of length, with an overlap of 2048. The main network is initialized with a depth of 8 (i.e. 8 downsampling blocks and 8 upsampling blocks). The discriminator and the autoencoder will have the same depth aswell. Each experiment is for 10 epochs, using mini-bacthes of size 32. For the generator, the L2 loss is used by default. 
+For each experiment, the data is split into samples of 4096 of length, with an overlap of 2048. The main network is initialized with a depth of 8 (i.e. 8 downsampling blocks and 8 upsampling blocks). The discriminator and the autoencoder will have the same depth as well. Each experiment is for 10 epochs, using mini-batches of size 32. For the generator, the L2 loss is used by default. 
 
 For all the experiments, the same file is used as the "test data" to create the plots that will follow. Moreover, the measure the metrics, another file is used, but once again always the same. 
 
