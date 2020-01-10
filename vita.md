@@ -37,8 +37,7 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 
 The quality of audio recordings from a mobile device has gotten better over the years, but there are still a lot of factors that can decrease the quality. Among others, the size and the quality of the microphone sensor, as well as its location relative to the audio source can have a non-negligable impact. We also cannot forget potential ambient noise (e.g. voices, rain, traffic) and reverberation that can be cause by the size and shape of the room.
 
-It would be usefull if we could somehow correct all those issues by using software tools that could take a low quality audio file, and improve it as if the audio was recorded using high quality equipement in a perfectly silent environement. More precisly, given a music sample of any length and recorded using low quality equipment in a noisy environment (therefore it might have a low resolution, some noise and some reverberation), we want to output a higher resolution version of the same audio sample, with some of the noise and reverberation removed.
-quality version of this audio sample. If the resulting music file sounds better to the human ear than the original, the transformation is considered successful. 
+It would be usefull if we could somehow correct all those issues by using software tools that could take a low quality audio file, and improve it as if the audio was recorded using high quality equipement in a perfectly silent environement. More precisly, given a music sample of any length and recorded using low quality equipment in a noisy environment (therefore it might have a low resolution, some noise and some reverberation), we want to output a higher resolution version of the same audio sample, with some of the noise and reverberation removed. If the resulting music file sounds better to the human ear than the original, the transformation is considered successful. 
 
 **Why is it important ?**
 
@@ -50,9 +49,9 @@ For instance, it could be used to improve the precision of the LIDAR technology 
 
 **Goal of the project**
 
-Most of the research on audio denoising is done on speech, as it is probably the domain where such techniques might be the most usefull (intelligent assistants and so on). Thefore, there are very few papers that tried these techniques on music, and when they did it often was as an afterthought, and the not primary goal of their project.
+Most of the research on audio denoising is done on speech, as it is probably the domain where such techniques might be the most usefull (intelligent assistants, speech-to-text, etc). Therefore, there are very few papers that tried these techniques on music, and when they did it often was as an afterthought, and not the primary goal of their project.
 
-The goal of this project was to study the state of the art in audio denoising and super-resolution, and then improve it by adding some other ideas comming from image processing research. At the time of the start of the project, the state of the art in speech super-resolution seemed to be _Speech Denoising with Deep Feature Losses_ (complete reference at the end), and the state of the art for speech denoising seemed to be _Adversarial Audio Super-Resolution with Unsupervised Feature Losses_. The plan was to first implement this second paper as a baseline, and then try to improve it. Unfortunatly, it proved more challening than expected to implement this model, as some details were not clear enough to implement it correctly. 
+The goal of this project was to study the state of the art in audio denoising and super-resolution, and then improve it by adding some other ideas coming from image processing research. At the time of the start of the project, the state of the art in speech super-resolution seemed to be _Speech Denoising with Deep Feature Losses_ (complete reference at the end), and the state of the art for speech denoising seemed to be _Adversarial Audio Super-Resolution with Unsupervised Feature Losses_. The plan was to first implement this second paper as a baseline, and then try to improve it. Unfortunatly, it proved more challening than expected to implement this model, as some details were not clear enough to implement it correctly. 
 
 Therefore, the paper _Audio Super-Resolution using Neural Nets_ was chosen as a baseline for this project, as the paper was very clear and a github repository was also available for more details. 
 
@@ -62,7 +61,7 @@ Therefore, the paper _Audio Super-Resolution using Neural Nets_ was chosen as a 
 
 # Model
 
-The model proposed here is a concolutional autoencoder with skip connections, also known as *U-net*. Starting from this base model, a dew improvments were then added, such as a discriminator network to transform the model into a GAN and an autoencoder to further improve the learning process.
+The model proposed here is a convolutional autoencoder with skip connections, also known as *U-net*. Starting from this base model, a few improvements were then added, such as a discriminator network to transform the model into a GAN and another autoencoder to further improve the learning process.
 
 After this, techniques like Collaborative GAN, Conditional GAN **and Patch GAN** were also implemented.
 
@@ -72,7 +71,7 @@ After this, techniques like Collaborative GAN, Conditional GAN **and Patch GAN**
 
 **Architecture**
 
-The original architecture is, as mentionned before, a convolutional autoencoder with skip connections. It consists of $N$ downsampling blocks, one bottleneck block, $N$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsampling and an upsampling block at the same level, and an additive residual connection between the input and the final block.
+The original architecture is, as mentionned before, a convolutional autoencoder with skip connections. It consists of $B$ downsampling blocks, one bottleneck block, $B$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsampling and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
 ![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
 
@@ -86,19 +85,19 @@ In the upsampling blocks, the convolutional layer uses the same filter sizes as 
 
 ![Subpixel operation]({{site.baseurl}}/img/vita/subpixel.png)
 
-Finaly, we have the stacking block that takes the output of the corresponding downsampling block and concatenate it on the channel dimension with the output of the dimshuffle block.
+Finally, we have the stacking block that takes the output of the corresponding downsampling block and concatenates it on the channel dimension with the output of the sub-pixel block.
 
-After all the upsampling blocks, we finish with a final block that makes of convolution with 2 outputs channels, a filter size of 9 and a stride of 1, then the subpixel operation (this will reshape our data so that we are left with only one channel, and then we add the output of this to our input data to get the output of the network (this is the additive skip connection. What this connection implies is that the netork doesn't exactly learn how to create denoised sound directly, but rather it learns how to create "denoising data" that when added to the audio itself improves it.
+After all the upsampling blocks, we finish with a final block that makes of convolution with 2 outputs channels, a filter size of 9 and a stride of 1, then the subpixel operation (this will reshape our data so that we are left with only one channel, and then we add the output of this to our input data to get the output of the network (this is the additive skip connection). What this connection implies is that the netork doesn't learn how to create denoised sound directly, but rather it learns how to create "denoising data" that when added to the audio itself improves it.
 
-To undersand better this architecture, you can see here a schema of the network 
+To better understand this architecture, you can see here a schema of the network 
 
 
 ![Detailed architecture]({{site.baseurl}}/img/vita/detailed.png)
 
 
-and you can see how the stacking connections are used. In the upsampling block, the goal of the convolution is to merge the data from the previous upsampling block and from the corresponding downsampling block, whereas the sub-pixel operation's goal is simply to reshape it so that it has the correct shape to be concatennated later.
+and you can see how the stacking connections are used. In the upsampling block, the goal of the convolution is to merge the data from the previous upsampling block and from the corresponding downsampling block, whereas the sub-pixel operation's goal is simply to reshape it so that it has the correct shape to be concatenated later.
 
-Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what is the size of each layer and the parameters of the convolution. 
+Moreover, you can see here for a toy example with depth 4 and where inputs have shape (1, 1024), what are the size of each layer and the parameters of the convolution. 
 
 ```
    
