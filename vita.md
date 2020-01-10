@@ -382,17 +382,16 @@ will run the model for 10 epochs, using minibatches of 32 samples. The network w
 
 Note that you need to create a `out` folder inside then `src` directory. All the results will be saved inside.
 
-If you want to load an existing model to evaluate a new file, use the `--load test_file` argument. The other arguments should still be present. The model will look into the folder `out/{name}/models` for a file named `model.tar` that contains the desired model.
 
 ### Preprocessing
 
-You can apply the following types of preprocessing by putting the followijng arguments as a string for the `--preprocessing` option: 
+You can apply the following types of preprocessing by putting the following arguments as a string for the `--preprocessing` option: 
 
 - Downsample : `"sample low_res high_res"`, if you want your input data to have a resolution of `low_res` Hz, and the target data to have resolution `high_res` data. Do not forget to also put the value of `high_res` for the `--rate` argument.
-- Noise : `"noisetype variance volume"`, where `noisetype` can be among `["whitenoise", "pinknoise", "brownnoise", "tpdfnoise"]`, `volumne` the intensity of the noise (good values are around 0.001). You can add some variance if desired, so that for each audio file the noise level will be a little bit different.
+- Noise : `"noisetype variance volume"`, where `noisetype` can be among `["whitenoise", "pinknoise", "brownnoise", "tpdfnoise"]`, `volumne` the intensity of the noise (good values are around 0.001). You can add some variance if desired, so that for each audio file the noise level is a little bit different.
 - Reverberation : `"reverb variance reverberance hf_damping room_scal stereo_depth pre_delay wet_gain=0"` to apply some reverberation with various parameters. Default values can be found in the code.
 
-You can also apply different preprocessing one after the other, by concatenating the commands with a comma in between, e.g. `--preprocessing "sample 5000 10000,whitenoise 0 0.002"`
+You can also apply different preprocessing steps one after the other, by concatenating the commands with a comma in between, e.g. `--preprocessing "sample 5000 10000,whitenoise 0 0.002"`
 
 ### Evaluation 
 
