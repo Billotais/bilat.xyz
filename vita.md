@@ -9,6 +9,8 @@ Semester Project by [Loïs Bilat](mailto:lois@bilat.xyz) at VITA Lab - EPFL - Fa
 
 Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifringer](mailto:brian.sifringer@epfl.ch).
 
+You can take a look at the [first presentation](https://bilat.xyz/pdf/vita/presentation_first.pdf), the [midterm presentation](https://bilat.xyz/pdf/vita/presentation_midterm.pdf) and the [final presentation](https://bilat.xyz/pdf/vita/presentation_final.pdf).
+
 **NOT FINISHED YET, MISTAKES TO BE EXPECTED**
 
 
