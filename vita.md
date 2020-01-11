@@ -25,7 +25,7 @@ You can take a look at the [introduction presentation](pdf/vita/presentation_int
     - [Conditional GAN](#conditional_gan_)
 3. [Code](#code_)
 4. [Experiments](#experiments_) 
-5. [Potential Improvements](#potential_improvements_) 
+5. [Discussion](#discussion_) 
 6. [Conclusion](#conclusion_) 
 7. [Sources](#sources_) 
 
@@ -85,7 +85,7 @@ The bottleneck block is the same as a downsampling block, but with a dropout wit
 In the upsampling blocks, the convolutional layer uses the same filter sizes as the downsampling blocks, but in reversed order. The number of channels outputed by the convolution is double the one in the corresponding downsampling block, and we have a stride of 1. We then have a dropout of 0.5 and a LeakyReLU with a slope of 0.2. Following this, we have the *DimShuffle* operation, more precisely the Sub-pixel operation, that takes some data of shape $N\times C \times \ W$ and transform it into data of shape $N\times C/2 \times \ 2W$ by interleaving elements from two channels together. 
 
 
-![Subpixel operation]({{site.baseurl}}/img/vita/subpixel.png)
+![Subpixel operation](img/vita/subpixel.png)
 
 Finally, we have the stacking block that takes the output of the corresponding downsampling block and concatenates it on the channel dimension with the output of the sub-pixel block.
 
@@ -94,7 +94,7 @@ After all the upsampling blocks, we finish with a final block that makes of conv
 To better understand this architecture, you can see here a schema of the network 
 
 
-![Detailed architecture]({{site.baseurl}}/img/vita/detailed.png)
+![Detailed architecture](img/vita/detailed.png)
 
 
 and you can see how the stacking connections are used. In the upsampling block, the goal of the convolution is to merge the data from the previous upsampling block and from the corresponding downsampling block, whereas the sub-pixel operation's goal is simply to reshape it so that it has the correct shape to be concatenated later.
@@ -213,7 +213,7 @@ This step happens when you want to generate a sample, but also want to improve i
 
 Suppose we have an input sample, i.e. a low quality audio sample. We send it as an input to the generator, to generate an improved version. We then take the output, and give it to the discriminator. If the discriminator classifies it as "real" with a high enough confidence (in the code *0.5* is used, but higher values may be required for better results), we stop, as we consider our sample is good enough. However, if our sample is classified as "fake", we will try to improve it. This is illustrated here:
 
-![Collaborative GAN]({{site.baseurl}}/img/vita/collab_gan.png)
+![Collaborative GAN](img/vita/collab_gan.png)
 
 For this, we will look at the internal activations of the generator network, in particular the activations at one layer (we call it $x_l$). $x_l$ corresponds to the activation at the output of the l$l$th upsampling block of our generator. We then compute the gradient of this tensor of activations relative to the loss of the discriminator, and then update the value of $x_l$ by gradient descent. The values of $x_l$ are then once again propagated to the end of the network, which will give us a new sample. (Note that during this second pass with the modified $x_l$, the values provided by the skip connections come from the original propagation of x. 
 
@@ -255,7 +255,7 @@ This change means that now the goal of the discriminator is to ask "Is this a re
 
 You can see here an illustration of this change, taken from the original pix2pix paper.
 
-![Conditional gan]({{site.baseurl}}/img/vita/cgan.png)
+![Conditional gan](img/vita/cgan.png)
 
 Here they use images, but the idea is the same. Your input x (the drawn shoe, respectively the low quality audio file) is given to the generator to create an improved version (the gray shoe / improved audio). Then, you give both the generated sample (gray shoe / improved audio) and the original data (drawn show / low quality audio) to the discriminator. Moreover, when training the discriminator, you will also give two samples as the input, namely the original image (drawn shoe / low quality audio) and the target image (brown shoe / high quality audio).
 
@@ -280,7 +280,7 @@ During the evaluation phase, when we want to reconstruct an audio file, we need 
 
 Therefore, for the evaluation phase, we still split the data using a sliding window with some overlap. When putting the blocks together, we will only keep a part of each sample, and the borders will be cropped. This can be seen in the following illustration.
 
-![Illustration of audio reconstruction]({{site.baseurl}}/img/vita/merge.png)
+![Illustration of audio reconstruction](img/vita/merge.png)
 
 
 With this technique, we don't have any audio artifact at the junction between two samples.
@@ -465,13 +465,13 @@ For all the experiments, the same file is used as the "test data" to create the 
 <p>Low quality audio</p>
 Low quality audio, i.e. what we want to improve, the input
 <audio controls>
-  <source src="https://bilat.xyz/audio/vita/in.wav" type="audio/wav">
+  <source src="audio/vita/in.wav" type="audio/wav">
 Your browser does not support the audio element.
 </audio>
 
 High quality audio, i.e. what we want to achieve, the target
 <audio controls>
-  <source src="https://bilat.xyz/audio/vita/target.wav" type="audio/wav">
+  <source src="audio/vita/target.wav" type="audio/wav">
 Your browser does not support the audio element.
 </audio>
 
@@ -483,7 +483,7 @@ Before we take a look at the results, it is important to talk about something th
 
 
 
-<a name="potential_improvements_"></a>
+<a name="discussion_"></a>
 
 # Discussion
 
