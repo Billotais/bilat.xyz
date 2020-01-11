@@ -479,6 +479,12 @@ As you can hear, the degradation in the first file is clear. It sounds like it w
 
 Before we take a look at the results, it is important to talk about something that was implemented but ultimately not used; a scheduler. 
 
+The idea behind the scheduler is the following; we start with given learning and train our model, and regularly reduce the learning rate to avoid leaving good minima by "moving too much". There are many ways to do this, either by decreasing the learning rate linearly (i.e. every "n" iterations"), but we can also be smarter and look at the loss curve to find an approriate moment to do so. 
+
+The `ReduceLROnPlateau` was chosen here, but is easy to replace it by another one provided by pytorch. We can see here a comparison in the loss curves between the model without and with the comparator. 
+
+![Scheduler](img/vita/scheduler.png)
+
 
 
 
