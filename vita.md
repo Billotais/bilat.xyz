@@ -474,9 +474,7 @@ For each experiment, the data is split into samples of 4096 of length, with an o
 
 For all the experiments, the same file is used as the "test data" to create the plots that will follow. Moreover, to measure the metrics, another file is used, but once again always the same for one experiment to another.
 
-
-
-
+**Original data**
 
 <p>Low quality audio</p>
 Low quality audio, i.e. what we want to improve, the input
@@ -493,6 +491,9 @@ Your browser does not support the audio element.
 
 As you can hear, the degradation in the first file is clear. It sounds like it was recorded in a box, and it is due to the loss of high freqencies following the down-sampling of the file.
 
+
+**Scheduler**
+
 Before we take a look at the results, it is important to talk about something that was implemented but ultimately not used; a scheduler. 
 
 The idea behind the scheduler is the following; we start with given learning and train our model, and regularly reduce the learning rate to avoid leaving good minima by "moving too much". There are many ways to do this, either by decreasing the learning rate linearly (i.e. every "n" iterations"), but we can also be smarter and look at the loss curve to find an approriate moment to do so. 
@@ -501,9 +502,13 @@ The `ReduceLROnPlateau` was chosen here, but is easy to replace it by another on
 
 ![Scheduler](img/vita/scheduler.png)
 
-|   |   |   |
-|---|---|---|
-|   |   |   |
+The version with the scheduler seems better, or at least it is more stable and less noisy after a while. We can also see a little drop at arround 125 minibatches, corresponding to the change of learning rate. However, if we look at the LSD metric, we can see that the version without the scheduler gives better results. 
+
+| $LSD_{baseline}$  | $LSD_{no\_scheduler}$  | $LSD_{scheduler}$  |
+|-------------------|------------------------|--------------------|
+|  2.2235           |  1.6079                |  1.6777            |
+
+Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therfore it is disabled for the rest of the experiments.
 
 
 
