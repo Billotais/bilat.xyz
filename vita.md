@@ -75,7 +75,7 @@ After this, techniques like Collaborative GAN, Conditional GAN **and Patch GAN**
 
 The original architecture is, as mentioned before, a convolutional autoencoder with skip connections. It consists of $B$ downsampling blocks, one bottleneck block, $B$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsampling and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
-![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
+![architecture.png](img/vita/architecture.png)
 
 
 Each domnsampling block consists of a convolutional block, and a ReLU block. These have a stride of 2, the number of channels outputed by each convolutional block is given by the array `[126, 256, 512, 512, 512, ...]`, and the size of filters is given by the array `[63, 33, 17, 9, 9, 9, ...]`. The ReLU block is more precisely a Leaky rectified linear block with a slope of 0.2 on the negative side.
