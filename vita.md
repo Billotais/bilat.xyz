@@ -463,17 +463,19 @@ For all the experiments, the same file is used as the "test data" to create the 
 <p>Low quality audio</p>
 Low quality audio, i.e. what we want to improve, the input
 <audio controls>
-  <source src="https://bilat.xyz/audio/in.wav" type="audio/wav">
+  <source src="https://bilat.xyz/audio/vita/in.wav" type="audio/wav">
 Your browser does not support the audio element.
 </audio>
 
 High quality audio, i.e. what we want to achieve, the target
 <audio controls>
-  <source src="https://bilat.xyz/audio/target.wav" type="audio/wav">
+  <source src="https://bilat.xyz/audio/vita/target.wav" type="audio/wav">
 Your browser does not support the audio element.
 </audio>
 
 As you can hear, the degradation in the first file is clear. It sounds like it was recorded in a box, and it is due to the loss of high freqencies following the down-sampling of the file.
+
+Before we take a look at the results, it is important to talk about something that was implemented but ultimately not used; a scheduler. 
 
 
 
