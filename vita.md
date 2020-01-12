@@ -502,7 +502,7 @@ The `ReduceLROnPlateau` was chosen here, but is easy to replace it by another on
 
 The version with the scheduler seems better, or at least it is more stable and less noisy after a while. We can also see a little drop at arround 125 minibatches, corresponding to the change of learning rate. However, if we look at the LSD metric, we can see that the version without the scheduler gives better results. 
 
-| $LSD_{baseline}$  | $LSD_{no\_scheduler}$  | $LSD_{scheduler}$  |
+| $LSD_{baseline}$  | $LSD_{no\ scheduler}$  | $LSD_{scheduler}$  |
 |-------------------|------------------------|--------------------|
 |  2.2235           |  1.6079                |  1.6777            |
 
