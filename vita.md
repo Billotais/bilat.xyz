@@ -302,12 +302,12 @@ and can be found in `requirements.txt`. `pandas` and `graphviz` are not required
 ```
 usage: main.py [-h] [-c COUNT] [-o OUT] [-e EPOCHS] [-b BATCH] [-w WINDOW]
                [-s STRIDE] [-d DEPTH] -n NAME [--dropout DROPOUT]
-               [--train_n TRAIN_N] [--test_n TEST_N] [--load LOAD]
-               [--continue CONTINUE] [--dataset DATASET]
-               [--dataset_args DATASET_ARGS] [--data_root DATA_ROOT] --rate
-               RATE --preprocessing PREPROCESSING [--gan GAN] [--ae AE]
-               [--collab COLLAB] [--lr_g LR_G] [--lr_d LR_D] [--lr_ae LR_AE]
-               [--scheduler SCHEDULER]
+               [--train_n TRAIN_N] [--load LOAD] [--continue CONTINUE]
+               [--dataset DATASET] [--dataset_args DATASET_ARGS]
+               [--data_root DATA_ROOT] --rate RATE --preprocessing
+               PREPROCESSING [--loss LOSS] [--gan GAN] [--ae AE]
+               [--collab COLLAB] [--cgan CGAN] [--lr_g LR_G] [--lr_d LR_D]
+               [--lr_ae LR_AE] [--scheduler SCHEDULER]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -333,8 +333,8 @@ optional arguments:
                         default=0.5
   --train_n TRAIN_N     number of songs used to train [int], default=-1 (use
                         all songs)
-  --load LOAD           load already trained model to evaluate [bool],
-                        default=False
+  --load LOAD           load already trained model to evaluate file given as
+                        argument [string], default=''
   --continue CONTINUE   load already trained model to continue training
                         [bool], default=False, not implemented yet
   --dataset DATASET     type of the dataset[simple|type], where 'type' is a
@@ -351,11 +351,14 @@ optional arguments:
                         Preprocessing pipeline, a string with each step of the
                         pipeline separated by a comma, more details in readme
                         file
+  --loss LOSS           Choose the loss for the generator, [L1, L2],
+                        default='L2')
   --gan GAN             lambda for the gan loss [float], default=0 (meaning
                         gan disabled)
   --ae AE               lambda for the audoencoder loss [float], default=0
                         (meaning autoencoder disabled)
   --collab COLLAB       Enable the collaborative gan [bool], default=False
+  --cgan CGAN           Enable Conditional GAN [bool], default=False
   --lr_g LR_G           learning rate for the generator [float],
                         default=0.0001
   --lr_d LR_D           learning rate for the discriminator [float],
@@ -364,7 +367,6 @@ optional arguments:
                         default=0.0001
   --scheduler SCHEDULER
                         enable the scheduler [bool], default=False
-
 ```
 
 For instance, the following command
