@@ -468,7 +468,7 @@ For the following experiments, as there are a lot of parameters, only a few of t
 
 For all the experiment, we do super-resolution from 5kHz to 10kHz, with no noise added. Approximately 1.4 GB of raw data was used, corresponding to a little over 2 hours of music. 
 
-For each experiment, the data is split into samples of 4096 of length, with an overlap of 2048. The main network is initialized with a depth of 8 (i.e. 8 downsampling blocks and 8 upsampling blocks). The discriminator and the autoencoder will have the same depth as well. Each experiment is for 10 epochs, using mini-batches of size 32. For the generator, the L2 loss is used by default. 
+For each experiment, the data is split into samples of 2048 of length, with an overlap of 1024. The main network is initialized with a depth of 8 (i.e. 8 downsampling blocks and 8 upsampling blocks). The discriminator and the autoencoder will have the same depth as well. Each experiment is for 5 epochs, using mini-batches of size 32. For the generator, the L2 loss is used by default. 
 
 For all the experiments, the same file is used as the "test data" to create the plots that will follow. Moreover, to measure the metrics, another file is used, but once again always the same for one experiment to another.
 
@@ -506,9 +506,17 @@ The version with the scheduler seems better, or at least it is more stable and l
 |-------------------|------------------------|--------------------|
 |  2.2235           |  1.6079                |  1.6777            |
 
-Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therfore it is disabled for the rest of the experiments.
+Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments.
 
+**Baseline**
 
+**Autoencoder**
+
+**GAN**
+
+**Collaborative GAN**
+
+**Conditional GAN**
 
 <a name="discussion_"></a>
 
