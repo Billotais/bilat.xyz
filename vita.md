@@ -181,7 +181,7 @@ meaning that the generator will not only look at its own loss (i.e. how far are 
 
 ## Autoencoder
 
-To improve the model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently).
+To improve the model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently). Moreover, batchnorm layers are added in the downsampling block as initial testing showed that otherwise values were getting extremely small in the bottleneck, and this was causing some issues.
 
 This autoencoder is trained using the $\mathcal{L}_{L2}$ loss, on the *identity task* (meaning that the target is the same as the input). The goal of this is to find a lower dimension representation of our data (at the bottleneck), that can give some useful information to our optimization problem.
 
