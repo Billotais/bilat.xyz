@@ -11,10 +11,6 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
 
 You can take a look at the [introduction presentation](pdf/vita/presentation_intro.pdf), the [midterm presentation](pdf/vita/presentation_midterm.pdf) and the [final presentation](pdf/vita/presentation_final.pdf).
 
-**NOT FINISHED YET, MISTAKES TO BE EXPECTED**
-
-
-
 # Table of Contents
 1. [Introduction](#introduction_)
 2. [Model](#model_)
