@@ -536,6 +536,12 @@ On the other hand, if we were to expand this project to different types of music
 
 The idea behind the additional autoencoder is actually to try to automatically find those specific losses. It tries to find a low dimension representation of the data, which could be anything from just a low resolution version of the audio, or features about "sadness" or "color" or "speed" of the music. This is the goal, but since the architecture of this autoencoder is still quite simple, it is probable that is not able to learn such complicated features. 
 
+There is also the problem of hyperparameters tuning that needs to be addressed. For the base model, there are already a lot of parameters that have to be chosen, from the window size when we split the data (should this depend on the sampling rate, or even on the tempo of the music ? Is 0.1 seconds a good value, or maybe we need 1 second, but this might depend on the type of music). Then, there are all the details related to the architecture, dropout rate, LeakyReLu slope, and most importantly the number of layers. This should probably be related to the size of the input (if we have a larger input we might need more layers). Finally, there are details like the learning rate and other parameters to the optimizer that are also important.
+
+But all of this is only for the base model, as soon as we add for instance the discriminator, we double the number of parameters, and what to choose what weight we want to give the discriminator to the compositve loss. The same can be said with the autoencoder. 
+
+If we want to find the best parameter, we would have to add additional code to change the paramters, and use a validation dataset. The problem with that is not the code or the dataset, but finding which metric to use to decide what parameters are the best. Ideally, we would need to use human opinion, as it is the metric that is the most important for this task, but it would be impossible to integreate this into an automatic process. We are left with the mean square error, or maybe the log-spectral distance, but it's hard to see which one is the closest to what a person would perceive.
+
 
 <a name="conclusion_"></a>
 
