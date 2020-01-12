@@ -185,7 +185,7 @@ To improve the model further, we added another network, with an autoencoder arch
 
 This autoencoder is trained using the $\mathcal{L}_{L2}$ loss, on the *identity task* (meaning that the target is the same as the input). The goal of this is to find a lower dimension representation of our data (at the bottleneck), that can give some useful information to our optimization problem.
 
-The new loss for the generator is now 
+The loss for the generator is now 
 
 $$\mathcal{L}_G = \mathcal{L}_{L2} + \lambda_{adv}\mathcal{L}_{adv} + \lambda_f \mathcal{L}_f$$
 
