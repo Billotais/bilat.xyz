@@ -516,7 +516,7 @@ The version with the scheduler seems better, or at least it is more stable and l
 |-------------------|------------------------|--------------------|
 |  **28.8033**      |  1.70355               |  1.70319           |
 
-Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments. 
+Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments. It also allows us to compare the different models more fairly.
 
 However, this first test allows us to see a important problem with the SNR. The $SNR(low\ res, high\ res)$ will always be better than $SNR(improved, high\ res)$. It is unclear why it is the case, as the files are all properly aligned. What this means is that the metric will not be useful to know if we beat the baseline. However, we can still use it between two models, and it should tell us which one is better.
 
