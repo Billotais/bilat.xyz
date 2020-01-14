@@ -585,15 +585,15 @@ However a problem appears if we look at the metrics :
 
 The better audio has a higher LSD, which, if our metric was accuratly representing actual hearing quality, shouldn't be the case as the better sounding audio is the one with a width of 2048. This probably happens because the saturation is considered as "high frequency data", and is taken into account by the LSD. This is problematic, since it means that we cannot completly rely on the LSD to compare the samples, and the human opinion is clearly necessary.
 
-We can see an illustration of this here, where the spectrogram of each file is shown. We can first see the difference between the input and target file, where the high frequencies were just cut (sample rate of 10kHz implies a max high frequency of 5kHz). 
+We can see an illustration of this here, where the spectrogram of each file is shown. We can first see the difference between the input (*on the left*) and target file (*on the right*), where the high frequencies were just cut (sample rate of 10kHz implies a max high frequency of 5kHz). 
 
 <img src="img/vita/spectre_in.wav.png" width="49%"/> <img src="img/vita/spectre_target.wav.png" width="49%"/> 
 
 We can also see that the highest frequencies don't reach 5kHz, they stop a little lower.
 
-Now, if we look at the first generated file, we can see that higher frequencies are added. However, the intensity and amount of those high frequences is very low, nowhere near what we want to reach. 
+Now, if we look at the first generated file (*on the left*, 2048), we can see that higher frequencies are added. However, the intensity and amount of those high frequences is very low, nowhere near what we want to reach. 
 
-With a large sample size, we have clearly more frequencies added, which explains the better LSD values. However, we also see that this time we have frequencies that go all the way up to 5Ghz, causing the saturation we hear.
+With a larger sample size (*one the right*, 4096), we have clearly more frequencies added, which explains the better LSD values. However, we also see that this time we have frequencies that go all the way up to 5kHz, causing the saturation we hear.
 
 <img src="img/vita/spectre_base.wav.png" width="49%"/> <img src="img/vita/spectre_base_large.wav.png" width="49%"/> 
 
