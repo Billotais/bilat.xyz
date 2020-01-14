@@ -587,9 +587,7 @@ The better audio has a higher LSD, which, if our metric was accuratly representi
 
 We can see an illustration of this here, where the spectrogram of each file is shown. We can first see the difference between the input and target file, where the high frequencies were just cut (sample rate of 10kHz implies a max high frequency of 5kHz). 
 
-![Spectre for input file](img/vita/spectre_in.wav.png) ![Spectre for target file](img/vita/spectre_target.wav.png)
-
-<img src="img/vita/spectre_in.wav.png" width="50%"/> <img src="img/vita/spectre_target.wav.png" width="50%"/> 
+<img src="img/vita/spectre_in.wav.png" width="49%"/> <img src="img/vita/spectre_target.wav.png" width="49%"/> 
 
 We can also see that the highest frequencies don't reach 5kHz, they stop a little lower.
 
@@ -598,15 +596,6 @@ Now, if we look at the first generated file, we can see that higher frequencies 
 With a large sample size, we have clearly more frequencies added, which explains the better LSD values. However, we also see that this time we have frequencies that go all the way up to 5Ghz, causing the saturation we hear.
 
 <img src="img/vita/spectre_base.wav.png" width="49%"/> <img src="img/vita/spectre_base_large.wav.png" width="49%"/> 
-
-![Spectre for generated 2048 file](img/vita/spectre_base.wav.png)
-
-
-![Spectre for generated 4096 file](img/vita/spectre_base_large.wav.png)
-
-<p float="center">
-  <img src="img/vita/spectre_base_large.wav.png" width="90%" />
-</p>
 
 
 **Autoencoder**
