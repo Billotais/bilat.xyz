@@ -546,22 +546,21 @@ Your browser does not support the audio element.
 
 It is unfortunatly hard to hear an improvement. It is very subtle, but we could say that the notes are "sharper" than in the low quality file. If we compare the low quality with the high quality, we can hear that the higher notes get quieter in the low resolution. This is partially fixed the improved version, where the higher notes get louder again. 
 
-Finally, if we look at the metrics, it tells us that indeed the new version is better as it matches the original frequencies better.
+Finally, if we look at the LSDs, it tells us that indeed the new version is better as it matches the original frequencies better. As mentioned before, the SNR doesn't seem to give us any meaningful information here.
 
 | $LSD_{baseline}$  | $LSD_{base\ network}$  |
 |-------------------|------------------------|
-|  2.2662           |  1.5919                |
+|  2.2662           |  **1.5919**            |
 
 | $SNR_{baseline}$  | $SNR_{base\ network}$  |
 |-------------------|------------------------|
-|  28.8033          |  1.7032                |
+|  **28.8033**      |  1.7032                |
 
 If we take a look at the training loss, we can see that it is useless to have a high number of epochs, as we are already in a plateau after 4 epochs. 
 
 ![Loss for the base model]({{site.baseurl}}/img/vita/base_loss.png)
 
 The middle graph corresponds to the training loss, i.e. the loss computed on every sample used for training. It is every time averaged over the last 10 mini-batches. On the right there is the test loss, evaluated every 10 mini-batches. This evaluation is done on 4 minibatches from the test file. The reason why the test loss is lower than the train loss is because the dropout layers are disable when evaluating the network, therefore giving a better result.
-
 
 
 A second experiment that was done with this model is increasing the size of the sliding window when we split the data. Here, the data is split into samples of 4096 of width, and a stride of 2048. Here is a comparison :
@@ -580,13 +579,18 @@ Your browser does not support the audio element.
 
 We can hear that the version with samples of 2048 of width sounds better, as the other one has some saturation in the high notes.
 
-However a problem appears if we look at the LSD :
+However a problem appears if we look at the metrics :
 
 | $LSD_{baseline}$  | $LSD_{2048}$           | $LSD_{4096}$           |
 |-------------------|------------------------|------------------------|
-|  2.2662           |  1.5919                |  1.3184                |
+|  (2.2662)         |  1.5919                |  **1.3184**            |
 
-The better audio has a higher LSD, which shouldn't be the case. This probably happens because the saturation is considered as "high frequency data", and is taken into account by the LSD. This is problematic, since it means that we cannot completly rely on the LSD to compare the samples, and the human opinion is clearly necessary.
+
+| $SNR_{baseline}$  | $SNR_{2048}$           | $SNR_{4096}$           |
+|-------------------|------------------------|------------------------|
+|  (28.8033)        |  **1.7032**            |  1.7024                |
+
+The better audio has a higher LSD, which, if our metric was accuratly representing actual hearing quality, shouldn't be the case as the better sounding audio is the one with a width of 2048. This probably happens because the saturation is considered as "high frequency data", and is taken into account by the LSD. This is problematic, since it means that we cannot completly rely on the LSD to compare the samples, and the human opinion is clearly necessary.
 
 We can see an illustration of this here, where the spectrogram of each file is shown. We can first see the difference between the input and target file, where the high frequencies were just cut (sample rate of 10kHz implies a max high frequency of 5kHz). 
 
