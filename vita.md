@@ -617,9 +617,9 @@ Let's take a look at the metrics, and let's compare them with the base model :
 
 | $LSD_{base\ network}$  | $LSD_{ae}$        |
 |-------------------|------------------------|
-|  1.5919           |                        |
+|  1.5919           |          **1.5706**    |
 | $SNR_{baseline}$  | $SNR_{base\ network}$  |
-| 1.7032            |                        |
+| **1.7032**        |         1.70292        |
 
 
 
