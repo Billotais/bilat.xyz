@@ -585,7 +585,6 @@ However a problem appears if we look at the metrics :
 |-------------------|------------------------|------------------------|
 |  (2.2662)         |  1.5919                |  **1.3184**            |
 | $SNR_{baseline}$  | $SNR_{2048}$           | $SNR_{4096}$           |
-|-------------------|------------------------|------------------------|
 |  (28.8033)        |  **1.7032**            |  1.7024                |
 
 The better audio has a higher LSD, which, if our metric was accuratly representing actual hearing quality, shouldn't be the case as the better sounding audio is the one with a width of 2048. This probably happens because the saturation is considered as "high frequency data", and is taken into account by the LSD. This is problematic, since it means that we cannot completly rely on the LSD to compare the samples, and the human opinion is clearly necessary.
