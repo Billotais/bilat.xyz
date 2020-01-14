@@ -609,7 +609,7 @@ This represent the loss for the generator. It is hard to see here, since the lam
 
 ![Loss for the Generator in the AE model]({{site.baseurl}}/img/vita/ae_loss_ae.png)
 
-and this represent the loss of the autoencoder. Here, the training loss corresponds to the loss at the bottlneck during the training, whereas the test loss corresponds to the mean squared error loss on the output of the autoencoder on the identity task.
+and this represent the loss of the autoencoder. Here, the training loss corresponds to the loss at the bottlneck during the training, whereas the test loss corresponds to the mean squared error loss on the output of the autoencoder on the identity task. (The large jump at the beggining should be ignored, it only happens because in the first iterations the autoencoder is not yet used)
 
 We can clearly see that the autoencoder is doing something. It's loss on the identity task is decreasing, and the loss at the bottleneck is also decreasing, which seems to indicates that the generator is integrating information from the autoencoder to create better samples.
 
