@@ -597,6 +597,8 @@ With a larger sample size (*one the right*, 4096), we have clearly more frequenc
 
 <img src="img/vita/spectre_base.wav.png" width="49%"/> <img src="img/vita/spectre_base_large.wav.png" width="49%"/> 
 
+From now on, we will use a sample width of 2048
+
 
 **Autoencoder**
 
