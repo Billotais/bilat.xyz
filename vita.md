@@ -506,7 +506,7 @@ The version with the scheduler seems better, or at least it is more stable and l
 |-------------------|------------------------|--------------------|
 |  2.2235           |  1.6079                |  1.6777            |
 
-Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments.
+Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments. Finally, it should be noted that this test was not done with the same paramters as the experiments that will follow.
 
 **Baseline**
 
@@ -530,11 +530,23 @@ High quality audio, i.e. what we want to achieve, the target
 Your browser does not support the audio element.
 </audio>
 
+It is unfortunatly hard to hear an improvement. It is very subtle, but we could say that the notes are "sharper" than in the low quality file. If we compare the low quality with the high quality, we can here that the higher notes get quieter in the low resolution. This is partially fixed the improved version, where the higher notes get louder again. 
+
+Finally, if we look at the LSD metric, it tells us that indeed the new version is better as it matches the original frequencies better.
+
+| $LSD_{baseline}$  | $LSD_{base\ network}$  |
+|-------------------|------------------------|
+|  2.2662           |  1.5919                |
+
 If we take a look at the training loss, we can see that it is useless to have a high number of epochs, as we are already in a plateau after 4 epochs. 
 
 ![Loss for the base model]({{site.baseurl}}/img/vita/base_loss.png)
 
 The middle graph corresponds to the training loss, i.e. the loss computed on every sample used for training. It is every time averaged over the last 10 mini-batches. On the right there is the test loss, evaluated every 10 mini-batches. This evaluation is done on 4 minibatches from the test file. The reason why the test loss is lower than the train loss is because the dropout layers are disable when evaluating the network, therefore giving a better result.
+
+
+
+
 
 
 **Autoencoder**
