@@ -602,7 +602,6 @@ With a large sample size, we have clearly more frequencies added, which explains
 ![Spectre for generated 2048 file](img/vita/spectre_base.wav.png)
 
 
-
 ![Spectre for generated 4096 file](img/vita/spectre_base_large.wav.png)
 
 <p float="center">
