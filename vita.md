@@ -633,7 +633,12 @@ Autoencoder model
 Your browser does not support the audio element.
 </audio>
 
+Here you can hear/see the main problem that will occur in all the following tests; the metrics are very close, sometimes contradictory, and not exactly reliable as seen before, and a hearing test doesn't give us any information as the results are extremly close.
 
+Something that can be tried to improve the results with the autoencoder, is to
+
+1. Train longer : we see in the autoencoder loss that we clearly aren't in a plateau, some there is still some room for improvement.
+2. Increase the lambda : in the generator graph, we see that the composite loss is basically the same as the generator-only loss. This implies that the autoencoder information is almost not present in the final gradiant, and increasing it might be better.
 
 **GAN**
 
