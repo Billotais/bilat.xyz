@@ -546,7 +546,29 @@ The middle graph corresponds to the training loss, i.e. the loss computed on eve
 
 
 
+A second experiment that was done with this model is increasing the size of the sliding window when we split the data. Here, the data is split into samples of 4096 of width, and a stride of 2048. Here is a comparison :
 
+Base with samples of 2048
+<audio controls>
+  <source src="audio/vita/base.wav" type="audio/wav">
+Your browser does not support the audio element.
+</audio>
+
+Base with samples of 4096
+<audio controls>
+  <source src="audio/vita/base_large.wav" type="audio/wav">
+Your browser does not support the audio element.
+</audio>
+
+We can hear that the version with samples of 2048 of width sounds better, as the other one has some saturation in the high notes.
+
+However a problem appears if we look at the LSD :
+
+| $LSD_{baseline}$  | $LSD_{2048}$           | $LSD_{4096}$           |
+|-------------------|------------------------|------------------------|
+|  2.2662           |  1.5919                |  1.3184                |
+
+The better audio has a higher LSD, which shouldn't be the case. This probably happens because the saturation is considered as "high frequency data", and is taken into account by the LSD. This is problematic, since it means that we cannot completly rely on the LSD to compare the samples, and the human opinion is clearly necessary.
 
 
 **Autoencoder**
