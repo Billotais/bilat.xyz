@@ -618,7 +618,7 @@ Let's take a look at the results, and let's compare them with the base model :
 | $LSD_{base\ network}$  | $LSD_{ae}$        |
 |-------------------|------------------------|
 |  1.5919           |          **1.5706**    |
-| $SNR_{baseline}$  | $SNR_{base\ network}$  |
+| $SNR_{baseline}$  | $SNR_{ae}$  |
 | **1.7032**        |         1.70292        |
 
 Base model
