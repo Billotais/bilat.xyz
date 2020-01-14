@@ -460,6 +460,12 @@ $$LSD_{version\_x} = LSD(x_{improved\_by\_version\_x}, x_{high})$$
 
 The version with the smallest distance is the better one. 
 
+Moreover, we can also use another metrics, the Signal-to-Noise ration (SNR), defined as :
+
+$$SNR(x,y)=10*\log_{10}(\frac{\| y \|_2^2}{\frac{\| x-y \|_2^2}$$
+
+This is basically the difference between $x$ and $y$, but normalized and converted in decibels, the higher the better.
+
 
 
 ## Results
@@ -505,6 +511,10 @@ The version with the scheduler seems better, or at least it is more stable and l
 | $LSD_{baseline}$  | $LSD_{no\ scheduler}$  | $LSD_{scheduler}$  |
 |-------------------|------------------------|--------------------|
 |  2.2235           |  1.6079                |  1.6777            |
+
+| $SNR_{baseline}$  | $SNR_{no\ scheduler}$  | $SNR_{scheduler}$  |
+|-------------------|------------------------|--------------------|
+|  28.8033          |  1.70355               |  1.6777            |
 
 Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments. Finally, it should be noted that this test was not done with the same paramters as the experiments that will follow.
 
