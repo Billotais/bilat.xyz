@@ -462,7 +462,7 @@ The version with the smallest distance is the better one.
 
 Moreover, we can also use another metrics, the Signal-to-Noise ration (SNR), defined as :
 
-$$SNR(x,y)=10*\log_{10}(\frac{\| y \|_2^2}{\frac{\| x-y \|_2^2}$$
+$$SNR(x,y)=10*\log_{10}(\frac{\| y \|_2^2}{\| x-y \|_2^2}$$
 
 This is basically the difference between $x$ and $y$, but normalized and converted in decibels, the higher the better.
 
@@ -597,7 +597,7 @@ Now, if we look at the first generated file, we can see that higher frequencies 
 
 With a large sample size, we have clearly more frequencies added, which explains the better LSD values. However, we also see that this time we have frequencies that go all the way up to 5Ghz, causing the saturation we hear.
 
-<img src="img/vita/spectre_base.wav.png" width="48%"/> <img src="img/vita/spectre_base_large.wav.png" width="48%"/> 
+<img src="img/vita/spectre_base.wav.png" width="49%"/> <img src="img/vita/spectre_base_large.wav.png" width="49%"/> 
 
 ![Spectre for generated 2048 file](img/vita/spectre_base.wav.png)
 
