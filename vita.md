@@ -593,7 +593,7 @@ We can also see that the highest frequencies don't reach 5kHz, they stop a littl
 
 Now, if we look at the first generated file (*on the left*, 2048), we can see that higher frequencies are added. However, the intensity and amount of those high frequences is very low, nowhere near what we want to reach. 
 
-With a larger sample size (*one the right*, 4096), we have clearly more frequencies added, which explains the better LSD values. However, we also see that this time we have frequencies that go all the way up to 5kHz, causing the saturation we hear.
+With a larger sample size (*one the right*, 4096), we have clearly more frequencies added, which explains the better LSD values. However, we also see that this time we have frequencies that go all the way up to 5kHz, symptom of the saturation we hear.
 
 <img src="img/vita/spectre_base.wav.png" width="49%"/> <img src="img/vita/spectre_base_large.wav.png" width="49%"/> 
 
