@@ -605,7 +605,7 @@ Here, the additional autoencoder network was added. A lambda of 0.0001 was used.
 
 ![Loss for the Generator in the AE model]({{site.baseurl}}/img/vita/ae_loss.png)
 
-This represent the loss for the generator
+This represent the loss for the generator. It is hard to see here, since the lambda for the generator is small, but in the middle, both the compositive loss (*blue*) and the generator-only loss (*green*) are drawn.
 
 ![Loss for the Generator in the AE model]({{site.baseurl}}/img/vita/ae_loss_ae.png)
 
