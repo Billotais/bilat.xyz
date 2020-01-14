@@ -589,7 +589,7 @@ We can see an illustration of this here, where the spectrogram of each file is s
 
 ![Spectre for input file](img/vita/spectre_in.wav.png) ![Spectre for target file](img/vita/spectre_target.wav.png)
 
-<img src="img/vita/spectre_in.wav.png" width="48%"/> <img src="img/vita/spectre_target.wav.png" width="48%"/> 
+<img src="img/vita/spectre_in.wav.png" width="50%"/> <img src="img/vita/spectre_target.wav.png" width="50%"/> 
 
 We can also see that the highest frequencies don't reach 5kHz, they stop a little lower.
 
