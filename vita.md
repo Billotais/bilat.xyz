@@ -510,6 +510,7 @@ Now of course this might be a special case, but in the few tests done the versio
 
 **Baseline**
 
+You can see here the results when running the base network with the previously mentionned parameters.
 
 Low quality audio, i.e. what we want to improve, the input
 <audio controls>
@@ -528,6 +529,13 @@ High quality audio, i.e. what we want to achieve, the target
   <source src="audio/vita/target.wav" type="audio/wav">
 Your browser does not support the audio element.
 </audio>
+
+If we take a look at the training loss, we can see that it is useless to have a high number of epochs, as we are already in a plateau after 4 epochs. 
+
+![Loss for the base model]({{site.baseurl}}/img/vita/base_loss.png)
+
+The middle graph corresponds to the training loss, i.e. the loss computed on every sample used for training. It is every time averaged over the last 10 mini-batches. On the right there is the test loss, evaluated every 10 mini-batches. This evaluation is done on 4 minibatches from the test file. The reason why the test loss is lower than the train loss is because the dropout layers are disable when evaluating the network, therefore giving a better result.
+
 
 **Autoencoder**
 
