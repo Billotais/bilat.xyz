@@ -556,7 +556,7 @@ If we take a look at the training loss, we can see that it is useless to have a 
 
 ![Loss for the base model]({{site.baseurl}}/img/vita/base_loss.png)
 
-The middle graph corresponds to the training loss, i.e. the loss computed on every sample used for training. It is every time averaged over the last 10 mini-batches. On the right there is the test loss, evaluated every 10 mini-batches. This evaluation is done on 4 minibatches from the test file. The reason why the test loss is lower than the train loss is because the dropout layers are disable when evaluating the network, therefore giving a better result.
+The middle graph corresponds to the training loss, i.e. the loss computed on every sample used for training. It is every time averaged over the last 10 mini-batches. On the right there is the test loss, evaluated every 10 mini-batches. This evaluation is done on 4 minibatches from the test file. The reason why the test loss is lower than the train loss is because the dropout layers are disable when evaluating the network, therefore giving a better result. 
 
 
 A second experiment that was done with this model is increasing the size of the sliding window when we split the data. Here, the data is split into samples of 4096 of width, and a stride of 2048. Here is a comparison :
@@ -599,8 +599,29 @@ With a larger sample size (*one the right*, 4096), we have clearly more frequenc
 
 From now on, we will use a sample width of 2048
 
-
 **Autoencoder**
+
+Here, the additional autoencoder network was added. A lambda of 0.0001 was used. 
+
+![Loss for the Generator in the AE model]({{site.baseurl}}/img/vita/ae_loss.png)
+
+This represent the loss for the generator. It is hard to see here, since the lambda for the generator is small, but in the middle, both the compositive loss (*blue*) and the generator-only loss (*green*) are drawn.
+
+![Loss for the Generator in the AE model]({{site.baseurl}}/img/vita/ae_loss_ae.png)
+
+and this represent the loss of the autoencoder. Here, the training loss corresponds to the loss at the bottlneck during the training, whereas the test loss corresponds to the mean squared error loss on the output of the autoencoder on the identity task. (The large jump at the beggining should be ignored, it only happens because in the first iterations the autoencoder is not yet used)
+
+We can clearly see that the autoencoder is doing something. It's loss on the identity task is decreasing, and the loss at the bottleneck is also decreasing, which seems to indicates that the generator is integrating information from the autoencoder to create better samples.
+
+Let's take a look at the metrics, and let's compare them with the base model :
+
+| $LSD_{base\ network}$  | $LSD_{ae}$        |
+|-------------------|------------------------|
+|  1.5919           |          **1.5706**    |
+| $SNR_{baseline}$  | $SNR_{base\ network}$  |
+| **1.7032**        |         1.70292        |
+
+
 
 **GAN**
 
