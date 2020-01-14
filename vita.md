@@ -611,6 +611,10 @@ This represent the loss for the generator. It is hard to see here, since the lam
 
 and this represent the loss of the autoencoder. Here, the training loss corresponds to the loss at the bottlneck during the training, whereas the test loss corresponds to the mean squared error loss on the output of the autoencoder on the identity task.
 
+We can clearly see that the autoencoder is doing something. It's loss on the identity task is decreasing, and the loss at the bottleneck is also decreasing, which seems to indicates that the generator is integrating information from the autoencoder to create better samples.
+
+
+
 **GAN**
 
 **Collaborative GAN**
