@@ -589,15 +589,19 @@ We can see an illustration of this here, where the spectrogram of each file is s
 
 ![Spectre for input file](img/vita/spectre_in.wav.png) ![Spectre for target file](img/vita/spectre_target.wav.png)
 
-<img src="img/vita/spectre_in.wav.png" width="40%"/> <img src="img/vita/spectre_target.wav.png" width="40%"/> 
+<img src="img/vita/spectre_in.wav.png" width="48%"/> <img src="img/vita/spectre_target.wav.png" width="48%"/> 
 
 We can also see that the highest frequencies don't reach 5kHz, they stop a little lower.
 
-Then if we look at the first generated file, we can see that higher frequencies are added. However, the intensity and amount of those high frequences is very low, nowhere near what we want to reach. 
+Now, if we look at the first generated file, we can see that higher frequencies are added. However, the intensity and amount of those high frequences is very low, nowhere near what we want to reach. 
+
+With a large sample size, we have clearly more frequencies added, which explains the better LSD values. However, we also see that this time we have frequencies that go all the way up to 5Ghz, causing the saturation we hear.
+
+<img src="img/vita/spectre_base.wav.png" width="48%"/> <img src="img/vita/spectre_base_large.wav.png" width="48%"/> 
 
 ![Spectre for generated 2048 file](img/vita/spectre_base.wav.png)
 
-With a large sample size, we have clearly more frequencies added, which explains the better LSD values. However, we also see that this time we have frequencies that go all the way up to 5Ghz, causing the saturation we hear.
+
 
 ![Spectre for generated 4096 file](img/vita/spectre_base_large.wav.png)
 
