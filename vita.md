@@ -570,6 +570,14 @@ However a problem appears if we look at the LSD :
 
 The better audio has a higher LSD, which shouldn't be the case. This probably happens because the saturation is considered as "high frequency data", and is taken into account by the LSD. This is problematic, since it means that we cannot completly rely on the LSD to compare the samples, and the human opinion is clearly necessary.
 
+![Spectre for input file](img/vita/spectre_in.wav.png)
+
+![Spectre for target file](img/vita/spectre_target.wav.png)
+
+![Spectre for generated 2048 file](img/vita/spectre_base.wav.png)
+
+![Spectre for generated 4096 file](img/vita/spectre_base_large.wav.png)
+
 
 **Autoencoder**
 
