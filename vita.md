@@ -506,17 +506,21 @@ The `ReduceLROnPlateau` was chosen here, but is easy to replace it by another on
 
 ![Scheduler](img/vita/scheduler.png)
 
-The version with the scheduler seems better, or at least it is more stable and less noisy after a while. We can also see a little drop at arround 12'500 minibatches, corresponding to the change of learning rate. However, if we look at the LSD metric, we can see that the version without the scheduler gives better results. 
+The version with the scheduler seems better, or at least it is more stable and less noisy after a while. We can also see a little drop at arround 12'500 minibatches, corresponding to the change of learning rate. However, if we look at the LSD and SNR metrics, we can see that the version without the scheduler gives better results. 
 
 | $LSD_{baseline}$  | $LSD_{no\ scheduler}$  | $LSD_{scheduler}$  |
 |-------------------|------------------------|--------------------|
-|  2.2235           |  1.6079                |  1.6777            |
+|  2.2235           |  **1.6079**            |  1.6777            |
 
 | $SNR_{baseline}$  | $SNR_{no\ scheduler}$  | $SNR_{scheduler}$  |
 |-------------------|------------------------|--------------------|
-|  28.8033          |  1.70355               |  1.6777            |
+|  **28.8033**      |  1.70355               |  1.70319           |
 
-Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments. Finally, it should be noted that this test was not done with the same paramters as the experiments that will follow.
+Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments. 
+
+However, this first test allows us to see a important problem with the SNR. The $SNR(low\ res, high\ res)$ will always be better than $SNR(improved, high\ res)$. It is unclear why it is the case, as the files are all properly aligned. What this means is that the metric will not be useful to know if we beat the baseline. However, we can still use it between two models, and it should tell us which one is better.
+
+Finally, it should be noted that this test was not done with the same paramters as the experiments that will follow.
 
 **Baseline**
 
@@ -540,13 +544,17 @@ High quality audio, i.e. what we want to achieve, the target
 Your browser does not support the audio element.
 </audio>
 
-It is unfortunatly hard to hear an improvement. It is very subtle, but we could say that the notes are "sharper" than in the low quality file. If we compare the low quality with the high quality, we can here that the higher notes get quieter in the low resolution. This is partially fixed the improved version, where the higher notes get louder again. 
+It is unfortunatly hard to hear an improvement. It is very subtle, but we could say that the notes are "sharper" than in the low quality file. If we compare the low quality with the high quality, we can hear that the higher notes get quieter in the low resolution. This is partially fixed the improved version, where the higher notes get louder again. 
 
-Finally, if we look at the LSD metric, it tells us that indeed the new version is better as it matches the original frequencies better.
+Finally, if we look at the metrics, it tells us that indeed the new version is better as it matches the original frequencies better.
 
 | $LSD_{baseline}$  | $LSD_{base\ network}$  |
 |-------------------|------------------------|
 |  2.2662           |  1.5919                |
+
+| $SNR_{baseline}$  | $SNR_{base\ network}$  |
+|-------------------|------------------------|
+|  28.8033          |  1.7032                |
 
 If we take a look at the training loss, we can see that it is useless to have a high number of epochs, as we are already in a plateau after 4 epochs. 
 
