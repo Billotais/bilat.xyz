@@ -460,6 +460,12 @@ $$LSD_{version\_x} = LSD(x_{improved\_by\_version\_x}, x_{high})$$
 
 The version with the smallest distance is the better one. 
 
+Moreover, we can also use another metrics, the Signal-to-Noise ration (SNR), defined as :
+
+$$SNR(x,y)=10*\log_{10}\left(\frac{\| y \|_2^2}{\| x-y \|_2^2}\right)$$
+
+This is basically the difference between $x$ and $y$, but normalized and converted in decibels, the higher the better.
+
 
 
 ## Results
@@ -500,13 +506,19 @@ The `ReduceLROnPlateau` was chosen here, but is easy to replace it by another on
 
 ![Scheduler](img/vita/scheduler.png)
 
-The version with the scheduler seems better, or at least it is more stable and less noisy after a while. We can also see a little drop at arround 12'500 minibatches, corresponding to the change of learning rate. However, if we look at the LSD metric, we can see that the version without the scheduler gives better results. 
+The version with the scheduler seems better, or at least it is more stable and less noisy after a while. We can also see a little drop at arround 12'500 minibatches, corresponding to the change of learning rate. However, if we look at the LSD and SNR metrics, we can see that the version without the scheduler gives better results. 
 
 | $LSD_{baseline}$  | $LSD_{no\ scheduler}$  | $LSD_{scheduler}$  |
 |-------------------|------------------------|--------------------|
-|  2.2235           |  1.6079                |  1.6777            |
+|  2.2235           |  **1.6079**            |  1.6777            |
+| $SNR_{baseline}$  | $SNR_{no\ scheduler}$  | $SNR_{scheduler}$  |
+|  **28.8033**      |  1.70355               |  1.70319           |
 
-Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments. Finally, it should be noted that this test was not done with the same paramters as the experiments that will follow.
+Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments. It also allows us to compare the different models more fairly.
+
+However, this first test allows us to see a important problem with the SNR. The $SNR(low\ res, high\ res)$ will always be better than $SNR(improved, high\ res)$. It is unclear why it is the case, as the files are all properly aligned. What this means is that the metric will not be useful to know if we beat the baseline. However, we can still use it between two models, and it should tell us which one is better.
+
+Finally, it should be noted that this test was not done with the same paramters as the experiments that will follow.
 
 **Baseline**
 
@@ -530,20 +542,21 @@ High quality audio, i.e. what we want to achieve, the target
 Your browser does not support the audio element.
 </audio>
 
-It is unfortunatly hard to hear an improvement. It is very subtle, but we could say that the notes are "sharper" than in the low quality file. If we compare the low quality with the high quality, we can here that the higher notes get quieter in the low resolution. This is partially fixed the improved version, where the higher notes get louder again. 
+It is unfortunatly hard to hear an improvement. It is very subtle, but we could say that the notes are "sharper" than in the low quality file. If we compare the low quality with the high quality, we can hear that the higher notes get quieter in the low resolution. This is partially fixed the improved version, where the higher notes get louder again. 
 
-Finally, if we look at the LSD metric, it tells us that indeed the new version is better as it matches the original frequencies better.
+Finally, if we look at the LSDs, it tells us that indeed the new version is better as it matches the original frequencies better. As mentioned before, the SNR doesn't seem to give us any meaningful information here.
 
 | $LSD_{baseline}$  | $LSD_{base\ network}$  |
 |-------------------|------------------------|
-|  2.2662           |  1.5919                |
+|  2.2662           |  **1.5919**            |
+| $SNR_{baseline}$  | $SNR_{base\ network}$  |
+|  **28.8033**      |  1.7032                |
 
 If we take a look at the training loss, we can see that it is useless to have a high number of epochs, as we are already in a plateau after 4 epochs. 
 
 ![Loss for the base model]({{site.baseurl}}/img/vita/base_loss.png)
 
 The middle graph corresponds to the training loss, i.e. the loss computed on every sample used for training. It is every time averaged over the last 10 mini-batches. On the right there is the test loss, evaluated every 10 mini-batches. This evaluation is done on 4 minibatches from the test file. The reason why the test loss is lower than the train loss is because the dropout layers are disable when evaluating the network, therefore giving a better result.
-
 
 
 A second experiment that was done with this model is increasing the size of the sliding window when we split the data. Here, the data is split into samples of 4096 of width, and a stride of 2048. Here is a comparison :
@@ -562,13 +575,29 @@ Your browser does not support the audio element.
 
 We can hear that the version with samples of 2048 of width sounds better, as the other one has some saturation in the high notes.
 
-However a problem appears if we look at the LSD :
+However a problem appears if we look at the metrics :
 
 | $LSD_{baseline}$  | $LSD_{2048}$           | $LSD_{4096}$           |
 |-------------------|------------------------|------------------------|
-|  2.2662           |  1.5919                |  1.3184                |
+|  (2.2662)         |  1.5919                |  **1.3184**            |
+| $SNR_{baseline}$  | $SNR_{2048}$           | $SNR_{4096}$           |
+|  (28.8033)        |  **1.7032**            |  1.7024                |
 
-The better audio has a higher LSD, which shouldn't be the case. This probably happens because the saturation is considered as "high frequency data", and is taken into account by the LSD. This is problematic, since it means that we cannot completly rely on the LSD to compare the samples, and the human opinion is clearly necessary.
+The better audio has a higher LSD, which, if our metric was accuratly representing actual hearing quality, shouldn't be the case as the better sounding audio is the one with a width of 2048. This probably happens because the saturation is considered as "high frequency data", and is taken into account by the LSD. This is problematic, since it means that we cannot completly rely on the LSD to compare the samples, and the human opinion is clearly necessary.
+
+We can see an illustration of this here, where the spectrogram of each file is shown. We can first see the difference between the input (*on the left*) and target file (*on the right*), where the high frequencies were just cut (sample rate of 10kHz implies a max high frequency of 5kHz). 
+
+<img src="img/vita/spectre_in.wav.png" width="49%"/> <img src="img/vita/spectre_target.wav.png" width="49%"/> 
+
+We can also see that the highest frequencies don't reach 5kHz, they stop a little lower.
+
+Now, if we look at the first generated file (*on the left*, 2048), we can see that higher frequencies are added. However, the intensity and amount of those high frequences is very low, nowhere near what we want to reach. 
+
+With a larger sample size (*one the right*, 4096), we have clearly more frequencies added, which explains the better LSD values. However, we also see that this time we have frequencies that go all the way up to 5kHz, symptom of the saturation we hear.
+
+<img src="img/vita/spectre_base.wav.png" width="49%"/> <img src="img/vita/spectre_base_large.wav.png" width="49%"/> 
+
+From now on, we will use a sample width of 2048
 
 
 **Autoencoder**
