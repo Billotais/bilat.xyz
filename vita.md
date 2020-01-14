@@ -9,9 +9,7 @@ Semester Project by [Loïs Bilat](mailto:lois@bilat.xyz) at VITA Lab - EPFL - Fa
 
 Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifringer](mailto:brian.sifringer@epfl.ch).
 
-**NOT FINISHED YET, MISTAKES TO BE EXPECTED**
-
-
+You can take a look at the [introduction presentation](pdf/vita/presentation_intro.pdf), the [midterm presentation](pdf/vita/presentation_midterm.pdf) and the [final presentation](pdf/vita/presentation_final.pdf).
 
 # Table of Contents
 1. [Introduction](#introduction_)
@@ -23,7 +21,7 @@ Supervised by [Alexandre Alahi](mailto:alexandre.alahi@epfl.ch) and [Brian Sifri
     - [Conditional GAN](#conditional_gan_)
 3. [Code](#code_)
 4. [Experiments](#experiments_) 
-5. [Potential Improvements](#potential_improvements_) 
+5. [Discussion](#discussion_) 
 6. [Conclusion](#conclusion_) 
 7. [Sources](#sources_) 
 
@@ -73,7 +71,7 @@ After this, techniques like Collaborative GAN, Conditional GAN **and Patch GAN**
 
 The original architecture is, as mentioned before, a convolutional autoencoder with skip connections. It consists of $B$ downsampling blocks, one bottleneck block, $B$ upsampling blocks and a final convolutional layer. There are stacking residual connections between a downsampling and an upsampling block at the same level, and an additive residual connection between the input and the final block.
 
-![architecture.png]({{site.baseurl}}/img/vita/architecture.png)
+![architecture.png](img/vita/architecture.png)
 
 
 Each domnsampling block consists of a convolutional block, and a ReLU block. These have a stride of 2, the number of channels outputed by each convolutional block is given by the array `[126, 256, 512, 512, 512, ...]`, and the size of filters is given by the array `[63, 33, 17, 9, 9, 9, ...]`. The ReLU block is more precisely a Leaky rectified linear block with a slope of 0.2 on the negative side.
@@ -83,7 +81,7 @@ The bottleneck block is the same as a downsampling block, but with a dropout wit
 In the upsampling blocks, the convolutional layer uses the same filter sizes as the downsampling blocks, but in reversed order. The number of channels outputed by the convolution is double the one in the corresponding downsampling block, and we have a stride of 1. We then have a dropout of 0.5 and a LeakyReLU with a slope of 0.2. Following this, we have the *DimShuffle* operation, more precisely the Sub-pixel operation, that takes some data of shape $N\times C \times \ W$ and transform it into data of shape $N\times C/2 \times \ 2W$ by interleaving elements from two channels together. 
 
 
-![Subpixel operation]({{site.baseurl}}/img/vita/subpixel.png)
+![Subpixel operation](img/vita/subpixel.png)
 
 Finally, we have the stacking block that takes the output of the corresponding downsampling block and concatenates it on the channel dimension with the output of the sub-pixel block.
 
@@ -92,7 +90,7 @@ After all the upsampling blocks, we finish with a final block that makes of conv
 To better understand this architecture, you can see here a schema of the network 
 
 
-![Detailed architecture]({{site.baseurl}}/img/vita/detailed.png)
+![Detailed architecture](img/vita/detailed.png)
 
 
 and you can see how the stacking connections are used. In the upsampling block, the goal of the convolution is to merge the data from the previous upsampling block and from the corresponding downsampling block, whereas the sub-pixel operation's goal is simply to reshape it so that it has the correct shape to be concatenated later.
@@ -169,7 +167,7 @@ The architecture of the discriminator is basically the first half ot the generat
 
 $$\mathcal{L}_D = - [\log D(x_h) + \log(1-D(G(x_l)))]$$
 
-When training the model, we first train the generator and discriminator separately for a while, and once the loss of the discriminar is low enough, we change the generator loss $L_G$ to
+When training the model, we first train the generator by itself for a while, and then we start training the discriminator and we change the generator loss $L_G$ to
 
 $$\mathcal{L}_G = \mathcal{L}_{L2} + \lambda_{adv}\mathcal{L}_{adv}$$
 
@@ -183,11 +181,11 @@ meaning that the generator will not only look at its own loss (i.e. how far are 
 
 ## Autoencoder
 
-To improve the model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently).
+To improve the model further, we added another network, with an autoencoder architecture, that will also contribute to the loss function of our generator by computing the distance between our generated and target data, but in the latent space created at the bottleneck of this autoencoder. The architecture is the same as the generator, but the residual connections are removed (and therefore some parameters for the number of channels and filters and adapted consequently). Moreover, batchnorm layers are added in the downsampling block as initial testing showed that otherwise values were getting extremely small in the bottleneck, and this was causing some issues.
 
 This autoencoder is trained using the $\mathcal{L}_{L2}$ loss, on the *identity task* (meaning that the target is the same as the input). The goal of this is to find a lower dimension representation of our data (at the bottleneck), that can give some useful information to our optimization problem.
 
-The new loss for the generator is now 
+The loss for the generator is now 
 
 $$\mathcal{L}_G = \mathcal{L}_{L2} + \lambda_{adv}\mathcal{L}_{adv} + \lambda_f \mathcal{L}_f$$
 
@@ -211,7 +209,7 @@ This step happens when you want to generate a sample, but also want to improve i
 
 Suppose we have an input sample, i.e. a low quality audio sample. We send it as an input to the generator, to generate an improved version. We then take the output, and give it to the discriminator. If the discriminator classifies it as "real" with a high enough confidence (in the code *0.5* is used, but higher values may be required for better results), we stop, as we consider our sample is good enough. However, if our sample is classified as "fake", we will try to improve it. This is illustrated here:
 
-![Collaborative GAN]({{site.baseurl}}/img/vita/collab_gan.png)
+![Collaborative GAN](img/vita/collab_gan.png)
 
 For this, we will look at the internal activations of the generator network, in particular the activations at one layer (we call it $x_l$). $x_l$ corresponds to the activation at the output of the l$l$th upsampling block of our generator. We then compute the gradient of this tensor of activations relative to the loss of the discriminator, and then update the value of $x_l$ by gradient descent. The values of $x_l$ are then once again propagated to the end of the network, which will give us a new sample. (Note that during this second pass with the modified $x_l$, the values provided by the skip connections come from the original propagation of x. 
 
@@ -253,7 +251,7 @@ This change means that now the goal of the discriminator is to ask "Is this a re
 
 You can see here an illustration of this change, taken from the original pix2pix paper.
 
-![Conditional gan]({{site.baseurl}}/img/vita/cgan.png)
+![Conditional gan](img/vita/cgan.png)
 
 Here they use images, but the idea is the same. Your input x (the drawn shoe, respectively the low quality audio file) is given to the generator to create an improved version (the gray shoe / improved audio). Then, you give both the generated sample (gray shoe / improved audio) and the original data (drawn show / low quality audio) to the discriminator. Moreover, when training the discriminator, you will also give two samples as the input, namely the original image (drawn shoe / low quality audio) and the target image (brown shoe / high quality audio).
 
@@ -278,7 +276,7 @@ During the evaluation phase, when we want to reconstruct an audio file, we need 
 
 Therefore, for the evaluation phase, we still split the data using a sliding window with some overlap. When putting the blocks together, we will only keep a part of each sample, and the borders will be cropped. This can be seen in the following illustration.
 
-![Illustration of audio reconstruction]({{site.baseurl}}/img/vita/merge.png)
+![Illustration of audio reconstruction](img/vita/merge.png)
 
 
 With this technique, we don't have any audio artifact at the junction between two samples.
@@ -304,12 +302,12 @@ and can be found in `requirements.txt`. `pandas` and `graphviz` are not required
 ```
 usage: main.py [-h] [-c COUNT] [-o OUT] [-e EPOCHS] [-b BATCH] [-w WINDOW]
                [-s STRIDE] [-d DEPTH] -n NAME [--dropout DROPOUT]
-               [--train_n TRAIN_N] [--test_n TEST_N] [--load LOAD]
-               [--continue CONTINUE] [--dataset DATASET]
-               [--dataset_args DATASET_ARGS] [--data_root DATA_ROOT] --rate
-               RATE --preprocessing PREPROCESSING [--gan GAN] [--ae AE]
-               [--collab COLLAB] [--lr_g LR_G] [--lr_d LR_D] [--lr_ae LR_AE]
-               [--scheduler SCHEDULER]
+               [--train_n TRAIN_N] [--load LOAD] [--continue CONTINUE]
+               [--dataset DATASET] [--dataset_args DATASET_ARGS]
+               [--data_root DATA_ROOT] --rate RATE --preprocessing
+               PREPROCESSING [--loss LOSS] [--gan GAN] [--ae AE]
+               [--collab COLLAB] [--cgan CGAN] [--lr_g LR_G] [--lr_d LR_D]
+               [--lr_ae LR_AE] [--scheduler SCHEDULER]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -335,8 +333,8 @@ optional arguments:
                         default=0.5
   --train_n TRAIN_N     number of songs used to train [int], default=-1 (use
                         all songs)
-  --load LOAD           load already trained model to evaluate [bool],
-                        default=False
+  --load LOAD           load already trained model to evaluate file given as
+                        argument [string], default=''
   --continue CONTINUE   load already trained model to continue training
                         [bool], default=False, not implemented yet
   --dataset DATASET     type of the dataset[simple|type], where 'type' is a
@@ -353,11 +351,14 @@ optional arguments:
                         Preprocessing pipeline, a string with each step of the
                         pipeline separated by a comma, more details in readme
                         file
+  --loss LOSS           Choose the loss for the generator, [L1, L2],
+                        default='L2')
   --gan GAN             lambda for the gan loss [float], default=0 (meaning
                         gan disabled)
   --ae AE               lambda for the audoencoder loss [float], default=0
                         (meaning autoencoder disabled)
   --collab COLLAB       Enable the collaborative gan [bool], default=False
+  --cgan CGAN           Enable Conditional GAN [bool], default=False
   --lr_g LR_G           learning rate for the generator [float],
                         default=0.0001
   --lr_d LR_D           learning rate for the discriminator [float],
@@ -366,7 +367,6 @@ optional arguments:
                         default=0.0001
   --scheduler SCHEDULER
                         enable the scheduler [bool], default=False
-
 ```
 
 For instance, the following command
@@ -395,7 +395,7 @@ You can also apply different preprocessing steps one after the other, by concate
 
 ### Evaluation 
 
-By default, once the model has finished training, it will take a file and try to improve it. This file will be `out.wav`. If you want to evaluate other files, you can run the original command, but with the `--load filename` argument added. This will look for a model save file `out/name/models/model.tar` (don't forget to rename the model file you want to use).
+By default, once the model has finished training, it will take a file and try to improve it. This file will be `out.wav`. If you want to evaluate other files, you can run the original command, but with the `--load filename` argument added, where `filename` is relative to the value of the `--data_root` argument. This will look for a model save file `out/name/models/model.tar` (don't forget to rename the model file you want to use).
  
 ## Code structure
 
@@ -448,40 +448,77 @@ $$LSD(x,y) =  \frac{1}{L} \sum_{l=1}^L \sqrt{\frac{1}{K} \sum_{k=1}^K (X(l,k) - 
 
 where $X$ and $\hat{X}$ are the log-spectral power magnitudes of $y$ and $x$, respectively. These are defined as $X=\log{\left\| S\right\|^2}$, where $S$ is the short-time Fourier transform (STFT) of the signal. $l$ and $k$ are used to index frames and frequencies, respectively. For the following results, frames of length 1024 were used.
 
+More concretly, the following measurement are done :
+
+First, we compute the LSD between the low quality signal and the high quality signal. This is our baseline, i.e. the score without doing anything. We will call it 
+
+$$LSD_{baseline} = LSD(x_{low}, x_{high})$$
+
+Then, for each version of the model "version_x", we compute the LSD between the audio generated by the model, and the high quality audio. We call it 
+
+$$LSD_{version\_x} = LSD(x_{improved\_by\_version\_x}, x_{high})$$
+
+The version with the smallest distance is the better one. 
+
+
+
 ## Results
 
 For the following experiments, as there are a lot of parameters, only a few of them are changed while the others stay fixed. 
 
 For all the experiment, we do super-resolution from 5kHz to 10kHz, with no noise added. Approximately 1.4 GB of raw data was used, corresponding to a little over 2 hours of music. 
 
-For each experiment, the data is split into samples of 4096 of length, with an overlap of 2048. The main network is initialized with a depth of 8 (i.e. 8 downsampling blocks and 8 upsampling blocks). The discriminator and the autoencoder will have the same depth as well. Each experiment is for 10 epochs, using mini-batches of size 32. For the generator, the L2 loss is used by default. 
+For each experiment, the data is split into samples of 2048 of length, with an overlap of 1024. The main network is initialized with a depth of 8 (i.e. 8 downsampling blocks and 8 upsampling blocks). The discriminator and the autoencoder will have the same depth as well. Each experiment is for 5 epochs, using mini-batches of size 32. For the generator, the L2 loss is used by default. 
 
-For all the experiments, the same file is used as the "test data" to create the plots that will follow. Moreover, to measure the metrics, another file is used, but once again always the same for one experiment to another. 
+For all the experiments, the same file is used as the "test data" to create the plots that will follow. Moreover, to measure the metrics, another file is used, but once again always the same for one experiment to another.
 
-
+**Original data**
 
 <p>Low quality audio</p>
 Low quality audio, i.e. what we want to improve, the input
 <audio controls>
-  <source src="https://bilat.xyz/audio/vita/in.wav" type="audio/wav">
+  <source src="audio/vita/in.wav" type="audio/wav">
 Your browser does not support the audio element.
 </audio>
 
 High quality audio, i.e. what we want to achieve, the target
 <audio controls>
-  <source src="https://bilat.xyz/audio/vita/target.wav" type="audio/wav">
+  <source src="audio/vita/target.wav" type="audio/wav">
 Your browser does not support the audio element.
 </audio>
 
 As you can hear, the degradation in the first file is clear. It sounds like it was recorded in a box, and it is due to the loss of high freqencies following the down-sampling of the file.
 
+
+**Scheduler**
+
 Before we take a look at the results, it is important to talk about something that was implemented but ultimately not used; a scheduler. 
 
+The idea behind the scheduler is the following; we start with given learning and train our model, and regularly reduce the learning rate to avoid leaving good minima by "moving too much". There are many ways to do this, either by decreasing the learning rate linearly (i.e. every "n" iterations"), but we can also be smarter and look at the loss curve to find an approriate moment to do so. 
 
+The `ReduceLROnPlateau` was chosen here, but is easy to replace it by another one provided by pytorch. We can see here a comparison in the loss curves between the model without and with the comparator. 
 
+![Scheduler](img/vita/scheduler.png)
 
+The version with the scheduler seems better, or at least it is more stable and less noisy after a while. We can also see a little drop at arround 125 minibatches, corresponding to the change of learning rate. However, if we look at the LSD metric, we can see that the version without the scheduler gives better results. 
 
-<a name="potential_improvements_"></a>
+| $LSD_{baseline}$  | $LSD_{no\ scheduler}$  | $LSD_{scheduler}$  |
+|-------------------|------------------------|--------------------|
+|  2.2235           |  1.6079                |  1.6777            |
+
+Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments.
+
+**Baseline**
+
+**Autoencoder**
+
+**GAN**
+
+**Collaborative GAN**
+
+**Conditional GAN**
+
+<a name="discussion_"></a>
 
 # Discussion
 
@@ -499,14 +536,20 @@ On the other hand, if we were to expand this project to different types of music
 
 The idea behind the additional autoencoder is actually to try to automatically find those specific losses. It tries to find a low dimension representation of the data, which could be anything from just a low resolution version of the audio, or features about "sadness" or "color" or "speed" of the music. This is the goal, but since the architecture of this autoencoder is still quite simple, it is probable that is not able to learn such complicated features. 
 
+There is also the problem of hyperparameters tuning that needs to be addressed. For the base model, there are already a lot of parameters that have to be chosen, from the window size when we split the data (should this depend on the sampling rate, or even on the tempo of the music ? Is 0.1 seconds a good value, or maybe we need 1 second, but this might depend on the type of music). Then, there are all the details related to the architecture, dropout rate, LeakyReLu slope, and most importantly the number of layers. This should probably be related to the size of the input (if we have a larger input we might need more layers). Finally, there are details like the learning rate and other parameters to the optimizer that are also important.
+
+But all of this is only for the base model, as soon as we add for instance the discriminator, we double the number of parameters, and what to choose what weight we want to give the discriminator to the compositve loss. The same can be said with the autoencoder. 
+
+If we want to find the best parameter, we would have to add additional code to change the paramters, and use a validation dataset. The problem with that is not the code or the dataset, but finding which metric to use to decide what parameters are the best. Ideally, we would need to use human opinion, as it is the metric that is the most important for this task, but it would be impossible to integreate this into an automatic process. We are left with the mean square error, or maybe the log-spectral distance, but it's hard to see which one is the closest to what a person would perceive.
+
 
 <a name="conclusion_"></a>
 
 # Conclusion
 
-Audio denoising is a very complicated task, and as we have seen with the results, it is really hard to get a result that really sounds better. Unlike with images and videos, were a little artifact or defect will maybe go unseen by the untrained eye, something similar in an audio file is immediately noticeable, especially with music file with little variation (everybody knows what a piano is supposed to sound like, so any variation will be noticeable). With more general sound, like speech mixed with background music, it can maybe be less problematic as there is anyway more variation in the original audio. 
+Audio denoising is a very complicated task, and as we have seen with the results, it is really hard to get an output that really sounds better. Unlike with images and videos, where a little artifact or defect will maybe go unseen by the untrained eye, something similar in an audio file is immediately noticeable, especially with music file with little variation (everybody knows what a piano is supposed to sound like, so any variation will be noticeable). With more general sound, like speech mixed with background music, it can maybe be less problematic as there is anyway more variation in the original audio. 
 
-Nevertheless, this project can hopefully be of help for anybody that want to start working with audio denoising. It can serve as a starting point for the implementation of many advanced machine learning or processing methods that might be able to solve this problem. 
+Nevertheless, this project can hopefully be of help for anybody that want to start working with audio denoising. It shows that methods that were originaly created to work with images can work with audio data, and it can serve as a starting point for the implementation of many advanced machine learning or processing methods that might be able to solve this problem. 
 
 <a name="sources_"></a>
 
