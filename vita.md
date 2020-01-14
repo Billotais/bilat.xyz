@@ -462,7 +462,7 @@ The version with the smallest distance is the better one.
 
 Moreover, we can also use another metrics, the Signal-to-Noise ration (SNR), defined as :
 
-$$SNR(x,y)=10*\log_{10}(\frac{\| y \|_2^2}{\| x-y \|_2^2}$$
+$$SNR(x,y)=10*\log_{10}\left(\frac{\| y \|_2^2}{\| x-y \|_2^2}\right)$$
 
 This is basically the difference between $x$ and $y$, but normalized and converted in decibels, the higher the better.
 
