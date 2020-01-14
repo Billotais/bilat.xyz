@@ -511,9 +511,7 @@ The version with the scheduler seems better, or at least it is more stable and l
 | $LSD_{baseline}$  | $LSD_{no\ scheduler}$  | $LSD_{scheduler}$  |
 |-------------------|------------------------|--------------------|
 |  2.2235           |  **1.6079**            |  1.6777            |
-
 | $SNR_{baseline}$  | $SNR_{no\ scheduler}$  | $SNR_{scheduler}$  |
-|-------------------|------------------------|--------------------|
 |  **28.8033**      |  1.70355               |  1.70319           |
 
 Now of course this might be a special case, but in the few tests done the version without the scheduler was giving better results, therefore it is disabled for the rest of the experiments. It also allows us to compare the different models more fairly.
@@ -551,9 +549,7 @@ Finally, if we look at the LSDs, it tells us that indeed the new version is bett
 | $LSD_{baseline}$  | $LSD_{base\ network}$  |
 |-------------------|------------------------|
 |  2.2662           |  **1.5919**            |
-
 | $SNR_{baseline}$  | $SNR_{base\ network}$  |
-|-------------------|------------------------|
 |  **28.8033**      |  1.7032                |
 
 If we take a look at the training loss, we can see that it is useless to have a high number of epochs, as we are already in a plateau after 4 epochs. 
