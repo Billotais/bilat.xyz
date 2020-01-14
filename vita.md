@@ -587,9 +587,9 @@ The better audio has a higher LSD, which, if our metric was accuratly representi
 
 We can see an illustration of this here, where the spectrogram of each file is shown. We can first see the difference between the input and target file, where the high frequencies were just cut (sample rate of 10kHz implies a max high frequency of 5kHz). 
 
-![Spectre for input file](img/vita/spectre_in.wav.png)
+![Spectre for input file](img/vita/spectre_in.wav.png) ![Spectre for target file](img/vita/spectre_target.wav.png)
 
-![Spectre for target file](img/vita/spectre_target.wav.png)
+
 
 We can also see that the highest frequencies don't reach 5kHz, they stop a little lower.
 
