@@ -460,7 +460,7 @@ $$LSD_{version\_x} = LSD(x_{improved\_by\_version\_x}, x_{high})$$
 
 The version with the smallest distance is the better one. 
 
-Moreover, we can also use another metrics, the Signal-to-Noise ration (SNR), defined as :
+Moreover, we can also use another metric, the Signal-to-Noise ratio (SNR), defined as :
 
 $$SNR(x,y)=10\times\log_{10}\left(\frac{\| y \|_2^2}{\| x-y \|_2^2}\right)$$
 
