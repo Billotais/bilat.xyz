@@ -464,7 +464,7 @@ Moreover, we can also use another metric, the Signal-to-Noise ratio (SNR), defin
 
 $$SNR(x,y)=10\times\log_{10}\left(\frac{\| y \|_2^2}{\| x-y \|_2^2}\right)$$
 
-This is basically the difference between $x$ and $y$, but normalized and converted in decibels, the higher the better.
+This is basically the difference between $x$ and $y$, but normalized and converted in decibels. The higher the better.
 
 
 
