@@ -640,15 +640,12 @@ Something that can be tried to improve the results with the autoencoder, is to
 1. Train longer : we see in the autoencoder loss that we clearly aren't in a plateau, some there is still some room for improvement.
 2. Increase the lambda : in the generator graph, we see that the composite loss is basically the same as the generator-only loss. This implies that the autoencoder information is almost not present in the final gradiant, and increasing it might be better.
 
-TODO
-
-- test loss increasing ?
 
 **GAN**
 
-**Collaborative GAN**
+Unfortunately, the GAN wasn't working. The discriminator's loss always stayed very high, and no combination of parameters were found to make it work.
 
-**Conditional GAN**
+Therefore, there are no results to show for the GAN, and neither for the collaborative and conditional GANs.
 
 <a name="discussion_"></a>
 
