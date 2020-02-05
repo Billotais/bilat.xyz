@@ -436,8 +436,6 @@ By default, once the model has finished training, it will take a file and try to
 - `ae.py` : code to train the autoencoder, all specific functions are present in this file directly.
 
 
-
-
 <a name="experiments_"></a>
 
 # Experiments
