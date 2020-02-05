@@ -300,22 +300,14 @@ and can be found in `requirements.txt`. `pandas` and `graphviz` are not required
 
 ## How to run
 ```
-usage: main.py [-h] [-c COUNT] [-o OUT] [-e EPOCHS] [-b BATCH] [-w WINDOW]
-               [-s STRIDE] [-d DEPTH] -n NAME [--dropout DROPOUT]
-               [--train_n TRAIN_N] [--load LOAD] [--continue CONTINUE]
-               [--dataset DATASET] [--dataset_args DATASET_ARGS]
-               [--data_root DATA_ROOT] --rate RATE --preprocessing
-               PREPROCESSING [--loss LOSS] [--gan GAN] [--ae AE]
-               [--collab COLLAB] [--cgan CGAN] [--lr_g LR_G] [--lr_d LR_D]
-               [--lr_ae LR_AE] [--scheduler SCHEDULER]
+usage: main.py [-h] [-c COUNT] [-o OUT] [-e EPOCHS] [-b BATCH] [-w WINDOW] [-s STRIDE] [-d DEPTH] -n NAME [--dropout DROPOUT] [--train_n TRAIN_N] [--load LOAD] [--continue CONTINUE] [--dataset DATASET] [--dataset_args DATASET_ARGS]
+               [--data_root DATA_ROOT] --rate RATE --preprocessing PREPROCESSING [--loss LOSS] [--gan GAN] [--ae AE] [--ae_path AE_PATH] [--collab COLLAB] [--cgan CGAN] [--lr_g LR_G] [--lr_d LR_D] [--scheduler SCHEDULER]
 
 optional arguments:
   -h, --help            show this help message and exit
   -c COUNT, --count COUNT
-                        number of mini-batches per epoch [int], default=-1
-                        (use all data)
-  -o OUT, --out OUT     number of samples for the output file [int],
-                        default=500
+                        number of mini-batches per epoch [int], default=-1 (use all data)
+  -o OUT, --out OUT     number of samples for the output file [int], default=500
   -e EPOCHS, --epochs EPOCHS
                         number of epochs [int], default=10
   -b BATCH, --batch BATCH
@@ -325,46 +317,28 @@ optional arguments:
   -s STRIDE, --stride STRIDE
                         stride of the sliding window [int], default=1024
   -d DEPTH, --depth DEPTH
-                        number of layers of the network [int], default=4,
-                        maximum allowed is log2(window)-1
-  -n NAME, --name NAME  name of the folder in which we want to save data for
-                        this model [string], mandatory
-  --dropout DROPOUT     value for the dropout used the network [float],
-                        default=0.5
-  --train_n TRAIN_N     number of songs used to train [int], default=-1 (use
-                        all songs)
-  --load LOAD           load already trained model to evaluate file given as
-                        argument [string], default=''
-  --continue CONTINUE   load already trained model to continue training
-                        [bool], default=False, not implemented yet
-  --dataset DATASET     type of the dataset[simple|type], where 'type' is a
-                        custom dataset type implemented in load_data(),
-                        default=simple
+                        number of layers of the network [int], default=4, maximum allowed is log2(window)-1
+  -n NAME, --name NAME  name of the folder in which we want to save data for this model [string], mandatory
+  --dropout DROPOUT     value for the dropout used the network [float], default=0.5
+  --train_n TRAIN_N     number of songs used to train [int], default=-1 (use all songs)
+  --load LOAD           load already trained model to evaluate file given as argument [string], default=''
+  --continue CONTINUE   load already trained model to continue training [bool], default=False, not implemented yet
+  --dataset DATASET     type of the dataset[simple|type], where 'type' is a custom dataset type implemented in load_data(), default=simple
   --dataset_args DATASET_ARGS
-                        optional arguments for specific datasets, strings
-                        separated by commas
+                        optional arguments for specific datasets, strings separated by commas
   --data_root DATA_ROOT
-                        root of the dataset [path], default=/data/lois-
-                        data/models/maestro
+                        root of the dataset [path], default=/data/lois-data/models/maestro
   --rate RATE           Sample rate of the output file [int], mandatory
   --preprocessing PREPROCESSING
-                        Preprocessing pipeline, a string with each step of the
-                        pipeline separated by a comma, more details in readme
-                        file
-  --loss LOSS           Choose the loss for the generator, [L1, L2],
-                        default='L2')
-  --gan GAN             lambda for the gan loss [float], default=0 (meaning
-                        gan disabled)
-  --ae AE               lambda for the audoencoder loss [float], default=0
-                        (meaning autoencoder disabled)
+                        Preprocessing pipeline, a string with each step of the pipeline separated by a comma, more details in readme file
+  --loss LOSS           Choose the loss for the generator, [L1, L2], default='L2')
+  --gan GAN             lambda for the gan loss [float], default=0 (meaning gan disabled)
+  --ae AE               lambda for the audoencoder loss [float], default=0 (meaning autoencoder disabled)
+  --ae_path AE_PATH     path to the trained autoencoder model
   --collab COLLAB       Enable the collaborative gan [bool], default=False
   --cgan CGAN           Enable Conditional GAN [bool], default=False
-  --lr_g LR_G           learning rate for the generator [float],
-                        default=0.0001
-  --lr_d LR_D           learning rate for the discriminator [float],
-                        default=0.0001
-  --lr_ae LR_AE         learning rate for the autoencoder [float],
-                        default=0.0001
+  --lr_g LR_G           learning rate for the generator [float], default=0.0001
+  --lr_d LR_D           learning rate for the discriminator [float], default=0.0001
   --scheduler SCHEDULER
                         enable the scheduler [bool], default=False
 ```
