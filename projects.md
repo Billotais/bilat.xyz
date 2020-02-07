@@ -7,6 +7,13 @@ description: Loïs Bilat
 
 During my studies and my free time, I had the occasion to work on many programming projects. Here are a few of them :
 
+
+### Denoising with Generative Models
+
+Generative adversarial networks have often been used for image processing (for instance denoising and super-resolution). However, those techniques are
+less common in audio applications. The goal of this project is to first evaluate state-of-the-art techniques for audio denoising and audio super-resolution,
+and then to try to apply some of the Generative methods used in image processing to audio processing.
+
 ### Detecting Bias in Amazon reviews
 
 A Data Story about the potential bias that can be found in Amazon user reviews, and how to correct it. We worked on 20GB of comments extracted from various Amazon articles, and used multiple tools including Pandas, pyspark, and matplotlib. [Link](https://ada-lyn.github.io/)
