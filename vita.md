@@ -300,22 +300,13 @@ and can be found in `requirements.txt`. `pandas` and `graphviz` are not required
 
 ## How to run
 ```
-usage: main.py [-h] [-c COUNT] [-o OUT] [-e EPOCHS] [-b BATCH] [-w WINDOW]
-               [-s STRIDE] [-d DEPTH] -n NAME [--dropout DROPOUT]
-               [--train_n TRAIN_N] [--load LOAD] [--continue CONTINUE]
-               [--dataset DATASET] [--dataset_args DATASET_ARGS]
-               [--data_root DATA_ROOT] --rate RATE --preprocessing
-               PREPROCESSING [--loss LOSS] [--gan GAN] [--ae AE]
-               [--collab COLLAB] [--cgan CGAN] [--lr_g LR_G] [--lr_d LR_D]
-               [--lr_ae LR_AE] [--scheduler SCHEDULER]
+usage: main.py [-h] [-c COUNT] [-o OUT] [-e EPOCHS] [-b BATCH] [-w WINDOW] [-s STRIDE] [-d DEPTH] -n NAME [--dropout DROPOUT] [--train_n TRAIN_N] [--load LOAD] [--continue CONTINUE] [--dataset DATASET] [--dataset_args DATASET_ARGS] [--data_root DATA_ROOT] --rate RATE --preprocessing PREPROCESSING [--loss LOSS] [--gan GAN] [--ae AE] [--ae_path AE_PATH] [--collab COLLAB] [--cgan CGAN] [--lr_g LR_G] [--lr_d LR_D] [--scheduler SCHEDULER]
 
 optional arguments:
   -h, --help            show this help message and exit
   -c COUNT, --count COUNT
-                        number of mini-batches per epoch [int], default=-1
-                        (use all data)
-  -o OUT, --out OUT     number of samples for the output file [int],
-                        default=500
+                        number of mini-batches per epoch [int], default=-1 (use all data)
+  -o OUT, --out OUT     number of samples for the output file [int], default=500
   -e EPOCHS, --epochs EPOCHS
                         number of epochs [int], default=10
   -b BATCH, --batch BATCH
@@ -325,46 +316,28 @@ optional arguments:
   -s STRIDE, --stride STRIDE
                         stride of the sliding window [int], default=1024
   -d DEPTH, --depth DEPTH
-                        number of layers of the network [int], default=4,
-                        maximum allowed is log2(window)-1
-  -n NAME, --name NAME  name of the folder in which we want to save data for
-                        this model [string], mandatory
-  --dropout DROPOUT     value for the dropout used the network [float],
-                        default=0.5
-  --train_n TRAIN_N     number of songs used to train [int], default=-1 (use
-                        all songs)
-  --load LOAD           load already trained model to evaluate file given as
-                        argument [string], default=''
-  --continue CONTINUE   load already trained model to continue training
-                        [bool], default=False, not implemented yet
-  --dataset DATASET     type of the dataset[simple|type], where 'type' is a
-                        custom dataset type implemented in load_data(),
-                        default=simple
+                        number of layers of the network [int], default=4, maximum allowed is log2(window)-1
+  -n NAME, --name NAME  name of the folder in which we want to save data for this model [string], mandatory
+  --dropout DROPOUT     value for the dropout used the network [float], default=0.5
+  --train_n TRAIN_N     number of songs used to train [int], default=-1 (use all songs)
+  --load LOAD           load already trained model to evaluate file given as argument [string], default=''
+  --continue CONTINUE   load already trained model to continue training [bool], default=False, not implemented yet
+  --dataset DATASET     type of the dataset[simple|type], where 'type' is a custom dataset type implemented in load_data(), default=simple
   --dataset_args DATASET_ARGS
-                        optional arguments for specific datasets, strings
-                        separated by commas
+                        optional arguments for specific datasets, strings separated by commas
   --data_root DATA_ROOT
-                        root of the dataset [path], default=/data/lois-
-                        data/models/maestro
+                        root of the dataset [path], default=/data/lois-data/models/maestro
   --rate RATE           Sample rate of the output file [int], mandatory
   --preprocessing PREPROCESSING
-                        Preprocessing pipeline, a string with each step of the
-                        pipeline separated by a comma, more details in readme
-                        file
-  --loss LOSS           Choose the loss for the generator, [L1, L2],
-                        default='L2')
-  --gan GAN             lambda for the gan loss [float], default=0 (meaning
-                        gan disabled)
-  --ae AE               lambda for the audoencoder loss [float], default=0
-                        (meaning autoencoder disabled)
+                        Preprocessing pipeline, a string with each step of the pipeline separated by a comma, more details in readme file
+  --loss LOSS           Choose the loss for the generator, [L1, L2], default='L2')
+  --gan GAN             lambda for the gan loss [float], default=0 (meaning gan disabled)
+  --ae AE               lambda for the audoencoder loss [float], default=0 (meaning autoencoder disabled)
+  --ae_path AE_PATH     path to the trained autoencoder model
   --collab COLLAB       Enable the collaborative gan [bool], default=False
   --cgan CGAN           Enable Conditional GAN [bool], default=False
-  --lr_g LR_G           learning rate for the generator [float],
-                        default=0.0001
-  --lr_d LR_D           learning rate for the discriminator [float],
-                        default=0.0001
-  --lr_ae LR_AE         learning rate for the autoencoder [float],
-                        default=0.0001
+  --lr_g LR_G           learning rate for the generator [float], default=0.0001
+  --lr_d LR_D           learning rate for the discriminator [float], default=0.0001
   --scheduler SCHEDULER
                         enable the scheduler [bool], default=False
 ```
@@ -381,6 +354,40 @@ main.py --count -1 --out 1000 -e 10 --batch 32 --window 2048 --stride 1024 \\
 will run the model for 10 epochs, using minibatches of 32 samples. The network will have a depth of 8, and we split the data into sub-samples of 2048 of width, with some overlap (stride of 1024). We train on all avalailable training data, but create an improved version for only one output file. Our data is stored in the `/data/lois-data/maestro` folder. Our target rate is 10kHz, the learning rate for the generator and the discriminator is 0.0001, the lambda used for the discriminator part of the composite loss is 0.0001. Finally, we want to do some upsampling from 5kHz to 10kHz.
 
 Note that you need to create a `out` folder inside then `src` directory. All the results will be saved inside.
+
+Moreover, if you want to use the autoencoder, you first have to train it separately. This can be done using the `ae.py` file, which has a similair interface.
+
+```
+usage: ae.py [-h] [-c COUNT] [-o OUT] [-e EPOCHS] [-b BATCH] [-w WINDOW] [-s STRIDE] [-d DEPTH] -n NAME [--dropout DROPOUT] [--train_n TRAIN_N] [--dataset DATASET] [--data_root DATA_ROOT] --rate RATE [--loss LOSS] [--lr_ae LR_AE] [--scheduler SCHEDULER]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c COUNT, --count COUNT
+                        number of mini-batches per epoch [int], default=-1 (use all data)
+  -o OUT, --out OUT     number of samples for the output file [int], default=500
+  -e EPOCHS, --epochs EPOCHS
+                        number of epochs [int], default=10
+  -b BATCH, --batch BATCH
+                        size of a minibatch [int], default=32
+  -w WINDOW, --window WINDOW
+                        size of the sliding window [int], default=2048
+  -s STRIDE, --stride STRIDE
+                        stride of the sliding window [int], default=1024
+  -d DEPTH, --depth DEPTH
+                        number of layers of the network [int], default=4, maximum allowed is log2(window)-1
+  -n NAME, --name NAME  name of the folder in which we want to save data for this model [string], mandatory
+  --dropout DROPOUT     value for the dropout used the network [float], default=0.5
+  --train_n TRAIN_N     number of songs used to train [int], default=-1 (use all songs)
+  --dataset DATASET     type of the dataset[simple|type], where 'type' is a custom dataset type implemented in load_data(), default=simple
+  --data_root DATA_ROOT
+                        root of the dataset [path], default=/data/lois-data/models/maestro
+  --rate RATE           Sample rate of the output file [int], mandatory
+  --loss LOSS           Choose the loss for the generator, [L1, L2], default='L2')
+  --lr_ae LR_AE         learning rate for the autoencoder [float], default=0.0001
+  --scheduler SCHEDULER
+                        enable the scheduler [bool], default=False
+```
+The resulting model archive generated by this code can then be used in the main program by giving its path to the `--ae_path` argument.
 
 
 ### Preprocessing
@@ -426,8 +433,7 @@ By default, once the model has finished training, it will take a file and try to
     - `sample, noise, reverb` :  implementation of the options accepted by the preprocess chain
 - `utils.py` : various functions used in multiple places in the code
 - `metrics.py` : file where metrics are implemented. Everything inside the main function will be called at the end of the training after an audio file has been generated.
-
-
+- `ae.py` : code to train the autoencoder, all specific functions are present in this file directly.
 
 
 <a name="experiments_"></a>
@@ -460,11 +466,11 @@ $$LSD_{version\_x} = LSD(x_{improved\_by\_version\_x}, x_{high})$$
 
 The version with the smallest distance is the better one. 
 
-Moreover, we can also use another metrics, the Signal-to-Noise ration (SNR), defined as :
+Moreover, we can also use another metric, the Signal-to-Noise ratio (SNR), defined as :
 
-$$SNR(x,y)=10*\log_{10}\left(\frac{\| y \|_2^2}{\| x-y \|_2^2}\right)$$
+$$SNR(x,y)=10\times\log_{10}\left(\frac{\| y \|_2^2}{\| x-y \|_2^2}\right)$$
 
-This is basically the difference between $x$ and $y$, but normalized and converted in decibels, the higher the better.
+This is basically the difference between $x$ and $y$, but normalized and converted in decibels. The higher the better.
 
 
 
@@ -618,7 +624,7 @@ Let's take a look at the results, and let's compare them with the base model :
 | $LSD_{base\ network}$  | $LSD_{ae}$        |
 |-------------------|------------------------|
 |  1.5919           |          **1.5706**    |
-| $SNR_{baseline}$  | $SNR_{base\ network}$  |
+| $SNR_{base\ network}$  | $SNR_{ae}$             |
 | **1.7032**        |         1.70292        |
 
 Base model
@@ -640,11 +646,12 @@ Something that can be tried to improve the results with the autoencoder, is to
 1. Train longer : we see in the autoencoder loss that we clearly aren't in a plateau, some there is still some room for improvement.
 2. Increase the lambda : in the generator graph, we see that the composite loss is basically the same as the generator-only loss. This implies that the autoencoder information is almost not present in the final gradiant, and increasing it might be better.
 
+
 **GAN**
 
-**Collaborative GAN**
+Unfortunately, the GAN wasn't working. The discriminator's loss always stayed very high, and no combination of parameters were found to make it work.
 
-**Conditional GAN**
+Therefore, there are no results to show for the GAN, and neither for the collaborative and conditional GANs.
 
 <a name="discussion_"></a>
 
