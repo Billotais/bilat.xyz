@@ -7,7 +7,6 @@ description: Loïs Bilat
 
 During my studies and my free time, I had the occasion to work on many programming projects. Here are a few of them :
 
-
 ### Denoising with Generative Models
 
 Generative adversarial networks have often been used for image processing (for instance denoising and super-resolution). However, those techniques are
