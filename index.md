@@ -17,6 +17,6 @@ You can take a look at my [CV](http://bilat.xyz/cv), see a list of [Projects](ht
 
 Email : [lois@bilat.xyz](mailto:lois@bilat.xyz)
 
-Phone : [+41 78 645 94 84](tel:+41786459484)
+Phone : [+41 78 652 29 56](tel:+41786522956)
 
 Social networks : [Linkedin](https://linkedin.com/in/lois-bilat) and [Twitter](https://twitter.com/@Billotais)
