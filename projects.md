@@ -12,7 +12,7 @@ During my studies and my free time, I had the occasion to work on many programmi
 
 Generative adversarial networks have often been used for image processing (for instance denoising and super-resolution). However, those techniques are
 less common in audio applications. The goal of this project is to first evaluate state-of-the-art techniques for audio denoising and audio super-resolution,
-and then to try to apply some of the Generative methods used in image processing to audio processing.
+and then to try to apply some of the Generative methods used in image processing to audio processing. [Link](http://vita.bilat.xyz)
 
 ### Detecting Bias in Amazon reviews
 
