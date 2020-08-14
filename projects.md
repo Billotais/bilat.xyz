@@ -7,6 +7,10 @@ description: Loïs Bilat
 
 During my studies and my free time, I had the occasion to work on many programming projects. Here are a few of them :
 
+### Cross-Lingual Toxicity Detection - Master Thesis
+
+With the increasing use of social media, there is a critical need for performant automatic moderation tools. In this thesis, we present advanced classifiers that can detect hateful and offensive content in short texts. We study various architectures based on transformer models such as BERT and evaluate multiple changes to those models that improve their performance. We then tackle cross-lingual classification and introduce new architectures that use joint-learning and data translation. Our models are able to outperform existing multilingual models on zero-shot and multilingual classification. [Link](http://cltd.bilat.xyz)
+
 ### Denoising with Generative Models
 
 Generative adversarial networks have often been used for image processing (for instance denoising and super-resolution). However, those techniques are
