@@ -12,5 +12,8 @@ description: Loïs Bilat
 <embed src="https://drive.google.com/viewerng/
 viewer?embedded=true&amp;url=http://bilat.xyz/pdf/cv.pdf" width="100%" height="700" />
 
-[Direct download](http://cv.bilat.xyz)
+Salut
 
+<iframe src="http://bilat.xyz/pdf/cv.pdf" width="100%" height="500px">
+    </iframe>
+[Direct download](http://cv.bilat.xyz)
