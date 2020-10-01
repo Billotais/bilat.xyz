@@ -12,8 +12,8 @@ description: Loïs Bilat
 
 
 Salut
-![cv1]({{site.baseurl}}/bilat.xyz/img/cv1.png)
-![cv2]({{site.baseurl}}/bilat.xyz/img/cv2.png)
+![cv1](http://bilat.xyz/img/cv1.png)
+![cv2](http://bilat.xyz/img/cv2.png)
 
 
 <iframe src="http://bilat.xyz/pdf/cv.pdf" width="100%" height="500px">
