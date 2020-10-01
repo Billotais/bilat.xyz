@@ -1,6 +1,6 @@
 ---
 layout: page
-description: Promotions
+description: Loïs Bilat
 published: true
 title: Promotions
 ---
