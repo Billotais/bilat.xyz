@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Promotions
+title: CV
 subtitle: Loïs Bilat
 published: true
 description: Loïs Bilat
