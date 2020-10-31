@@ -10,9 +10,6 @@ description: Loïs Bilat
 
 
 
+[Direct download](http://cv.bilat.xyz) to full CV
 
-Salut
-
-<iframe src="http://bilat.xyz/pdf/cv.pdf" width="100%" height="500px">
-    </iframe>
-[Direct download](http://cv.bilat.xyz)
+![cv1](img/cv1.png)
