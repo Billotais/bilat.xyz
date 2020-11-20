@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Loïs Bilat
-description: Computer Science Student
+description: Data Scientist @ ELCA Informatique SA
 published: true
 ---
 
