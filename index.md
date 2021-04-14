@@ -10,7 +10,7 @@ published: true
 I am a Swiss Data Scientist currently working at [ELCA Informatique SA](https://elca.ch), with a Master in Computer Science from [EPFL](https://epfl.ch) in Lausanne. 
 I'm mostly interested in Machine Learning, Data Analysis, Natural Language Processing and Computer Vision. 
 
-I also like Board Games, TV Shows and taking walks.
+I also like Board Games, TV Shows and going for walks.
 
 You can take a look at my [CV](http://bilat.xyz/cv), see a list of [Projects](http://bilat.xyz/projects) I worked on or take a look at my [Github page](https://github.com/Billotais). 
 
