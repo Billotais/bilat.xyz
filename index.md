@@ -16,7 +16,5 @@ You can take a look at my [CV](http://bilat.xyz/cv), see a list of [Projects](ht
 
 # Contact me
 
-Email : [mailto](mailto:bilat.xyz.contact.payee548@passinbox.com)
-
-
-Social networks : [Linkedin](https://linkedin.com/in/lois-bilat), [Twitter](https://twitter.com/@Billotais) and [Medium](https://lois-bilat.medium.com/)
+- By [email](mailto:bilat.xyz.contact.payee548@passinbox.com)
+- On Social networks : [Linkedin](https://linkedin.com/in/lois-bilat), [Twitter](https://twitter.com/@Billotais) and [Medium](https://lois-bilat.medium.com/)
